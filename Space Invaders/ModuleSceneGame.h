@@ -8,7 +8,7 @@
 struct SDL_Texture;
 struct SDL_Rect;
 struct Text;
-typedef enum class MouseMove;
+enum class MouseMove;
 
 class ModuleSceneGame : public Module
 {
