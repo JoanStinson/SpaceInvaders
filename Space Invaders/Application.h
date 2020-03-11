@@ -4,6 +4,7 @@
 #include "Module.h"
 
 #include <list>
+#include <memory>
 
 class ModuleRender;
 class ModuleWindow;
@@ -14,7 +15,8 @@ class ModuleFadeToBlack;
 class ModuleSceneMenu;
 class ModuleSceneGame;
 
-class Application {
+class Application
+{
 public:
 	Application();
 	~Application();
@@ -24,14 +26,14 @@ public:
 	bool CleanUp();
 
 public:
-	ModuleRender* renderer = nullptr;
-	ModuleWindow* window = nullptr;
-	ModuleTextures* textures = nullptr;
-	ModuleInput* input = nullptr;
-	ModuleAudio* audio = nullptr;
-	ModuleFadeToBlack* fade = nullptr;
-	ModuleSceneMenu* sceneIntro = nullptr;
-	ModuleSceneGame* sceneGame = nullptr;
+	std::unique_ptr<ModuleRender> renderer;
+	std::unique_ptr<ModuleWindow> window;
+	std::unique_ptr<ModuleTextures> textures;
+	std::unique_ptr<ModuleInput> input;
+	std::unique_ptr<ModuleAudio> audio;
+	std::unique_ptr<ModuleFadeToBlack> fade;
+	std::unique_ptr<ModuleSceneMenu> sceneIntro;
+	std::unique_ptr<ModuleSceneGame> sceneGame;
 
 private:
 	std::list<Module*> modules;
