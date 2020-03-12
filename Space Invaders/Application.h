@@ -14,6 +14,7 @@ class ModuleAudio;
 class ModuleFadeToBlack;
 class ModuleSceneMenu;
 class ModuleSceneGame;
+class ModulePlayer;
 
 class Application
 {
@@ -34,6 +35,9 @@ public:
 	std::unique_ptr<ModuleFadeToBlack> fade;
 	std::unique_ptr<ModuleSceneMenu> sceneIntro;
 	std::unique_ptr<ModuleSceneGame> sceneGame;
+	std::unique_ptr<ModulePlayer> player;
+
+	int delta_time;
 
 private:
 	std::list<Module*> modules;

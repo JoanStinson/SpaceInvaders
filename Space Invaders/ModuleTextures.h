@@ -8,6 +8,11 @@
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 
+#define LAYER_FRONT 0.67F
+#define LAYER_MIDDLE 0.62F
+#define LAYER_BACK 0.5F
+#define LAYER_HUD 0.F
+
 #define DEFAULT_COLOR SDL_Color { 67, 91, 55 }
 #define DEFAULT_TEXT_SIZE 24
 #define FONT_PATH "Game/candy.ttf"

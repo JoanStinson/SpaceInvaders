@@ -8,17 +8,17 @@
     <Filter Include="Game Modules">
       <UniqueIdentifier>{15b5cbc6-cd68-4e6e-8935-b04f2fdf7bf4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core Modules">
-      <UniqueIdentifier>{72b85efa-930b-4213-a8ec-2f0f817410d1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Utils">
       <UniqueIdentifier>{ad89cf24-f35e-4d0c-90e5-820c054c274d}</UniqueIdentifier>
     </Filter>
     <Filter Include="Utils\GIF">
       <UniqueIdentifier>{b8b7dc3d-248a-4182-83aa-fa3c98ccb676}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Data">
+    <Filter Include="Game Data">
       <UniqueIdentifier>{301af1ac-6f12-4bc5-bbd2-450ea1a9b4b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core Modules">
+      <UniqueIdentifier>{72b85efa-930b-4213-a8ec-2f0f817410d1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -68,21 +68,24 @@
       <Filter>Game Modules</Filter>
     </ClInclude>
     <ClInclude Include="Candy.h">
-      <Filter>Data</Filter>
+      <Filter>Game Data</Filter>
     </ClInclude>
     <ClInclude Include="CandyGrid.h">
-      <Filter>Data</Filter>
+      <Filter>Game Data</Filter>
     </ClInclude>
     <ClInclude Include="CandyMatch.h">
-      <Filter>Data</Filter>
+      <Filter>Game Data</Filter>
     </ClInclude>
     <ClInclude Include="CandyScore.h">
-      <Filter>Data</Filter>
+      <Filter>Game Data</Filter>
     </ClInclude>
     <ClInclude Include="SDL_Button.h">
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="ModuleSceneMenu.h">
+      <Filter>Game Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="ModulePlayer.h">
       <Filter>Game Modules</Filter>
     </ClInclude>
   </ItemGroup>
@@ -127,21 +130,24 @@
       <Filter>Game Modules</Filter>
     </ClCompile>
     <ClCompile Include="Candy.cpp">
-      <Filter>Data</Filter>
+      <Filter>Game Data</Filter>
     </ClCompile>
     <ClCompile Include="CandyGrid.cpp">
-      <Filter>Data</Filter>
+      <Filter>Game Data</Filter>
     </ClCompile>
     <ClCompile Include="CandyMatch.cpp">
-      <Filter>Data</Filter>
+      <Filter>Game Data</Filter>
     </ClCompile>
     <ClCompile Include="SDL_Button.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="CandyScore.cpp">
-      <Filter>Data</Filter>
+      <Filter>Game Data</Filter>
     </ClCompile>
     <ClCompile Include="ModuleSceneMenu.cpp">
+      <Filter>Game Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ModulePlayer.cpp">
       <Filter>Game Modules</Filter>
     </ClCompile>
   </ItemGroup>

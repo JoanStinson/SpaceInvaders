@@ -41,5 +41,6 @@ enum class UpdateStatus
 #define FULLSCREEN false
 #define VSYNC true
 #define TITLE "Space Invaders"
+#define FPS 60
 
 #endif // _GLOBALS_H_

@@ -18,14 +18,14 @@ public:
 
 	bool Start() override;
 	UpdateStatus Update() override;
-	UpdateStatus PostUpdate() override;
 	bool CleanUp() override;
 
 private:
 
 
 private:
-
+	SDL_Texture* graphics = nullptr;
+	SDL_Rect background;
 };
 
 #endif // _MODULESCENEGAME_H_
