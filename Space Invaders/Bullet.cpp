@@ -21,6 +21,8 @@ bool Bullet::Start()
 
 UpdateStatus Bullet::Update()
 {
+	position.y--;
+
 	App->renderer->Draw(texture, position, &rect, LAYER_FRONT);
 
 	return UpdateStatus::CONTINUE;

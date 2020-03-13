@@ -23,6 +23,8 @@ protected:
 
 	fPoint position;
 	float speed;
+
+	bool active;
 };
 
 #endif // _ENTITY_H_

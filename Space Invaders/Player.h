@@ -4,6 +4,10 @@
 //#include "Creature.h"
 #include "Bullet.h"
 
+#include <vector>
+
+#define MAX_BULLETS 20
+
 class Player : public Creature
 {
 public:
@@ -17,6 +21,8 @@ public:
 
 private:
 	Bullet* bullet = nullptr;
+
+	std::vector<Bullet*> pooled_bullets;
 };
 
 #endif // _PLAYER_H_

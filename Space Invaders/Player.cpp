@@ -12,6 +12,13 @@ Player::Player()
 	speed = 350.0f / FPS;
 
 	bullet = new Bullet();
+
+	pooled_bullets.reserve(MAX_BULLETS);
+
+	for (int i = 0; i < MAX_BULLETS; ++i)
+	{
+		pooled_bullets.push_back(new Bullet());
+	}
 }
 
 Player::Player(fPoint position, float speed) : Creature(position, speed)
@@ -22,6 +29,11 @@ Player::Player(fPoint position, float speed) : Creature(position, speed)
 Player::~Player()
 {
 	delete bullet;
+
+	for (int i = 0; i < MAX_BULLETS; ++i)
+	{
+		delete pooled_bullets[i];
+	}
 }
 
 bool Player::Start()
@@ -59,9 +71,9 @@ UpdateStatus Player::Update()
 	if (App->input->GetKeyDown(SDL_SCANCODE_SPACE))
 	{
 		//TODO shoot projectiles
-		bullet->Update();
+		
 	}
-
+	bullet->Update();
 	App->renderer->Draw(texture, position, &rect, LAYER_FRONT);
 
 	return UpdateStatus::CONTINUE;
