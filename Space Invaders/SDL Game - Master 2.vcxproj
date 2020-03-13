@@ -86,6 +86,8 @@
     <ClInclude Include="CEV_gif.h" />
     <ClInclude Include="CEV_gifDeflate.h" />
     <ClInclude Include="CEV_gifToSurface.h" />
+    <ClInclude Include="Creature.h" />
+    <ClInclude Include="Entity.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="Module.h" />
     <ClInclude Include="ModuleAudio.h" />
@@ -106,6 +108,8 @@
     <ClCompile Include="CEV_gifDeflate.c" />
     <ClCompile Include="CEV_gifToSurface.c" />
     <ClCompile Include="CEV_gifUser.c" />
+    <ClCompile Include="Creature.cpp" />
+    <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Log.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="ModuleAudio.cpp" />

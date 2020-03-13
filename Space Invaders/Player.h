@@ -1,28 +1,25 @@
 #ifndef _PLAYER_H_
 #define _PLAYER_H_
 
-#include "Globals.h"
-#include "Point.h"
+#include "Creature.h"
 
 struct SDL_Texture;
 struct SDL_Rect;
 
-class Player
+class Player : public Creature
 {
 public:
 	Player();
+	Player(fPoint position, float speed);
 	~Player();
 
-	bool Start();
-	UpdateStatus Update();
-	bool CleanUp();
+	bool Start() override;
+	UpdateStatus Update() override;
+	bool CleanUp() override;
 
 private:
 	SDL_Texture* graphics = nullptr;
 	SDL_Rect spaceship;
-
-	fPoint position;
-	const float speed = 350.0f / FPS;
 };
 
 #endif // _PLAYER_H_

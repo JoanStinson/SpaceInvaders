@@ -76,6 +76,12 @@
     <ClInclude Include="Player.h">
       <Filter>Game Data</Filter>
     </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Game Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Creature.h">
+      <Filter>Game Data</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -128,6 +134,12 @@
     </ClCompile>
     <ClCompile Include="Animation.cpp">
       <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Creature.cpp">
+      <Filter>Game Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Game Data</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

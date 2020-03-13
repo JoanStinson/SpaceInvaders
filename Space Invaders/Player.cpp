@@ -9,6 +9,12 @@ Player::Player()
 {
 	spaceship = { 0, 0, 102, 102 };
 	position = { float((SCREEN_WIDTH / 2) - (spaceship.w / 2)), float(SCREEN_HEIGHT - spaceship.h) };
+	speed = 350.0f / FPS;
+}
+
+Player::Player(fPoint position, float speed) : Creature(position, speed)
+{
+	spaceship = { 0, 0, 102, 102 };
 }
 
 Player::~Player()
