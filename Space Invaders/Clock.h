@@ -1,6 +1,8 @@
 #ifndef _CLOCK_H_
 #define _CLOCK_H_
 
+#include <SDL_timer.h>
+
 struct Clock
 {
 	Uint64 current_time = SDL_GetPerformanceCounter();

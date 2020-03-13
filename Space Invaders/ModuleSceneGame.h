@@ -2,8 +2,6 @@
 #define _MODULESCENEGAME_H_
 
 #include "Module.h"
-#include "Animation.h"
-#include "SDL_Button.h"
 #include "Player.h"
 #include "Clock.h"
 
@@ -12,7 +10,6 @@
 struct SDL_Texture;
 struct SDL_Rect;
 struct Text;
-enum class MouseMove;
 
 class ModuleSceneGame : public Module
 {
@@ -28,12 +25,11 @@ public:
 	void AddEntity(Entity* entity);
 
 private:
-	SDL_Texture* graphics = nullptr;
-	SDL_Rect background;
-
 	Player* player = nullptr;
 	std::list<Entity*> entities;
-	//list<Entity*> walls;
+
+	SDL_Texture* graphics = nullptr;
+	SDL_Rect background;
 
 	Clock clock;
 };

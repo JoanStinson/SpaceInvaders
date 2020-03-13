@@ -4,7 +4,7 @@
 
 #include <SDL.h>
 
-ModuleInput::ModuleInput() : Module(), mouse_motion({ 0,0 }), mouse_pos({ 0, 0 })
+ModuleInput::ModuleInput() : Module(), window_events(), mouse_buttons(), mouse_motion({ 0,0 }), mouse_pos({ 0, 0 })
 {
 	keyboard = new KeyState[MAX_KEYS];
 
@@ -135,6 +135,7 @@ UpdateStatus ModuleInput::PreUpdate()
 		case SDL_MOUSEMOTION:
 			mouse_motion.x = event.motion.xrel / SCREEN_SIZE;
 			mouse_motion.y = event.motion.yrel / SCREEN_SIZE;
+
 			mouse_pos.x = event.motion.x / SCREEN_SIZE;
 			mouse_pos.y = event.motion.y / SCREEN_SIZE;
 			break;

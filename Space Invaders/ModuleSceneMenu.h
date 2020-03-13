@@ -3,6 +3,9 @@
 
 #include "Module.h"
 #include "Animation.h"
+#include "SDL_Button.h"
+
+enum class MouseMove;
 
 class ModuleSceneMenu : public Module
 {

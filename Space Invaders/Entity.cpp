@@ -1,10 +1,10 @@
 #include "Entity.h"
 
-Entity::Entity()
+Entity::Entity() : active(true), life_points(3), rect({0, 0, 0, 0}), speed(0.1f)
 {
 }
 
-Entity::Entity(fPoint position, float speed) : position(position), speed(speed)
+Entity::Entity(fPoint position, float speed) : position(position), speed(speed), active(false), life_points(3), rect({ 0, 0, 0, 0 })
 {
 }
 

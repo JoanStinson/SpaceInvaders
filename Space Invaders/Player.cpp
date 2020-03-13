@@ -38,6 +38,7 @@ bool Player::Start()
 	for (int i = 0; i < MAX_BULLETS; ++i)
 	{
 		Bullet* bullet = new Bullet();
+		bullet->SetActive(false);
 		bullet->SetTexture(bulletTexture);
 		pooled_bullets.push_back(bullet);
 		App->sceneGame->AddEntity(bullet);
@@ -56,7 +57,7 @@ UpdateStatus Player::Update(float delta_time)
 
 		if (position.x > SCREEN_WIDTH - rect.w)
 		{
-			position.x = SCREEN_WIDTH - rect.w;
+			position.x = (float)SCREEN_WIDTH - rect.w;
 		}
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_LEFT))
@@ -71,8 +72,8 @@ UpdateStatus Player::Update(float delta_time)
 
 	if (App->input->GetKeyDown(SDL_SCANCODE_SPACE))
 	{
-		// Shoot pooled projectiles
-		for (int i = 0; i < pooled_bullets.size(); ++i)
+		// Shoot pooled projectile
+		for (unsigned i = 0; i < pooled_bullets.size(); ++i)
 		{
 			Bullet* bullet = pooled_bullets[i];
 

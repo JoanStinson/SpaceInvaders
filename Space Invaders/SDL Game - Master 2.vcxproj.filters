@@ -88,6 +88,9 @@
     <ClInclude Include="Clock.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Asteroid.h">
+      <Filter>Game Data</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -148,6 +151,9 @@
       <Filter>Game Data</Filter>
     </ClCompile>
     <ClCompile Include="Bullet.cpp">
+      <Filter>Game Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Asteroid.cpp">
       <Filter>Game Data</Filter>
     </ClCompile>
   </ItemGroup>

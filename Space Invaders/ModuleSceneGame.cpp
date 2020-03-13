@@ -14,8 +14,11 @@
 ModuleSceneGame::ModuleSceneGame(bool start_enabled) : Module(start_enabled)
 {
 	background = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
+
 	player = new Player();
 	AddEntity(player);
+
+
 }
 
 ModuleSceneGame::~ModuleSceneGame()
@@ -48,7 +51,7 @@ UpdateStatus ModuleSceneGame::Update()
 
 	for (std::list<Entity*>::iterator it = entities.begin(); it != entities.end() && ret == UpdateStatus::CONTINUE; ++it)
 		if ((*it)->IsEnabled())
-			ret = (*it)->Update(clock.delta_time);
+			ret = (*it)->Update((float)clock.delta_time);
 
 	return ret;
 }

@@ -33,6 +33,8 @@ protected:
 	float speed;
 
 	bool active;
+
+	int life_points;
 };
 
 #endif // _ENTITY_H_

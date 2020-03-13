@@ -9,7 +9,6 @@
 Bullet::Bullet()
 {
 	rect = { 0, 0, 26, 26 };
-	position = { float((SCREEN_WIDTH / 2) - (rect.w / 2)), float(SCREEN_HEIGHT - (rect.h * 2)) };
 	active = false;
 	speed = 0.5f;
 }
