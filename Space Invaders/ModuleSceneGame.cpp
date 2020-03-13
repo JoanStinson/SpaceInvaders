@@ -15,6 +15,7 @@ ModuleSceneGame::ModuleSceneGame(bool start_enabled) : Module(start_enabled)
 {
 	background = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
 	player = new Player();
+	AddEntity(player);
 }
 
 ModuleSceneGame::~ModuleSceneGame()
@@ -26,29 +27,46 @@ bool ModuleSceneGame::Start()
 {
 	LOG("Loading game scene");
 
-	player->Start();
+	bool ret = true;
+
+	for (std::list<Entity*>::iterator it = entities.begin(); it != entities.end() && ret; ++it)
+		if ((*it)->IsEnabled())
+			ret = (*it)->Start();
 
 	graphics = App->textures->LoadImage("Game/Background/background.jpg");
 
-	return true;
+	return ret;
 }
 
 UpdateStatus ModuleSceneGame::Update()
 {
+	UpdateStatus ret = UpdateStatus::CONTINUE;
+
 	App->renderer->Draw(graphics, fPoint::Zero(), &background, LAYER_BACK);
 
-	player->Update();
+	for (std::list<Entity*>::iterator it = entities.begin(); it != entities.end() && ret == UpdateStatus::CONTINUE; ++it)
+		if ((*it)->IsEnabled())
+			ret = (*it)->Update();
 
-	return UpdateStatus::CONTINUE;
+	return ret;
 }
 
 bool ModuleSceneGame::CleanUp()
 {
 	LOG("Unloading game scene");
 
-	player->CleanUp();
+	bool ret = true;
+
+	for (std::list<Entity*>::iterator it = entities.begin(); it != entities.end() && ret; ++it)
+		if ((*it)->IsEnabled())
+			ret = (*it)->CleanUp();
 
 	App->textures->Unload(graphics);
 
-	return true;
+	return ret;
+}
+
+void ModuleSceneGame::AddEntity(Entity* entity)
+{
+	entities.push_back(entity);
 }

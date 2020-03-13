@@ -4,6 +4,7 @@
 #include "ModuleTextures.h"
 #include "ModuleInput.h"
 #include "ModuleRender.h"
+#include "ModuleSceneGame.h"
 
 Player::Player()
 {
@@ -11,14 +12,7 @@ Player::Player()
 	position = { float((SCREEN_WIDTH / 2) - (rect.w / 2)), float(SCREEN_HEIGHT - rect.h) };
 	speed = 350.0f / FPS;
 
-	bullet = new Bullet();
-
 	pooled_bullets.reserve(MAX_BULLETS);
-
-	for (int i = 0; i < MAX_BULLETS; ++i)
-	{
-		pooled_bullets.push_back(new Bullet());
-	}
 }
 
 Player::Player(fPoint position, float speed) : Creature(position, speed)
@@ -28,8 +22,6 @@ Player::Player(fPoint position, float speed) : Creature(position, speed)
 
 Player::~Player()
 {
-	delete bullet;
-
 	for (int i = 0; i < MAX_BULLETS; ++i)
 	{
 		delete pooled_bullets[i];
@@ -40,7 +32,12 @@ bool Player::Start()
 {
 	LOG("Loading player");
 
-	bullet->Start();
+	for (int i = 0; i < MAX_BULLETS; ++i)
+	{
+		Bullet* bullet = new Bullet();
+		bullet->Start();
+		pooled_bullets.push_back(bullet);
+	}
 
 	texture = App->textures->LoadImage("Game/Player/spaceship.png");
 
@@ -70,10 +67,22 @@ UpdateStatus Player::Update()
 
 	if (App->input->GetKeyDown(SDL_SCANCODE_SPACE))
 	{
-		//TODO shoot projectiles
-		
+		// Shoot pooled projectiles
+		for (int i = 0; i < pooled_bullets.size(); ++i)
+		{
+			Bullet* bullet = pooled_bullets[i];
+
+			// Instead of new/delete, enable/disable
+			if (!bullet->IsEnabled())
+			{
+				bullet->SetActive(true);
+				bullet->SetPosition(position);
+				App->sceneGame->AddEntity(bullet);
+				break;
+			}
+		}
 	}
-	bullet->Update();
+
 	App->renderer->Draw(texture, position, &rect, LAYER_FRONT);
 
 	return UpdateStatus::CONTINUE;
@@ -82,8 +91,6 @@ UpdateStatus Player::Update()
 bool Player::CleanUp()
 {
 	LOG("Unloading player");
-
-	bullet->CleanUp();
 
 	SDL_DestroyTexture(texture);
 

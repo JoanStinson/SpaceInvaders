@@ -12,10 +12,17 @@ class Entity
 public:
 	Entity();
 	Entity(fPoint position, float speed);
+	virtual ~Entity();
 
 	virtual bool Start() = 0;
 	virtual UpdateStatus Update() = 0;
 	virtual bool CleanUp() = 0;
+
+public:
+	bool IsEnabled() const;
+
+	void SetPosition(fPoint new_position);
+	void SetActive(bool active);
 
 protected:
 	SDL_Texture* texture = nullptr;

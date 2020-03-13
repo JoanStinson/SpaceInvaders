@@ -7,7 +7,12 @@
 Bullet::Bullet()
 {
 	rect = { 0, 0, 26, 26 };
-	position = { float((SCREEN_WIDTH / 2) - (rect.w / 2)), float(SCREEN_HEIGHT - (rect.h*2)) };
+	ResetPosition();
+	active = false;
+}
+
+Bullet::~Bullet()
+{
 }
 
 bool Bullet::Start()
@@ -21,9 +26,17 @@ bool Bullet::Start()
 
 UpdateStatus Bullet::Update()
 {
-	position.y--;
+	if (active)
+	{
+		position.y--;
 
-	App->renderer->Draw(texture, position, &rect, LAYER_FRONT);
+		App->renderer->Draw(texture, position, &rect, LAYER_FRONT);
+	}
+
+	if (position.y < rect.w && active)
+	{
+		active = false;
+	}
 
 	return UpdateStatus::CONTINUE;
 }
@@ -35,4 +48,14 @@ bool Bullet::CleanUp()
 	SDL_DestroyTexture(texture);
 
 	return true;
+}
+
+void Bullet::SetPosition(fPoint position)
+{
+	this->position = position;
+}
+
+void Bullet::ResetPosition()
+{
+	position = { float((SCREEN_WIDTH / 2) - (rect.w / 2)), float(SCREEN_HEIGHT - (rect.h * 2)) };
 }

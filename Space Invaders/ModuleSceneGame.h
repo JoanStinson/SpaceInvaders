@@ -6,6 +6,8 @@
 #include "SDL_Button.h"
 #include "Player.h"
 
+#include <list>
+
 struct SDL_Texture;
 struct SDL_Rect;
 struct Text;
@@ -21,15 +23,15 @@ public:
 	UpdateStatus Update() override;
 	bool CleanUp() override;
 
-private:
-
+public:
+	void AddEntity(Entity* entity);
 
 private:
 	SDL_Texture* graphics = nullptr;
 	SDL_Rect background;
 
 	Player* player = nullptr;
-	//list<Entity*> enemies;
+	std::list<Entity*> entities;
 	//list<Entity*> walls;
 };
 
