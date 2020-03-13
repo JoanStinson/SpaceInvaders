@@ -22,10 +22,6 @@ Player::Player(fPoint position, float speed) : Creature(position, speed)
 
 Player::~Player()
 {
-	for (int i = 0; i < MAX_BULLETS; ++i)
-	{
-		delete pooled_bullets[i];
-	}
 }
 
 bool Player::Start()
@@ -38,7 +34,6 @@ bool Player::Start()
 	for (int i = 0; i < MAX_BULLETS; ++i)
 	{
 		Bullet* bullet = new Bullet();
-		bullet->SetActive(false);
 		bullet->SetTexture(bulletTexture);
 		pooled_bullets.push_back(bullet);
 		App->sceneGame->AddEntity(bullet);

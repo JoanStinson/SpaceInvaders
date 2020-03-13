@@ -7,6 +7,7 @@
 #include "ModuleInput.h"
 #include "ModuleWindow.h"
 #include "ModuleFadeToBlack.h"
+#include "Asteroid.h"
 
 #include <SDL.h>
 #include <string>
@@ -15,15 +16,13 @@ ModuleSceneGame::ModuleSceneGame(bool start_enabled) : Module(start_enabled)
 {
 	background = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
 
-	player = new Player();
-	AddEntity(player);
-
-
+	//TODO remember that cant use modules until Start, because they are not initialized before
 }
 
 ModuleSceneGame::~ModuleSceneGame()
 {
-	delete player;
+	for (std::list<Entity*>::iterator it = entities.begin(); it != entities.end(); ++it)
+		delete (*it);
 }
 
 bool ModuleSceneGame::Start()
@@ -32,11 +31,20 @@ bool ModuleSceneGame::Start()
 
 	bool ret = true;
 
+	graphics = App->textures->LoadImage("Game/Background/background.jpg");
+
+	player = new Player();
+	AddEntity(player);
+
+	Asteroid* asteroid = new Asteroid();
+	SDL_Texture* asteroidTexture = App->textures->LoadImage("Game/Aestroids/aestroid_brown.png");
+	asteroid->SetTexture(asteroidTexture);
+	asteroid->SetPosition(fPoint{ SCREEN_WIDTH / 3, SCREEN_HEIGHT / 3 });
+	AddEntity(asteroid);
+
 	for (std::list<Entity*>::iterator it = entities.begin(); it != entities.end() && ret; ++it)
 		if ((*it)->IsEnabled())
 			ret = (*it)->Start();
-
-	graphics = App->textures->LoadImage("Game/Background/background.jpg");
 
 	return ret;
 }

@@ -9,9 +9,9 @@ public:
 	Asteroid();
 	~Asteroid();
 
-	bool Start() = 0;
-	UpdateStatus Update(float delta_time) = 0;
-	bool CleanUp() = 0;
+	bool Start() override;
+	UpdateStatus Update(float delta_time) override;
+	bool CleanUp() override;
 };
 
 #endif // _ASTEROID_H_
