@@ -70,9 +70,9 @@ bool ModuleAudio::PlayMusic(const char* path, float fade_time)
 
 	if (music != nullptr)
 	{
-		if (fade_time > 0.0F)
+		if (fade_time > 0.f)
 		{
-			Mix_FadeOutMusic((int)(fade_time * 1000.0F));
+			Mix_FadeOutMusic((int)(fade_time * 1000.f));
 		}
 		else
 		{
@@ -92,9 +92,9 @@ bool ModuleAudio::PlayMusic(const char* path, float fade_time)
 	}
 	else
 	{
-		if (fade_time > 0.0F)
+		if (fade_time > 0.f)
 		{
-			if (Mix_FadeInMusic(music, -1, (int)(fade_time * 1000.0F)) < 0)
+			if (Mix_FadeInMusic(music, -1, (int)(fade_time * 1000.f)) < 0)
 			{
 				LOG("Cannot fade in music %s. Mix_GetError(): %s", path, Mix_GetError());
 				ret = false;

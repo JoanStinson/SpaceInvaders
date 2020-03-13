@@ -21,7 +21,7 @@ public:
 	bool CleanUp() override;
 
 public:
-	bool Draw(SDL_Texture* texture, fPoint position, SDL_Rect* section, float speed = 1.0F);
+	bool Draw(SDL_Texture* texture, fPoint position, SDL_Rect* section, float speed = 1.f);
 
 	SDL_Renderer& GetRenderer() const;
 

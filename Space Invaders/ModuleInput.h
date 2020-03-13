@@ -6,8 +6,8 @@
 
 #include <SDL_scancode.h>
 
-#define MAX_MOUSE_BUTTONS 5
 #define MAX_KEYS 286
+#define MAX_MOUSE_BUTTONS 5
 
 enum class EventWindow
 {

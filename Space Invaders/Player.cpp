@@ -96,8 +96,5 @@ bool Player::CleanUp()
 {
 	LOG("Unloading player");
 
-	SDL_DestroyTexture(texture);
-	SDL_DestroyTexture(bulletTexture);
-
 	return true;
 }

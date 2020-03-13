@@ -66,8 +66,6 @@ bool ModuleSceneGame::CleanUp()
 		if ((*it)->IsEnabled())
 			ret = (*it)->CleanUp();
 
-	App->textures->Unload(graphics);
-
 	return ret;
 }
 

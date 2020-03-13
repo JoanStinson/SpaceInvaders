@@ -86,5 +86,6 @@ public:
 
 typedef Point<int> iPoint;
 typedef Point<float> fPoint;
+typedef Point<double> dPoint;
 
 #endif // _POINT_H_

@@ -21,8 +21,6 @@ bool Bullet::Start()
 {
 	LOG("Loading bullet");
 
-	//texture = App->textures->LoadImage("Game/Player/bullet.png");
-
 	return true;
 }
 
@@ -46,8 +44,6 @@ UpdateStatus Bullet::Update(float delta_time)
 bool Bullet::CleanUp()
 {
 	LOG("Unloading bullet");
-
-	SDL_DestroyTexture(texture);
 
 	return true;
 }

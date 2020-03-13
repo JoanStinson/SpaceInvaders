@@ -13,7 +13,7 @@ public:
 	UpdateStatus Update() override;
 
 public:
-	void FadeToBlack(Module* module_on, Module* module_off = nullptr, float time = 1.0F);
+	void FadeToBlack(Module* module_on, Module* module_off = nullptr, float time = 1.f);
 	bool isFading() const;
 
 private:

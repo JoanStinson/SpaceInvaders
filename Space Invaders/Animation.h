@@ -8,7 +8,7 @@ struct SDL_Rect;
 class Animation
 {
 public:
-	Animation(int num_frames, float speed = 0.1F); 
+	Animation(int num_frames, float speed = 0.1f); 
 
 	void AddFrame(SDL_Rect frame);
 	SDL_Rect& GetCurrentFrame();

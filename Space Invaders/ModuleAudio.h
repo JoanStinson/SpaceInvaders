@@ -5,7 +5,7 @@
 
 #include <vector>
 
-#define FADE_TIME 2.0F
+#define FADE_TIME 2.f
 
 struct _Mix_Music;
 struct Mix_Chunk;
