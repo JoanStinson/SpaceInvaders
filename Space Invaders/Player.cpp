@@ -8,7 +8,7 @@
 Player::Player()
 {
 	spaceship = { 0, 0, 102, 102 };
-	position = { (float)(SCREEN_WIDTH / 2) - (spaceship.w / 2), (float)SCREEN_HEIGHT - spaceship.h };
+	position = { float((SCREEN_WIDTH / 2) - (spaceship.w / 2)), float(SCREEN_HEIGHT - spaceship.h) };
 }
 
 Player::~Player()
@@ -50,7 +50,7 @@ UpdateStatus Player::Update()
 		//TODO shoot projectiles
 	}
 
-	App->renderer->Draw(graphics, position.x, position.y, &spaceship, LAYER_FRONT);
+	App->renderer->Draw(graphics, position, &spaceship, LAYER_FRONT);
 
 	return UpdateStatus::CONTINUE;
 }

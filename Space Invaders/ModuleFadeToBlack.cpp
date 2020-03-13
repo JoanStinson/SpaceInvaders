@@ -17,7 +17,7 @@ ModuleFadeToBlack::~ModuleFadeToBlack()
 bool ModuleFadeToBlack::Start()
 {
 	LOG("Preparing Fade Screen");
-	SDL_SetRenderDrawBlendMode(App->renderer->renderer, SDL_BLENDMODE_BLEND);
+	SDL_SetRenderDrawBlendMode(&App->renderer->GetRenderer(), SDL_BLENDMODE_BLEND);
 	return true;
 }
 
@@ -35,8 +35,8 @@ UpdateStatus ModuleFadeToBlack::Update()
 			normalized = 1.0F - normalized;
 
 		// Draw a screen-size black rectangle with alpha
-		SDL_SetRenderDrawColor(App->renderer->renderer, 0, 0, 0, (Uint8)(normalized * 255.0F));
-		SDL_RenderFillRect(App->renderer->renderer, NULL);
+		SDL_SetRenderDrawColor(&App->renderer->GetRenderer(), 0, 0, 0, (Uint8)(normalized * 255.0F));
+		SDL_RenderFillRect(&App->renderer->GetRenderer(), NULL);
 
 		if (module_off == nullptr && module_on != nullptr)
 		{

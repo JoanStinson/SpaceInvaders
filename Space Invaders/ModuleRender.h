@@ -2,6 +2,7 @@
 #define _MODULERENDER_H_
 
 #include "Module.h"
+#include "Point.h"
 
 struct SDL_Texture;
 struct SDL_Renderer;
@@ -20,9 +21,11 @@ public:
 	bool CleanUp() override;
 
 public:
-	bool Draw(SDL_Texture* texture, int x, int y, SDL_Rect* section, float speed = 1.0F);
+	bool Draw(SDL_Texture* texture, fPoint position, SDL_Rect* section, float speed = 1.0F);
 
-public:
+	SDL_Renderer& GetRenderer() const;
+
+private:
 	SDL_Renderer* renderer = nullptr;
 	SDL_Rect camera;
 };

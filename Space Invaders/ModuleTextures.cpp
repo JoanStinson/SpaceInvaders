@@ -60,7 +60,7 @@ SDL_Texture* const ModuleTextures::LoadImage(const char* path)
 	}
 	else
 	{
-		texture = SDL_CreateTextureFromSurface(App->renderer->renderer, surface);
+		texture = SDL_CreateTextureFromSurface(&App->renderer->GetRenderer(), surface);
 
 		if (texture == nullptr)
 		{
@@ -97,7 +97,7 @@ SDL_Texture* const ModuleTextures::LoadText(const char* text, int size, SDL_Colo
 		}
 		else
 		{
-			texture = SDL_CreateTextureFromSurface(App->renderer->renderer, surface);
+			texture = SDL_CreateTextureFromSurface(&App->renderer->GetRenderer(), surface);
 
 			if (texture == nullptr)
 			{

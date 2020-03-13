@@ -70,6 +70,11 @@ public:
 		return(*this);
 	}
 
+	Point static Zero()
+	{
+		return Point<T>(0, 0);
+	}
+
 	// Distances ---------------------------------------------
 	T DistanceTo(const Point& v) const
 	{

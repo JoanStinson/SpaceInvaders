@@ -71,12 +71,12 @@ bool ModuleRender::CleanUp()
 	return true;
 }
 
-bool ModuleRender::Draw(SDL_Texture* texture, int x, int y, SDL_Rect* section, float speed)
+bool ModuleRender::Draw(SDL_Texture* texture, fPoint position, SDL_Rect* section, float speed)
 {
 	bool ret = true;
 	SDL_Rect rect;
-	rect.x = (int)(camera.x * speed) + x * SCREEN_SIZE;
-	rect.y = (int)(camera.y * speed) + y * SCREEN_SIZE;
+	rect.x = (int)(camera.x * speed) + position.x * SCREEN_SIZE;
+	rect.y = (int)(camera.y * speed) + position.y * SCREEN_SIZE;
 
 	if (section != NULL)
 	{
@@ -98,4 +98,9 @@ bool ModuleRender::Draw(SDL_Texture* texture, int x, int y, SDL_Rect* section, f
 	}
 
 	return ret;
+}
+
+SDL_Renderer& ModuleRender::GetRenderer() const
+{
+	return *renderer;
 }

@@ -35,7 +35,7 @@ bool ModuleSceneGame::Start()
 
 UpdateStatus ModuleSceneGame::Update()
 {
-	App->renderer->Draw(graphics, 0, 0, &background, LAYER_BACK);
+	App->renderer->Draw(graphics, fPoint::Zero(), &background, LAYER_BACK);
 
 	player->Update();
 
