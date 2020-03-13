@@ -4,6 +4,7 @@
 #include "Module.h"
 #include "Animation.h"
 #include "SDL_Button.h"
+#include "Player.h"
 
 struct SDL_Texture;
 struct SDL_Rect;
@@ -26,6 +27,10 @@ private:
 private:
 	SDL_Texture* graphics = nullptr;
 	SDL_Rect background;
+
+	Player* player = nullptr;
+	//list<Entity*> enemies;
+	//list<Entity*> walls;
 };
 
 #endif // _MODULESCENEGAME_H_

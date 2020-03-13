@@ -83,10 +83,6 @@
   <ItemGroup>
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Application.h" />
-    <ClInclude Include="Candy.h" />
-    <ClInclude Include="CandyGrid.h" />
-    <ClInclude Include="CandyMatch.h" />
-    <ClInclude Include="CandyScore.h" />
     <ClInclude Include="CEV_gif.h" />
     <ClInclude Include="CEV_gifDeflate.h" />
     <ClInclude Include="CEV_gifToSurface.h" />
@@ -95,21 +91,18 @@
     <ClInclude Include="ModuleAudio.h" />
     <ClInclude Include="ModuleFadeToBlack.h" />
     <ClInclude Include="ModuleInput.h" />
-    <ClInclude Include="ModulePlayer.h" />
     <ClInclude Include="ModuleRender.h" />
     <ClInclude Include="ModuleSceneGame.h" />
     <ClInclude Include="ModuleSceneMenu.h" />
     <ClInclude Include="ModuleTextures.h" />
     <ClInclude Include="ModuleWindow.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="SDL_Button.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Application.cpp" />
-    <ClCompile Include="Candy.cpp" />
-    <ClCompile Include="CandyGrid.cpp" />
-    <ClCompile Include="CandyMatch.cpp" />
-    <ClCompile Include="CandyScore.cpp" />
     <ClCompile Include="CEV_gifDeflate.c" />
     <ClCompile Include="CEV_gifToSurface.c" />
     <ClCompile Include="CEV_gifUser.c" />
@@ -118,12 +111,12 @@
     <ClCompile Include="ModuleAudio.cpp" />
     <ClCompile Include="ModuleFadeToBlack.cpp" />
     <ClCompile Include="ModuleInput.cpp" />
-    <ClCompile Include="ModulePlayer.cpp" />
     <ClCompile Include="ModuleRender.cpp" />
     <ClCompile Include="ModuleSceneGame.cpp" />
     <ClCompile Include="ModuleSceneMenu.cpp" />
     <ClCompile Include="ModuleTextures.cpp" />
     <ClCompile Include="ModuleWindow.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="SDL_Button.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

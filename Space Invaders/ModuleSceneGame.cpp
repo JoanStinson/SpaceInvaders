@@ -14,15 +14,19 @@
 ModuleSceneGame::ModuleSceneGame(bool start_enabled) : Module(start_enabled)
 {
 	background = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
+	player = new Player();
 }
 
 ModuleSceneGame::~ModuleSceneGame()
 {
+	delete player;
 }
 
 bool ModuleSceneGame::Start()
 {
 	LOG("Loading game scene");
+
+	player->Start();
 
 	graphics = App->textures->LoadImage("Game/Background/background.jpg");
 
@@ -31,7 +35,9 @@ bool ModuleSceneGame::Start()
 
 UpdateStatus ModuleSceneGame::Update()
 {
-	App->renderer->Blit(graphics, 0, 0, &background, LAYER_BACK);
+	App->renderer->Draw(graphics, 0, 0, &background, LAYER_BACK);
+
+	player->Update();
 
 	return UpdateStatus::CONTINUE;
 }
@@ -39,6 +45,8 @@ UpdateStatus ModuleSceneGame::Update()
 bool ModuleSceneGame::CleanUp()
 {
 	LOG("Unloading game scene");
+
+	player->CleanUp();
 
 	App->textures->Unload(graphics);
 

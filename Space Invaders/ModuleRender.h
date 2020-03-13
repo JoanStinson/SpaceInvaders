@@ -20,7 +20,7 @@ public:
 	bool CleanUp() override;
 
 public:
-	bool Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, float speed = 1.0F);
+	bool Draw(SDL_Texture* texture, int x, int y, SDL_Rect* section, float speed = 1.0F);
 
 public:
 	SDL_Renderer* renderer = nullptr;

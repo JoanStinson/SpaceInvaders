@@ -8,7 +8,6 @@
 #include "ModuleFadeToBlack.h"
 #include "ModuleSceneGame.h"
 #include "ModuleSceneMenu.h"
-#include "ModulePlayer.h"
 
 Application::Application()
 {
@@ -20,10 +19,10 @@ Application::Application()
 	modules.push_back((audio = std::make_unique<ModuleAudio>()).get());
 
 	// Game Modules
-	modules.push_back((sceneIntro = std::make_unique<ModuleSceneMenu>(false)).get());
+	modules.push_back((sceneMenu = std::make_unique<ModuleSceneMenu>(false)).get());
 	modules.push_back((sceneGame = std::make_unique<ModuleSceneGame>(false)).get());
+
 	modules.push_back((fade = std::make_unique<ModuleFadeToBlack>()).get());
-	modules.push_back((player = std::make_unique<ModulePlayer>()).get());
 }
 
 Application::~Application()

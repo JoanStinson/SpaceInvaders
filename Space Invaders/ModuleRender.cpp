@@ -62,7 +62,7 @@ bool ModuleRender::CleanUp()
 {
 	LOG("Destroying renderer");
 
-	// Destroy window
+	// Destroy render
 	if (renderer != nullptr)
 	{
 		SDL_DestroyRenderer(renderer);
@@ -71,7 +71,7 @@ bool ModuleRender::CleanUp()
 	return true;
 }
 
-bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, float speed)
+bool ModuleRender::Draw(SDL_Texture* texture, int x, int y, SDL_Rect* section, float speed)
 {
 	bool ret = true;
 	SDL_Rect rect;

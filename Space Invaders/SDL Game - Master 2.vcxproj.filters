@@ -67,26 +67,14 @@
     <ClInclude Include="ModuleSceneGame.h">
       <Filter>Game Modules</Filter>
     </ClInclude>
-    <ClInclude Include="Candy.h">
-      <Filter>Game Data</Filter>
-    </ClInclude>
-    <ClInclude Include="CandyGrid.h">
-      <Filter>Game Data</Filter>
-    </ClInclude>
-    <ClInclude Include="CandyMatch.h">
-      <Filter>Game Data</Filter>
-    </ClInclude>
-    <ClInclude Include="CandyScore.h">
-      <Filter>Game Data</Filter>
-    </ClInclude>
     <ClInclude Include="SDL_Button.h">
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="ModuleSceneMenu.h">
       <Filter>Game Modules</Filter>
     </ClInclude>
-    <ClInclude Include="ModulePlayer.h">
-      <Filter>Game Modules</Filter>
+    <ClInclude Include="Player.h">
+      <Filter>Game Data</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -129,26 +117,17 @@
     <ClCompile Include="ModuleSceneGame.cpp">
       <Filter>Game Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Candy.cpp">
-      <Filter>Game Data</Filter>
-    </ClCompile>
-    <ClCompile Include="CandyGrid.cpp">
-      <Filter>Game Data</Filter>
-    </ClCompile>
-    <ClCompile Include="CandyMatch.cpp">
-      <Filter>Game Data</Filter>
-    </ClCompile>
     <ClCompile Include="SDL_Button.cpp">
       <Filter>Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="CandyScore.cpp">
-      <Filter>Game Data</Filter>
     </ClCompile>
     <ClCompile Include="ModuleSceneMenu.cpp">
       <Filter>Game Modules</Filter>
     </ClCompile>
-    <ClCompile Include="ModulePlayer.cpp">
-      <Filter>Game Modules</Filter>
+    <ClCompile Include="Player.cpp">
+      <Filter>Game Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>Utils</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
