@@ -9,12 +9,9 @@ public:
 	Bullet();
 	~Bullet();
 
-	bool Start();
-	UpdateStatus Update();
-	bool CleanUp();
-
-	void SetPosition(fPoint position);
-	void ResetPosition();
+	bool Start() override;
+	UpdateStatus Update(float delta_time) override;
+	bool CleanUp() override;
 };
 
 #endif // _BULLET_H

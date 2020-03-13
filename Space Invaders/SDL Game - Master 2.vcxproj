@@ -87,6 +87,7 @@
     <ClInclude Include="CEV_gif.h" />
     <ClInclude Include="CEV_gifDeflate.h" />
     <ClInclude Include="CEV_gifToSurface.h" />
+    <ClInclude Include="Clock.h" />
     <ClInclude Include="Creature.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Globals.h" />

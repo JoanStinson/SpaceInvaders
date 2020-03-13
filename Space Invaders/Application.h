@@ -35,8 +35,6 @@ public:
 	std::unique_ptr<ModuleSceneMenu> sceneMenu;
 	std::unique_ptr<ModuleSceneGame> sceneGame;
 
-	Uint32 delta_time;
-
 private:
 	std::list<Module*> modules;
 };

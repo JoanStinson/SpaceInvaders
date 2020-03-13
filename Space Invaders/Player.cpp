@@ -10,7 +10,7 @@ Player::Player()
 {
 	rect = { 0, 0, 102, 102 };
 	position = { float((SCREEN_WIDTH / 2) - (rect.w / 2)), float(SCREEN_HEIGHT - rect.h) };
-	speed = 350.0f / FPS;
+	speed = 0.5f;
 
 	pooled_bullets.reserve(MAX_BULLETS);
 }
@@ -40,6 +40,7 @@ bool Player::Start()
 		Bullet* bullet = new Bullet();
 		bullet->SetTexture(bulletTexture);
 		pooled_bullets.push_back(bullet);
+		App->sceneGame->AddEntity(bullet);
 	}
 
 	texture = App->textures->LoadImage("Game/Player/spaceship.png");
@@ -47,11 +48,11 @@ bool Player::Start()
 	return true;
 }
 
-UpdateStatus Player::Update()
+UpdateStatus Player::Update(float delta_time)
 {
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT))
 	{
-		position.x += speed;
+		position.x += speed * delta_time;
 
 		if (position.x > SCREEN_WIDTH - rect.w)
 		{
@@ -60,11 +61,11 @@ UpdateStatus Player::Update()
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_LEFT))
 	{
-		position.x -= speed;
+		position.x -= speed * delta_time;
 
-		if (position.x < 20)
+		if (position.x < 0)
 		{
-			position.x = 20;
+			position.x = 0;
 		}
 	}
 
@@ -80,7 +81,6 @@ UpdateStatus Player::Update()
 			{
 				bullet->SetActive(true);
 				bullet->SetPosition(position);
-				App->sceneGame->AddEntity(bullet);
 				break;
 			}
 		}

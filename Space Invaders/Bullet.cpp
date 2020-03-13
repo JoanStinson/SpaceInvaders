@@ -4,11 +4,14 @@
 #include "ModuleTextures.h"
 #include "ModuleRender.h"
 
+#include <SDL.h>
+
 Bullet::Bullet()
 {
 	rect = { 0, 0, 26, 26 };
-	ResetPosition();
+	position = { float((SCREEN_WIDTH / 2) - (rect.w / 2)), float(SCREEN_HEIGHT - (rect.h * 2)) };
 	active = false;
+	speed = 0.5f;
 }
 
 Bullet::~Bullet()
@@ -19,16 +22,16 @@ bool Bullet::Start()
 {
 	LOG("Loading bullet");
 
-	texture = App->textures->LoadImage("Game/Player/bullet.png");
+	//texture = App->textures->LoadImage("Game/Player/bullet.png");
 
 	return true;
 }
 
-UpdateStatus Bullet::Update()
+UpdateStatus Bullet::Update(float delta_time)
 {
 	if (active)
 	{
-		position.y--;
+		position.y -= speed * delta_time;
 
 		App->renderer->Draw(texture, position, &rect, LAYER_FRONT);
 	}
@@ -48,14 +51,4 @@ bool Bullet::CleanUp()
 	SDL_DestroyTexture(texture);
 
 	return true;
-}
-
-void Bullet::SetPosition(fPoint position)
-{
-	this->position = position;
-}
-
-void Bullet::ResetPosition()
-{
-	position = { float((SCREEN_WIDTH / 2) - (rect.w / 2)), float(SCREEN_HEIGHT - (rect.h * 2)) };
 }

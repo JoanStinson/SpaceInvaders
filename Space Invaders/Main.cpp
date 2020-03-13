@@ -51,11 +51,7 @@ int main(int argc, char** argv)
 
 		case MainState::UPDATE:
 		{
-			App->delta_time = SDL_GetTicks();
-
 			UpdateStatus update_return = App->Update();
-
-			while (SDL_GetTicks() - App->delta_time < 1000 / FPS);
 
 			if (update_return == UpdateStatus::ERRORS)
 			{

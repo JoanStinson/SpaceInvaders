@@ -10,7 +10,7 @@ public:
 	Creature(fPoint position, float speed);
 
 	virtual bool Start() = 0;
-	virtual UpdateStatus Update() = 0;
+	virtual UpdateStatus Update(float delta_time) = 0;
 	virtual bool CleanUp() = 0;
 };
 

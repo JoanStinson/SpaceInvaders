@@ -5,6 +5,7 @@
 #include "Animation.h"
 #include "SDL_Button.h"
 #include "Player.h"
+#include "Clock.h"
 
 #include <list>
 
@@ -33,6 +34,8 @@ private:
 	Player* player = nullptr;
 	std::list<Entity*> entities;
 	//list<Entity*> walls;
+
+	Clock clock;
 };
 
 #endif // _MODULESCENEGAME_H_

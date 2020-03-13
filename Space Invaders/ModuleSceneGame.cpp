@@ -42,11 +42,13 @@ UpdateStatus ModuleSceneGame::Update()
 {
 	UpdateStatus ret = UpdateStatus::CONTINUE;
 
+	clock.Tick();
+
 	App->renderer->Draw(graphics, fPoint::Zero(), &background, LAYER_BACK);
 
 	for (std::list<Entity*>::iterator it = entities.begin(); it != entities.end() && ret == UpdateStatus::CONTINUE; ++it)
 		if ((*it)->IsEnabled())
-			ret = (*it)->Update();
+			ret = (*it)->Update(clock.delta_time);
 
 	return ret;
 }

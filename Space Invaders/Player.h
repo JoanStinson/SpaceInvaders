@@ -17,7 +17,7 @@ public:
 	~Player();
 
 	bool Start() override;
-	UpdateStatus Update() override;
+	UpdateStatus Update(float delta_time) override;
 	bool CleanUp() override;
 
 private:
