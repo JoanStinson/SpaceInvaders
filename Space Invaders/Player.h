@@ -1,10 +1,8 @@
 #ifndef _PLAYER_H_
 #define _PLAYER_H_
 
-#include "Creature.h"
-
-struct SDL_Texture;
-struct SDL_Rect;
+//#include "Creature.h"
+#include "Bullet.h"
 
 class Player : public Creature
 {
@@ -18,8 +16,7 @@ public:
 	bool CleanUp() override;
 
 private:
-	SDL_Texture* graphics = nullptr;
-	SDL_Rect spaceship;
+	Bullet* bullet = nullptr;
 };
 
 #endif // _PLAYER_H_

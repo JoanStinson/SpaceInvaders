@@ -4,6 +4,9 @@
 #include "Globals.h"
 #include "Point.h"
 
+struct SDL_Texture;
+struct SDL_Rect;
+
 class Entity
 {
 public:
@@ -15,6 +18,9 @@ public:
 	virtual bool CleanUp() = 0;
 
 protected:
+	SDL_Texture* texture = nullptr;
+	SDL_Rect rect;
+
 	fPoint position;
 	float speed;
 };

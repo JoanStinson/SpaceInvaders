@@ -82,6 +82,9 @@
     <ClInclude Include="Creature.h">
       <Filter>Game Data</Filter>
     </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>Game Data</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -139,6 +142,9 @@
       <Filter>Game Data</Filter>
     </ClCompile>
     <ClCompile Include="Entity.cpp">
+      <Filter>Game Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
       <Filter>Game Data</Filter>
     </ClCompile>
   </ItemGroup>
