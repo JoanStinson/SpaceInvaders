@@ -32,10 +32,13 @@ bool Player::Start()
 {
 	LOG("Loading player");
 
+	// Load bullet texture once, instead of MAX_BULLETS times
+	SDL_Texture* bulletTexture = App->textures->LoadImage("Game/Player/bullet.png");
+
 	for (int i = 0; i < MAX_BULLETS; ++i)
 	{
 		Bullet* bullet = new Bullet();
-		bullet->Start();
+		bullet->SetTexture(bulletTexture);
 		pooled_bullets.push_back(bullet);
 	}
 
@@ -93,6 +96,7 @@ bool Player::CleanUp()
 	LOG("Unloading player");
 
 	SDL_DestroyTexture(texture);
+	SDL_DestroyTexture(bulletTexture);
 
 	return true;
 }

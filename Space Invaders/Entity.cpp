@@ -26,3 +26,8 @@ void Entity::SetActive(bool active)
 {
 	this->active = active;
 }
+
+void Entity::SetTexture(SDL_Texture* texture)
+{
+	this->texture = texture;
+}

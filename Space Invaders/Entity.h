@@ -23,6 +23,7 @@ public:
 
 	void SetPosition(fPoint new_position);
 	void SetActive(bool active);
+	void SetTexture(SDL_Texture* texture);
 
 protected:
 	SDL_Texture* texture = nullptr;

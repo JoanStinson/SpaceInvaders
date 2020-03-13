@@ -7,6 +7,8 @@
 
 #define MAX_BULLETS 50
 
+struct SDL_Texture;
+
 class Player : public Creature
 {
 public:
@@ -20,6 +22,8 @@ public:
 
 private:
 	std::vector<Bullet*> pooled_bullets;
+
+	SDL_Texture* bulletTexture = nullptr;
 };
 
 #endif // _PLAYER_H_
