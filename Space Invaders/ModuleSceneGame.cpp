@@ -28,13 +28,23 @@ bool ModuleSceneGame::Start()
 
 	bool ret = true;
 
+	// Background
 	texture = App->textures->LoadImage("Game/Background/background.jpg");
 
+	// Player
 	player = new Player(App->textures->LoadImage("Game/Player/spaceship.png"), SDL_Rect{ 0, 0, 102, 102 }, fPoint{ SCREEN_WIDTH/2, SCREEN_HEIGHT-140}, 3, 1, 0.5f);
 	Entity::AddEntity(player);
 
-	Asteroid* asteroid = new Asteroid(App->textures->LoadImage("Game/Aestroids/aestroid_brown.png"), SDL_Rect{ 0, 0, 102, 102 }, fPoint{ SCREEN_WIDTH / 3, SCREEN_HEIGHT / 3 }, 3);
-	Entity::AddEntity(asteroid);
+	// Asteroids
+	fPoint asteroid_positions[]{ fPoint{100, 350}, fPoint{200, 350}, fPoint{300, 350}, fPoint{400, 350} };
+
+	for (int i = 0; i < sizeof(asteroid_positions) / sizeof(asteroid_positions[0]); ++i)
+	{
+		Asteroid* asteroid = new Asteroid(App->textures->LoadImage("Game/Aestroids/aestroid_brown.png"), SDL_Rect{ 0, 0, 102, 102 }, asteroid_positions[i], 3);
+		Entity::AddEntity(asteroid);
+	}
+
+	//TODO Enemies
 
 	return ret;
 }
