@@ -16,8 +16,3 @@ UpdateStatus Asteroid::Update(float delta_time)
 	Entity::DrawEntity();
 	return UpdateStatus::CONTINUE;
 }
-
-void Asteroid::OnDeath()
-{
-	LOG("Asteroid destroyed!\n");
-}

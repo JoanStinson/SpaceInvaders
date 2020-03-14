@@ -1,9 +1,6 @@
 #include "Bullet.h"
 
 #include "Application.h"
-#include "ModuleTextures.h"
-#include "ModuleRender.h"
-#include "ModuleSceneGame.h"
 
 #include <SDL_rect.h>
 
@@ -28,9 +25,7 @@ UpdateStatus Bullet::Update(float delta_time)
 	Entity::DrawEntity();
 
 	// Collisions
-	auto entities = App->sceneGame->GetEntities();//TODO hacer lista sin bullets para ahorrar calculos
-
-	for (auto& entity : entities)
+	for (auto& entity : Entity::entities)
 	{
 		if (!entity->IsActive()) continue;
 
@@ -39,12 +34,11 @@ UpdateStatus Bullet::Update(float delta_time)
 			if (SDL_HasIntersection(&box_collider, &entity->GetBoxCollider()))
 			{
 				SetActive(false);
-				entity->ReceiveDamage(1);
 
-				//entity->health--;
+				entity->health--;
 
-				//if (entity->health < 1)
-				//	App->sceneGame->RemoveEntity(entity);
+				if (entity->health < 1)
+					Entity::RemoveEntity(entity);
 
 				break;
 			}

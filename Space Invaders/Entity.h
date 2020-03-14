@@ -26,13 +26,14 @@ public:
 	virtual ~Entity() {};
 
 	virtual UpdateStatus Update(float delta_time) = 0;
-	virtual void OnDeath() {};
+
+	static void AddEntity(Entity* entity);
+	static void RemoveEntity(Entity* entity);
 
 	void DrawEntity();
 	void DrawBoxCollider();
 	void ReceiveDamage(int damage, callback on_death = nullptr);
 
-public:
 	void SetActive(bool active);
 	void SetPosition(fPoint position);
 	void SetTexture(SDL_Texture* texture);
@@ -45,6 +46,7 @@ private:
 	void CreateBoxCollider();
 
 public:
+	static std::list<Entity*> entities;
 	int health;
 
 protected:
@@ -57,7 +59,6 @@ protected:
 
 private:
 	bool active = true;
-	static std::list<Entity*> entities;
 };
 
 #endif // _ENTITY_H_

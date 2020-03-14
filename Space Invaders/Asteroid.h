@@ -10,7 +10,6 @@ public:
 	~Asteroid();
 
 	UpdateStatus Update(float delta_time) override;
-	void OnDeath() override;
 };
 
 #endif // _ASTEROID_H_

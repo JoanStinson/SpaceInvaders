@@ -3,9 +3,6 @@
 #include "Application.h"
 #include "ModuleTextures.h"
 #include "ModuleInput.h"
-#include "ModuleRender.h"
-#include "ModuleSceneGame.h"
-#include "SDL_Button.h"
 
 Player::Player(SDL_Texture* texture, SDL_Rect rect, fPoint position, int health, int damage, float speed) :
 	Creature(texture, rect, position, health, damage, speed)
@@ -21,7 +18,7 @@ Player::Player(SDL_Texture* texture, SDL_Rect rect, fPoint position, int health,
 	{
 		Bullet* bullet = new Bullet(bullet_texture, SDL_Rect{ 0, 0, 26,26 }, fPoint::Zero(), 1, 1, 0.1f);
 		pooled_bullets.push_back(bullet);
-		App->sceneGame->AddEntity(bullet);
+		Entity::AddEntity(bullet);
 	}
 }
 

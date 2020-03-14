@@ -5,8 +5,6 @@
 #include "Player.h"
 #include "Clock.h"
 
-#include <list>
-
 struct SDL_Texture;
 struct SDL_Rect;
 struct Text;
@@ -21,15 +19,8 @@ public:
 	UpdateStatus Update() override;
 	bool CleanUp() override;
 
-public:
-	void AddEntity(Entity* entity);
-	void RemoveEntity(Entity* entity);
-
-	const std::list<Entity*>& GetEntities() const;
-
 private:
 	Player* player = nullptr;
-	std::list<Entity*> entities;
 
 	SDL_Texture* texture = nullptr;
 	SDL_Rect background;

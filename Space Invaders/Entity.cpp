@@ -43,6 +43,17 @@ void Entity::ReceiveDamage(int damage, callback on_death)
 	}	
 }
 
+void Entity::AddEntity(Entity* entity)
+{
+	entities.push_back(entity);
+}
+
+void Entity::RemoveEntity(Entity* entity)
+{
+	entities.remove(entity);
+	delete entity;
+}
+
 void Entity::SetActive(bool active)
 {
 	this->active = active;
