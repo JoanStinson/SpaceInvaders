@@ -1,25 +1,46 @@
 #include "Entity.h"
 
-Entity::Entity() : active(true), life_points(3), rect({0, 0, 0, 0}), speed(0.1f)
+#include "Application.h"
+#include "ModuleRender.h"
+
+#include <SDL_render.h>
+
+std::list<Entity*> Entity::entities;
+
+Entity::Entity(SDL_Texture* texture, SDL_Rect rect, fPoint position, int health) :
+	texture(texture), rect(rect), position(position), health(health)
 {
+	CreateBoxCollider();
 }
 
-Entity::Entity(fPoint position, float speed) : position(position), speed(speed), active(false), life_points(3), rect({ 0, 0, 0, 0 })
+void Entity::DrawEntity()
 {
+	App->renderer->Draw(texture, position, &rect);
 }
 
-Entity::~Entity()
+void Entity::DrawBoxCollider()
 {
+	SDL_SetRenderDrawColor(&App->renderer->GetRenderer(), 0, 255, 0, SDL_ALPHA_OPAQUE);
+	SDL_RenderDrawRect(&App->renderer->GetRenderer(), &box_collider);
 }
 
-bool Entity::IsEnabled() const
+void Entity::CreateBoxCollider()
 {
-	return active;
+	box_collider.x = position.x;
+	box_collider.y = position.y;
+	box_collider.w = rect.w;
+	box_collider.h = rect.h;
 }
 
-void Entity::SetPosition(fPoint new_position)
+void Entity::ReceiveDamage(int damage, callback on_death)
 {
-	position = new_position;
+	health -= damage;
+
+	if (health < 1 && on_death != nullptr)
+	{
+		on_death();
+		//Remove entity
+	}	
 }
 
 void Entity::SetActive(bool active)
@@ -27,19 +48,24 @@ void Entity::SetActive(bool active)
 	this->active = active;
 }
 
+void Entity::SetPosition(fPoint position)
+{
+	this->position = position;
+}
+
 void Entity::SetTexture(SDL_Texture* texture)
 {
 	this->texture = texture;
 }
 
-bool Entity::HasCollision(const SDL_Rect* entity_rect_a, const SDL_Rect* entity_rect_b)
+bool Entity::IsActive() const
 {
-	return false;
+	return active;
 }
 
-Tag Entity::GetTag() const
+bool Entity::CompareTag(Type type) const
 {
-	return tag;
+	return this->type == type;
 }
 
 SDL_Rect Entity::GetBoxCollider() const

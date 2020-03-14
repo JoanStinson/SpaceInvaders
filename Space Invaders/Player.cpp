@@ -7,51 +7,26 @@
 #include "ModuleSceneGame.h"
 #include "SDL_Button.h"
 
-Player::Player()
+Player::Player(SDL_Texture* texture, SDL_Rect rect, fPoint position, int health, int damage, float speed) :
+	Creature(texture, rect, position, health, damage, speed)
 {
-	rect = { 0, 0, 102, 102 };
-	position = { float((SCREEN_WIDTH / 2) - (rect.w / 2)), float(SCREEN_HEIGHT - rect.h) };
-
-	tag = Tag::PLAYER;
-
-	box_collider.x = position.x;
-	box_collider.y = position.y;
-	box_collider.w = rect.w;
-	box_collider.h = rect.h;
-
-	speed = 0.5f;
+	type = Type::PLAYER;
 
 	pooled_bullets.reserve(MAX_BULLETS);
-}
 
-Player::Player(fPoint position, float speed) : Creature(position, speed)
-{
-	rect = { 0, 0, 102, 102 };
+	// Load bullet texture once, instead of MAX_BULLETS times
+	SDL_Texture* bullet_texture = App->textures->LoadImage("Game/Player/bullet.png");
+
+	for (int i = 0; i < MAX_BULLETS; ++i)
+	{
+		Bullet* bullet = new Bullet(bullet_texture, SDL_Rect{ 0, 0, 26,26 }, fPoint::Zero(), 1, 1, 0.1f);
+		pooled_bullets.push_back(bullet);
+		App->sceneGame->AddEntity(bullet);
+	}
 }
 
 Player::~Player()
 {
-}
-
-bool Player::Start()
-{
-	LOG("Loading player");
-
-	// Load bullet texture once, instead of MAX_BULLETS times
-	SDL_Texture* bulletTexture = App->textures->LoadImage("Game/Player/bullet.png");
-
-	for (int i = 0; i < MAX_BULLETS; ++i)
-	{
-		Bullet* bullet = new Bullet();
-		bullet->SetTexture(bulletTexture);
-		bullet->Start();
-		pooled_bullets.push_back(bullet);
-		App->sceneGame->AddEntity(bullet);
-	}
-
-	texture = App->textures->LoadImage("Game/Player/spaceship.png");
-
-	return true;
 }
 
 UpdateStatus Player::Update(float delta_time)
@@ -63,8 +38,7 @@ UpdateStatus Player::Update(float delta_time)
 		if (position.x > SCREEN_WIDTH - rect.w)
 			position.x = (float)SCREEN_WIDTH - rect.w;
 
-		box_collider.x = position.x;
-		box_collider.y = position.y;
+		Creature::UpdateBoxCollider();
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_LEFT))
 	{
@@ -73,8 +47,7 @@ UpdateStatus Player::Update(float delta_time)
 		if (position.x < 0)
 			position.x = 0;
 
-		box_collider.x = position.x;
-		box_collider.y = position.y;
+		Creature::UpdateBoxCollider();
 	}
 
 	if (App->input->GetKeyDown(SDL_SCANCODE_SPACE))
@@ -85,7 +58,7 @@ UpdateStatus Player::Update(float delta_time)
 			Bullet* bullet = pooled_bullets[i];
 
 			// Instead of new/delete, enable/disable
-			if (!bullet->IsEnabled())
+			if (!bullet->IsActive())
 			{
 				bullet->SetActive(true);
 				bullet->SetPosition(position);
@@ -94,18 +67,8 @@ UpdateStatus Player::Update(float delta_time)
 		}
 	}
 
-	// Draw box collider
-	SDL_SetRenderDrawColor(&App->renderer->GetRenderer(), 0, 255, 0, SDL_ALPHA_OPAQUE);
-	SDL_RenderDrawRect(&App->renderer->GetRenderer(), &box_collider);
-
-	App->renderer->Draw(texture, position, &rect);
+	Entity::DrawBoxCollider();
+	Entity::DrawEntity();
 
 	return UpdateStatus::CONTINUE;
-}
-
-bool Player::CleanUp()
-{
-	LOG("Unloading player");
-
-	return true;
 }

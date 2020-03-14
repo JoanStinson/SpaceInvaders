@@ -4,10 +4,13 @@
 #include "Globals.h"
 #include "Point.h"
 
+#include <list>
+
 struct SDL_Texture;
 struct SDL_Rect;
+typedef void (*callback)(void); 
 
-enum class Tag
+enum class Type
 {
 	PLAYER,
 	BULLET,
@@ -18,40 +21,43 @@ enum class Tag
 class Entity
 {
 public:
-	Entity();
-	Entity(fPoint position, float speed);
-	virtual ~Entity();
+	Entity() {}
+	Entity(SDL_Texture* texture, SDL_Rect rect, fPoint position, int health);
+	virtual ~Entity() {};
 
-	virtual bool Start() = 0;
 	virtual UpdateStatus Update(float delta_time) = 0;
-	virtual bool CleanUp() = 0;
+	virtual void OnDeath() {};
+
+	void DrawEntity();
+	void DrawBoxCollider();
+	void ReceiveDamage(int damage, callback on_death = nullptr);
 
 public:
-	bool IsEnabled() const;
-
-	void SetPosition(fPoint new_position);
 	void SetActive(bool active);
+	void SetPosition(fPoint position);
 	void SetTexture(SDL_Texture* texture);
 
-	bool HasCollision(const SDL_Rect* entity_rect_a, const SDL_Rect* entity_rect_b);
-
-	Tag GetTag() const;
+	bool IsActive() const;
+	bool CompareTag(Type type) const;
 	SDL_Rect GetBoxCollider() const;
 
+private:
+	void CreateBoxCollider();
+
+public:
+	int health;
+
 protected:
-	SDL_Texture* texture = nullptr;
-	SDL_Rect rect;
-
-	SDL_Rect box_collider;
-
+	Type type;
 	fPoint position;
-	float speed;
 
-	bool active;
+	SDL_Rect rect;
+	SDL_Rect box_collider;
+	SDL_Texture* texture = nullptr;
 
-	int life_points;
-
-	Tag tag;
+private:
+	bool active = true;
+	static std::list<Entity*> entities;
 };
 
 #endif // _ENTITY_H_

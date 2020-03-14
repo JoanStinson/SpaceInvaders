@@ -6,12 +6,11 @@
 class Asteroid : public Entity
 {
 public:
-	Asteroid();
+	Asteroid(SDL_Texture* texture, SDL_Rect rect, fPoint position, int health);
 	~Asteroid();
 
-	bool Start() override;
 	UpdateStatus Update(float delta_time) override;
-	bool CleanUp() override;
+	void OnDeath() override;
 };
 
 #endif // _ASTEROID_H_

@@ -5,77 +5,54 @@
 #include "ModuleRender.h"
 #include "ModuleSceneGame.h"
 
-#include <SDL.h>
+#include <SDL_rect.h>
 
-Bullet::Bullet()
+Bullet::Bullet(SDL_Texture* texture, SDL_Rect rect, fPoint position, int health, int damage, float speed) :
+	Creature(texture, rect, position, health, damage, speed)
 {
-	box_collider = rect = { 0, 0, 26, 26 };
-
-	active = false;
-	speed = 0.1f;
-
-	tag = Tag::BULLET;
+	type = Type::BULLET;
+	SetActive(false);
 }
 
 Bullet::~Bullet()
 {
 }
 
-bool Bullet::Start()
-{
-	LOG("Loading bullet");
-	box_collider.x = position.x;
-	box_collider.y = position.y;
-	box_collider.w = rect.w;
-	box_collider.h = rect.h;
-	return true;
-}
-
 UpdateStatus Bullet::Update(float delta_time)
 {
-	if (active)
+	position.y -= speed * delta_time;
+
+	Creature::UpdateBoxCollider();
+
+	Entity::DrawBoxCollider();
+	Entity::DrawEntity();
+
+	// Collisions
+	auto entities = App->sceneGame->GetEntities();//TODO hacer lista sin bullets para ahorrar calculos
+
+	for (auto& entity : entities)
 	{
-		position.y -= speed * delta_time;
+		if (!entity->IsActive()) continue;
 
-		box_collider.x = position.x;
-		box_collider.y = position.y;
-
-		// Draw box collider
-		SDL_SetRenderDrawColor(&App->renderer->GetRenderer(), 0, 255, 0, SDL_ALPHA_OPAQUE);
-		SDL_RenderDrawRect(&App->renderer->GetRenderer(), &box_collider);
-
-		App->renderer->Draw(texture, position, &rect);
-
-		// Collisions
-		auto entities = App->sceneGame->GetEntities();//Todo hacerlo en el start
-
-		for (auto& entity : entities)
+		if (entity->CompareTag(Type::ASTEROID))
 		{
-			if (!entity->IsEnabled) continue;
-
-			if (entity->GetTag() == Tag::ASTEROID)
+			if (SDL_HasIntersection(&box_collider, &entity->GetBoxCollider()))
 			{
-				if (SDL_HasIntersection(&box_collider, &entity->GetBoxCollider()))
-				{
-					active = false;
-					break;
-				}
+				SetActive(false);
+				entity->ReceiveDamage(1);
+
+				//entity->health--;
+
+				//if (entity->health < 1)
+				//	App->sceneGame->RemoveEntity(entity);
+
+				break;
 			}
-			//TODO if choca con el player, active = false y restarle vida al player
 		}
 	}
 
-	if (position.y < rect.w && active)
-	{
-		active = false;
-	}
+	if (position.y < rect.w)
+		SetActive(false);
 
 	return UpdateStatus::CONTINUE;
-}
-
-bool Bullet::CleanUp()
-{
-	LOG("Unloading bullet");
-
-	return true;
 }

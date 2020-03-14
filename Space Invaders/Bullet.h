@@ -6,12 +6,10 @@
 class Bullet : public Creature
 {
 public:
-	Bullet();
+	Bullet(SDL_Texture* texture, SDL_Rect rect, fPoint position, int health, int damage, float speed);
 	~Bullet();
 
-	bool Start() override;
 	UpdateStatus Update(float delta_time) override;
-	bool CleanUp() override;
 };
 
 #endif // _BULLET_H

@@ -3,10 +3,10 @@
 
 #include "Module.h"
 
-#include <list>
-#include <SDL.h>
+#include <SDL_render.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
+#include <list>
 
 #define DEFAULT_COLOR SDL_Color { 67, 91, 55 }
 #define DEFAULT_TEXT_SIZE 24

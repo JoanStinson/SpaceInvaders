@@ -1,17 +1,21 @@
 #ifndef _CREATURE_H_
-#define _CREATURE_H
+#define _CREATURE_H_
 
 #include "Entity.h"
 
 class Creature : public Entity
 {
 public:
-	Creature();
-	Creature(fPoint position, float speed);
+	Creature() {}
+	Creature(SDL_Texture* texture, SDL_Rect rect, fPoint position, int health, int damage, float speed);
 
-	virtual bool Start() = 0;
 	virtual UpdateStatus Update(float delta_time) = 0;
-	virtual bool CleanUp() = 0;
+	void UpdateBoxCollider();
+	int GetDamage() const;
+
+protected:
+	int damage;
+	float speed;
 };
 
 #endif // _CREATURE_H_

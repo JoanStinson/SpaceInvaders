@@ -23,13 +23,15 @@ public:
 
 public:
 	void AddEntity(Entity* entity);
+	void RemoveEntity(Entity* entity);
+
 	const std::list<Entity*>& GetEntities() const;
 
 private:
 	Player* player = nullptr;
 	std::list<Entity*> entities;
 
-	SDL_Texture* graphics = nullptr;
+	SDL_Texture* texture = nullptr;
 	SDL_Rect background;
 
 	Clock clock;

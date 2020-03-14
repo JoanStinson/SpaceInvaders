@@ -8,6 +8,7 @@
 #include "ModuleWindow.h"
 #include "ModuleFadeToBlack.h"
 #include "Asteroid.h"
+#include "Entity.h"
 
 #include <SDL.h>
 #include <string>
@@ -31,21 +32,13 @@ bool ModuleSceneGame::Start()
 
 	bool ret = true;
 
-	graphics = App->textures->LoadImage("Game/Background/background.jpg");
+	texture = App->textures->LoadImage("Game/Background/background.jpg");
 
-	player = new Player();
+	player = new Player(App->textures->LoadImage("Game/Player/spaceship.png"), SDL_Rect{ 0, 0, 102, 102 }, fPoint{ SCREEN_WIDTH/2, SCREEN_HEIGHT-140}, 3, 1, 0.5f);
 	AddEntity(player);
 
-	Asteroid* asteroid = new Asteroid();
-	SDL_Texture* asteroidTexture = App->textures->LoadImage("Game/Aestroids/aestroid_brown.png");
-	asteroid->SetTexture(asteroidTexture);
-	asteroid->SetPosition(fPoint{ SCREEN_WIDTH / 3, SCREEN_HEIGHT / 3 });
-	asteroid->Start();
+	Asteroid* asteroid = new Asteroid(App->textures->LoadImage("Game/Aestroids/aestroid_brown.png"), SDL_Rect{ 0, 0, 102, 102 }, fPoint{ SCREEN_WIDTH / 3, SCREEN_HEIGHT / 3 }, 3);
 	AddEntity(asteroid);
-
-	for (std::list<Entity*>::iterator it = entities.begin(); it != entities.end() && ret; ++it)
-		if ((*it)->IsEnabled())
-			ret = (*it)->Start();
 
 	return ret;
 }
@@ -56,10 +49,10 @@ UpdateStatus ModuleSceneGame::Update()
 
 	clock.Tick();
 
-	App->renderer->Draw(graphics, fPoint::Zero(), &background);
+	App->renderer->Draw(texture, fPoint::Zero(), &background);
 
 	for (std::list<Entity*>::iterator it = entities.begin(); it != entities.end() && ret == UpdateStatus::CONTINUE; ++it)
-		if ((*it)->IsEnabled())
+		if ((*it)->IsActive())
 			ret = (*it)->Update((float)clock.delta_time);
 
 	return ret;
@@ -71,16 +64,18 @@ bool ModuleSceneGame::CleanUp()
 
 	bool ret = true;
 
-	for (std::list<Entity*>::iterator it = entities.begin(); it != entities.end() && ret; ++it)
-		if ((*it)->IsEnabled())
-			ret = (*it)->CleanUp();
-
 	return ret;
 }
 
 void ModuleSceneGame::AddEntity(Entity* entity)
 {
 	entities.push_back(entity);
+}
+
+void ModuleSceneGame::RemoveEntity(Entity* entity)
+{
+	entities.remove(entity);
+	delete entity;
 }
 
 const std::list<Entity*>& ModuleSceneGame::GetEntities() const
