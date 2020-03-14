@@ -5,11 +5,18 @@
 #include "ModuleInput.h"
 #include "ModuleRender.h"
 #include "ModuleSceneGame.h"
+#include "SDL_Button.h"
 
 Player::Player()
 {
 	rect = { 0, 0, 102, 102 };
 	position = { float((SCREEN_WIDTH / 2) - (rect.w / 2)), float(SCREEN_HEIGHT - rect.h) };
+
+	boxCollider.x = position.x;
+	boxCollider.y = position.y;
+	boxCollider.w = rect.w;
+	boxCollider.h = rect.h;
+
 	speed = 0.5f;
 
 	pooled_bullets.reserve(MAX_BULLETS);
@@ -35,6 +42,7 @@ bool Player::Start()
 	{
 		Bullet* bullet = new Bullet();
 		bullet->SetTexture(bulletTexture);
+		bullet->Start();
 		pooled_bullets.push_back(bullet);
 		App->sceneGame->AddEntity(bullet);
 	}
@@ -51,18 +59,20 @@ UpdateStatus Player::Update(float delta_time)
 		position.x += speed * delta_time;
 
 		if (position.x > SCREEN_WIDTH - rect.w)
-		{
 			position.x = (float)SCREEN_WIDTH - rect.w;
-		}
+
+		boxCollider.x = position.x;
+		boxCollider.y = position.y;
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_LEFT))
 	{
 		position.x -= speed * delta_time;
 
 		if (position.x < 0)
-		{
 			position.x = 0;
-		}
+
+		boxCollider.x = position.x;
+		boxCollider.y = position.y;
 	}
 
 	if (App->input->GetKeyDown(SDL_SCANCODE_SPACE))
@@ -82,7 +92,11 @@ UpdateStatus Player::Update(float delta_time)
 		}
 	}
 
-	App->renderer->Draw(texture, position, &rect, LAYER_FRONT);
+	// Draw box collider
+	SDL_SetRenderDrawColor(&App->renderer->GetRenderer(), 0, 255, 0, SDL_ALPHA_OPAQUE);
+	SDL_RenderDrawRect(&App->renderer->GetRenderer(), &boxCollider);
+
+	App->renderer->Draw(texture, position, &rect);
 
 	return UpdateStatus::CONTINUE;
 }

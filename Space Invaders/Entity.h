@@ -25,9 +25,13 @@ public:
 	void SetActive(bool active);
 	void SetTexture(SDL_Texture* texture);
 
+	bool HasCollision(const SDL_Rect* entity_rect_a, const SDL_Rect* entity_rect_b);
+
 protected:
 	SDL_Texture* texture = nullptr;
 	SDL_Rect rect;
+
+	SDL_Rect boxCollider;
 
 	fPoint position;
 	float speed;

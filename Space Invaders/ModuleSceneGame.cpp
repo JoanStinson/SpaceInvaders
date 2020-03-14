@@ -40,6 +40,7 @@ bool ModuleSceneGame::Start()
 	SDL_Texture* asteroidTexture = App->textures->LoadImage("Game/Aestroids/aestroid_brown.png");
 	asteroid->SetTexture(asteroidTexture);
 	asteroid->SetPosition(fPoint{ SCREEN_WIDTH / 3, SCREEN_HEIGHT / 3 });
+	asteroid->Start();
 	AddEntity(asteroid);
 
 	for (std::list<Entity*>::iterator it = entities.begin(); it != entities.end() && ret; ++it)
@@ -55,7 +56,7 @@ UpdateStatus ModuleSceneGame::Update()
 
 	clock.Tick();
 
-	App->renderer->Draw(graphics, fPoint::Zero(), &background, LAYER_BACK);
+	App->renderer->Draw(graphics, fPoint::Zero(), &background);
 
 	for (std::list<Entity*>::iterator it = entities.begin(); it != entities.end() && ret == UpdateStatus::CONTINUE; ++it)
 		if ((*it)->IsEnabled())

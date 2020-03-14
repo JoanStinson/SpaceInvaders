@@ -5,10 +5,11 @@
 #include <stdbool.h>
 
 // Representation of a button as a surface with a rectangle defining its location and size
-typedef struct {
+typedef struct SDL_Button_t
+{
 	SDL_Surface *internal_surface;
 	SDL_Rect *location_and_size;
-} SDL_Button_t;
+};
 
 // Get a new SDL button
 SDL_Button_t* SDL_Button(SDL_Surface *surface, int x_location, int y_location, int button_width, int button_h);

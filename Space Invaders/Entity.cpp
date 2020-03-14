@@ -31,3 +31,8 @@ void Entity::SetTexture(SDL_Texture* texture)
 {
 	this->texture = texture;
 }
+
+bool Entity::HasCollision(const SDL_Rect* entity_rect_a, const SDL_Rect* entity_rect_b)
+{
+	return false;
+}

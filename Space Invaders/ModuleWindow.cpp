@@ -5,8 +5,6 @@
 #include <SDL.h>
 #include <SDL_image.h>
 
-#define ICON "Game/icon.png"
-
 ModuleWindow::ModuleWindow()
 {
 }
@@ -50,7 +48,7 @@ bool ModuleWindow::Init()
 			screen_surface = SDL_GetWindowSurface(window);
 
 			// Set icon
-			SDL_Surface* iconSurface = IMG_Load(ICON);
+			SDL_Surface* iconSurface = IMG_Load("Game/Logo/icon.png");
 			SDL_SetWindowIcon(window, iconSurface);
 			SDL_FreeSurface(iconSurface);
 		}
