@@ -7,6 +7,7 @@
 Asteroid::Asteroid()
 {
 	rect = { 0, 0, 102, 102 };
+	tag = Tag::ASTEROID;
 }
 
 Asteroid::~Asteroid()
@@ -15,10 +16,10 @@ Asteroid::~Asteroid()
 
 bool Asteroid::Start()
 {
-	boxCollider.x = position.x;
-	boxCollider.y = position.y;
-	boxCollider.w = rect.w;
-	boxCollider.h = rect.h;
+	box_collider.x = position.x;
+	box_collider.y = position.y;
+	box_collider.w = rect.w;
+	box_collider.h = rect.h;
 	return true;
 }
 
@@ -26,7 +27,7 @@ UpdateStatus Asteroid::Update(float delta_time)
 {
 	// Draw box collider
 	SDL_SetRenderDrawColor(&App->renderer->GetRenderer(), 0, 255, 0, SDL_ALPHA_OPAQUE);
-	SDL_RenderDrawRect(&App->renderer->GetRenderer(), &boxCollider);
+	SDL_RenderDrawRect(&App->renderer->GetRenderer(), &box_collider);
 
 	App->renderer->Draw(texture, position, &rect);
 

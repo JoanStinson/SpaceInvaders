@@ -12,10 +12,12 @@ Player::Player()
 	rect = { 0, 0, 102, 102 };
 	position = { float((SCREEN_WIDTH / 2) - (rect.w / 2)), float(SCREEN_HEIGHT - rect.h) };
 
-	boxCollider.x = position.x;
-	boxCollider.y = position.y;
-	boxCollider.w = rect.w;
-	boxCollider.h = rect.h;
+	tag = Tag::PLAYER;
+
+	box_collider.x = position.x;
+	box_collider.y = position.y;
+	box_collider.w = rect.w;
+	box_collider.h = rect.h;
 
 	speed = 0.5f;
 
@@ -61,8 +63,8 @@ UpdateStatus Player::Update(float delta_time)
 		if (position.x > SCREEN_WIDTH - rect.w)
 			position.x = (float)SCREEN_WIDTH - rect.w;
 
-		boxCollider.x = position.x;
-		boxCollider.y = position.y;
+		box_collider.x = position.x;
+		box_collider.y = position.y;
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_LEFT))
 	{
@@ -71,8 +73,8 @@ UpdateStatus Player::Update(float delta_time)
 		if (position.x < 0)
 			position.x = 0;
 
-		boxCollider.x = position.x;
-		boxCollider.y = position.y;
+		box_collider.x = position.x;
+		box_collider.y = position.y;
 	}
 
 	if (App->input->GetKeyDown(SDL_SCANCODE_SPACE))
@@ -94,7 +96,7 @@ UpdateStatus Player::Update(float delta_time)
 
 	// Draw box collider
 	SDL_SetRenderDrawColor(&App->renderer->GetRenderer(), 0, 255, 0, SDL_ALPHA_OPAQUE);
-	SDL_RenderDrawRect(&App->renderer->GetRenderer(), &boxCollider);
+	SDL_RenderDrawRect(&App->renderer->GetRenderer(), &box_collider);
 
 	App->renderer->Draw(texture, position, &rect);
 

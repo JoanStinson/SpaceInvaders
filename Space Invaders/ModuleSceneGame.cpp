@@ -82,3 +82,8 @@ void ModuleSceneGame::AddEntity(Entity* entity)
 {
 	entities.push_back(entity);
 }
+
+const std::list<Entity*>& ModuleSceneGame::GetEntities() const
+{
+	return entities;
+}

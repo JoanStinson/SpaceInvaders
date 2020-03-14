@@ -23,6 +23,7 @@ public:
 
 public:
 	void AddEntity(Entity* entity);
+	const std::list<Entity*>& GetEntities() const;
 
 private:
 	Player* player = nullptr;

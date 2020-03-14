@@ -36,3 +36,13 @@ bool Entity::HasCollision(const SDL_Rect* entity_rect_a, const SDL_Rect* entity_
 {
 	return false;
 }
+
+Tag Entity::GetTag() const
+{
+	return tag;
+}
+
+SDL_Rect Entity::GetBoxCollider() const
+{
+	return box_collider;
+}

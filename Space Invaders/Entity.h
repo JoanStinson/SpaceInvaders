@@ -7,6 +7,14 @@
 struct SDL_Texture;
 struct SDL_Rect;
 
+enum class Tag
+{
+	PLAYER,
+	BULLET,
+	ASTEROID,
+	ENEMY
+};
+
 class Entity
 {
 public:
@@ -27,11 +35,14 @@ public:
 
 	bool HasCollision(const SDL_Rect* entity_rect_a, const SDL_Rect* entity_rect_b);
 
+	Tag GetTag() const;
+	SDL_Rect GetBoxCollider() const;
+
 protected:
 	SDL_Texture* texture = nullptr;
 	SDL_Rect rect;
 
-	SDL_Rect boxCollider;
+	SDL_Rect box_collider;
 
 	fPoint position;
 	float speed;
@@ -39,6 +50,8 @@ protected:
 	bool active;
 
 	int life_points;
+
+	Tag tag;
 };
 
 #endif // _ENTITY_H_
