@@ -16,7 +16,7 @@ Player::Player(SDL_Texture* texture, SDL_Rect rect, fPoint position, int health,
 
 	for (int i = 0; i < MAX_BULLETS; ++i)
 	{
-		Bullet* bullet = new Bullet(bullet_texture, SDL_Rect{ 0, 0, 26,26 }, fPoint::Zero(), 1, 1, 0.1f);
+		Bullet* bullet = new Bullet(bullet_texture, SDL_Rect{ 0, 0, 26,26 }, fPoint(), 1, 1, 0.1f);
 		pooled_bullets.push_back(bullet);
 		Entity::AddEntity(bullet);
 	}

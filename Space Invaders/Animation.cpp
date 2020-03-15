@@ -1,6 +1,6 @@
 #include "Animation.h"
 
-#include <SDL.h>
+#include <SDL_rect.h>
 
 Animation::Animation(int num_frames, float speed) : frames(), speed(speed), current_frame(0.f)
 {

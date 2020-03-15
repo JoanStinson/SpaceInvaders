@@ -55,7 +55,7 @@ UpdateStatus ModuleSceneGame::Update()
 
 	clock.Tick();
 
-	App->renderer->Draw(texture, fPoint::Zero(), &background);
+	App->renderer->Draw(texture, fPoint(), &background);
 
 	for (std::list<Entity*>::iterator it = Entity::entities.begin(); it != Entity::entities.end() && ret == UpdateStatus::CONTINUE; ++it)
 		if ((*it)->IsActive())

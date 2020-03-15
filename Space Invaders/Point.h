@@ -7,7 +7,7 @@ class Point
 public:
 	T x, y;
 
-	Point() {}
+	Point() : x(0), y(0) {}
 	Point(T x, T y) : x(x), y(y) {}
 
 	// Operators ------------------------------------------------
@@ -68,11 +68,6 @@ public:
 		x = -x;
 		y = -y;
 		return(*this);
-	}
-
-	Point static Zero()
-	{
-		return Point<T>(0, 0);
 	}
 
 	// Distances ---------------------------------------------
