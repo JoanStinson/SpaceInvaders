@@ -5,13 +5,13 @@
 #include "ModuleInput.h"
 #include "ModuleSceneMenu.h"
 
-#include <SDL.h>
+#include <SDL_render.h>
 
 ModuleRender::ModuleRender()
 {
 	camera.x = camera.y = 0;
-	camera.w = SCREEN_WIDTH * SCREEN_SIZE;
-	camera.h = SCREEN_HEIGHT * SCREEN_SIZE;
+	camera.w = SCREEN_WIDTH;
+	camera.h = SCREEN_HEIGHT;
 }
 
 ModuleRender::~ModuleRender()
@@ -75,8 +75,8 @@ bool ModuleRender::Draw(SDL_Texture* texture, fPoint position, SDL_Rect* section
 {
 	bool ret = true;
 	SDL_Rect rect;
-	rect.x = (int)(camera.x * speed) + position.x * SCREEN_SIZE;
-	rect.y = (int)(camera.y * speed) + position.y * SCREEN_SIZE;
+	rect.x = (int)(camera.x * speed) + position.x;
+	rect.y = (int)(camera.y * speed) + position.y;
 
 	if (section != NULL)
 	{
@@ -87,9 +87,6 @@ bool ModuleRender::Draw(SDL_Texture* texture, fPoint position, SDL_Rect* section
 	{
 		SDL_QueryTexture(texture, NULL, NULL, &rect.w, &rect.h);
 	}
-
-	rect.w *= SCREEN_SIZE;
-	rect.h *= SCREEN_SIZE;
 
 	if (SDL_RenderCopy(renderer, texture, section, &rect) != 0)
 	{

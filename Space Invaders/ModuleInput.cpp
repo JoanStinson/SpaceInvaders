@@ -9,14 +9,10 @@ ModuleInput::ModuleInput() : Module(), window_events(), mouse_buttons(), mouse_m
 	keyboard = new KeyState[MAX_KEYS];
 
 	for (int i = 0; i < MAX_KEYS; ++i)
-	{
 		keyboard[i] = KeyState::IDLE;
-	}
 
 	for (int i = 0; i < MAX_MOUSE_BUTTONS; ++i)
-	{
 		mouse_buttons[i] = KeyState::IDLE;
-	}
 }
 
 ModuleInput::~ModuleInput()
@@ -51,9 +47,7 @@ UpdateStatus ModuleInput::PreUpdate()
 	mouse_motion = { 0, 0 };
 
 	for (int i = 0; i < (int)EventWindow::COUNT; ++i)
-	{
 		window_events[i] = false;
-	}
 
 	const Uint8* keys = SDL_GetKeyboardState(nullptr);
 
@@ -86,14 +80,10 @@ UpdateStatus ModuleInput::PreUpdate()
 	for (int i = 0; i < MAX_MOUSE_BUTTONS; ++i)
 	{
 		if (mouse_buttons[i] == KeyState::DOWN)
-		{
 			mouse_buttons[i] = KeyState::REPEAT;
-		}
 
 		if (mouse_buttons[i] == KeyState::UP)
-		{
 			mouse_buttons[i] = KeyState::IDLE;
-		}
 	}
 
 	while (SDL_PollEvent(&event))
@@ -133,11 +123,11 @@ UpdateStatus ModuleInput::PreUpdate()
 			break;
 
 		case SDL_MOUSEMOTION:
-			mouse_motion.x = event.motion.xrel / SCREEN_SIZE;
-			mouse_motion.y = event.motion.yrel / SCREEN_SIZE;
+			mouse_motion.x = event.motion.xrel;
+			mouse_motion.y = event.motion.yrel;
 
-			mouse_pos.x = event.motion.x / SCREEN_SIZE;
-			mouse_pos.y = event.motion.y / SCREEN_SIZE;
+			mouse_pos.x = event.motion.x;
+			mouse_pos.y = event.motion.y;
 			break;
 		}
 	}

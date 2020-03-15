@@ -88,7 +88,9 @@ SDL_Texture* const ModuleTextures::LoadText(const char* text, int size, SDL_Colo
 	}
 	else
 	{
-		if (bold) TTF_SetFontStyle(font, TTF_STYLE_BOLD);
+		if (bold) 
+			TTF_SetFontStyle(font, TTF_STYLE_BOLD);
+
 		SDL_Surface* surface = TTF_RenderText_Blended(font, text, text_color);
 
 		if (surface == nullptr)

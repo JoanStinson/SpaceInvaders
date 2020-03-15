@@ -2,7 +2,6 @@
 
 #include "Application.h"
 
-#include <SDL.h>
 #include <SDL_image.h>
 
 ModuleWindow::ModuleWindow()
@@ -26,16 +25,7 @@ bool ModuleWindow::Init()
 	else
 	{
 		// Create window
-		int width = SCREEN_WIDTH * SCREEN_SIZE;
-		int height = SCREEN_HEIGHT * SCREEN_SIZE;
-		Uint32 flags = SDL_WINDOW_SHOWN | SDL_WINDOW_ALLOW_HIGHDPI;
-
-		if (FULLSCREEN)
-		{
-			flags |= SDL_WINDOW_FULLSCREEN;
-		}
-
-		window = SDL_CreateWindow(TITLE, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, flags);
+		window = SDL_CreateWindow(TITLE, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN | SDL_WINDOW_ALLOW_HIGHDPI);
 
 		if (window == nullptr)
 		{

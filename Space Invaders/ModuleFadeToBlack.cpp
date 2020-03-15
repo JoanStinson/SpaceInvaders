@@ -50,6 +50,7 @@ UpdateStatus ModuleFadeToBlack::Update()
 			{
 				if (module_off != nullptr)
 					module_off->Disable();
+
 				module_on->Enable();
 
 				total_time += total_time;
