@@ -25,6 +25,8 @@ EnemyGrid::EnemyGrid(Uint8 rows, Uint8 cols) : rows(rows), cols(cols)
 	{
 		row_rects.push_back(SDL_Rect{ 0, 0, 0, 0 });
 	}
+
+	current_row = rows-1;
 }
 
 EnemyGrid::~EnemyGrid()
@@ -79,11 +81,11 @@ void EnemyGrid::MoveEnemies()
 	}
 
 
-	current_row++;
+	current_row--;
 	speed += 0.15f;
-	if (current_row == rows)
+	if (current_row < 0)
 	{
-		current_row = 0;
+		current_row = rows-1;
 		speed = 0.5f;
 	}
 

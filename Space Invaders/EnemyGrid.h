@@ -27,7 +27,7 @@ public:
 
 	Clock clock;
 
-	int current_row = 0;
+	int current_row = rows;
 
 	float speed = 0.5f;
 	float current_pos;
