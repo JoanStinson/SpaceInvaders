@@ -50,8 +50,9 @@ bool ModuleSceneGame::Start()
 			float posX = (102 * j) + 12;
 			float posY = (102 * i) + 0;
 			LOG("%f %f", posX, posY);
-			temp.push_back(new Enemy(enemy_texture, SDL_Rect{ 0, 0, 102, 102 }, fPoint{ posX, posY }, 3, 1, 10.01f, j, cols));
-			//Entity::AddEntity(new Enemy(enemy_texture, SDL_Rect{ 0, 0, 102, 102 }, fPoint{ posX, posY }, 3, 1, 10.01f, j, cols));
+			Enemy* enemy = new Enemy(enemy_texture, SDL_Rect{ 0, 0, 102, 102 }, fPoint{ posX, posY }, 3, 1, 10.01f, j, cols);
+			temp.push_back(enemy);
+			Entity::AddEntity(enemy);
 		}
 
 		enemy_grid.grid.push_back(temp);

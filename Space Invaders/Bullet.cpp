@@ -39,7 +39,9 @@ UpdateStatus Bullet::Update(float delta_time)
 			entity->health--;
 
 			if (entity->health < 1)
-				Entity::RemoveEntity(entity);
+				entity->enabled = false;
+
+				//Entity::RemoveEntity(entity);
 
 			break;
 		}

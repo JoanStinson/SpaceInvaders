@@ -45,7 +45,8 @@ void EnemyGrid::Update(float delta_time)
 
 		for (int j = 0; j < cols; ++j)
 		{
-			grid[i][j]->Draw();
+			if (grid[i][j]->enabled)
+				grid[i][j]->Draw();
 
 			SDL_UnionRect(&row_rect, &grid[i][j]->GetBoxCollider(), &row_rect);
 		}
