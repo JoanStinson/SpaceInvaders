@@ -38,8 +38,24 @@ bool ModuleSceneGame::Start()
 		Entity::AddEntity(new Asteroid(asteroid_texture, SDL_Rect{ 0, 0, 102, 102 }, asteroid_positions[i], 3));
 
 	// Enemies
-	Enemy* enemy = new Enemy(App->textures->LoadImage("Game/Enemy/spaceship_enemy_red.png"), SDL_Rect{ 0, 0, 102, 102 }, fPoint{ 100, 0 }, 3, 1, 30.1f);
-	Entity::AddEntity(enemy);
+	SDL_Texture* enemy_texture = App->textures->LoadImage("Game/Enemy/spaceship_enemy_red.png");
+
+	enemy_grid = EnemyGrid(rows, cols);
+
+	for (int i = 0; i < rows; ++i)
+	{
+		std::vector<Enemy*> temp;
+		for (int j = 0; j < cols; ++j)
+		{
+			float posX = (102 * j) + 12;
+			float posY = (102 * i) + 0;
+			LOG("%f %f", posX, posY);
+			temp.push_back(new Enemy(enemy_texture, SDL_Rect{ 0, 0, 102, 102 }, fPoint{ posX, posY }, 3, 1, 10.01f, j, cols));
+			//Entity::AddEntity(new Enemy(enemy_texture, SDL_Rect{ 0, 0, 102, 102 }, fPoint{ posX, posY }, 3, 1, 10.01f, j, cols));
+		}
+
+		enemy_grid.grid.push_back(temp);
+	}
 
 	// Player
 	player = new Player(App->textures->LoadImage("Game/Player/spaceship.png"), SDL_Rect{ 0, 0, 102, 102 }, fPoint{ SCREEN_WIDTH / 2, SCREEN_HEIGHT - 140 }, 3, 1, 0.5f);
@@ -52,13 +68,15 @@ UpdateStatus ModuleSceneGame::Update()
 {
 	UpdateStatus ret = UpdateStatus::CONTINUE;
 
-	App->clock.Tick();
+	clock.Tick();
 
 	App->renderer->Draw(texture, fPoint(), &background);
 
+	enemy_grid.Update((float)clock.delta_time);
+
 	for (std::list<Entity*>::iterator it = Entity::entities.begin(); it != Entity::entities.end() && ret == UpdateStatus::CONTINUE; ++it)
 		if ((*it)->enabled)
-			ret = (*it)->Update((float)App->clock.delta_time);
+			ret = (*it)->Update((float)clock.delta_time);
 
 	if (App->input->GetKeyDown(SDL_SCANCODE_D))
 		Entity::debug_draw = !Entity::debug_draw;

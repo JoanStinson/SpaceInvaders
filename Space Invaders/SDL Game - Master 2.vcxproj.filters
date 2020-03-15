@@ -94,6 +94,9 @@
     <ClInclude Include="Globals.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="EnemyGrid.h">
+      <Filter>Game Data</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -160,6 +163,9 @@
       <Filter>Game Data</Filter>
     </ClCompile>
     <ClCompile Include="Enemy.cpp">
+      <Filter>Game Data</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyGrid.cpp">
       <Filter>Game Data</Filter>
     </ClCompile>
   </ItemGroup>

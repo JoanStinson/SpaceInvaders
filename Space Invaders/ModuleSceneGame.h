@@ -3,6 +3,8 @@
 
 #include "Module.h"
 #include "Player.h"
+#include "Clock.h"
+#include "EnemyGrid.h"
 
 struct SDL_Texture;
 struct SDL_Rect;
@@ -23,6 +25,13 @@ private:
 
 	SDL_Texture* texture = nullptr;
 	SDL_Rect background;
+
+	Clock clock;
+	int rows = 3;
+	int cols = 4;
+	int offset = 20;
+
+	EnemyGrid enemy_grid;
 };
 
 #endif // _MODULESCENEGAME_H_
