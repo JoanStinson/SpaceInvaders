@@ -21,7 +21,6 @@ UpdateStatus Bullet::Update(float delta_time)
 
 	Creature::UpdateBoxCollider();
 
-	Entity::DrawBoxCollider();
 	Entity::DrawEntity();
 
 	// Collisions
@@ -29,19 +28,16 @@ UpdateStatus Bullet::Update(float delta_time)
 	{
 		if (!entity->IsActive()) continue;
 
-		if (entity->CompareTag(Type::ASTEROID))
+		if (entity->CompareType(Type::ASTEROID) && SDL_HasIntersection(&box_collider, &entity->GetBoxCollider()))
 		{
-			if (SDL_HasIntersection(&box_collider, &entity->GetBoxCollider()))
-			{
-				SetActive(false);
+			SetActive(false);
 
-				entity->health--;
+			entity->health--;
 
-				if (entity->health < 1)
-					Entity::RemoveEntity(entity);
+			if (entity->health < 1)
+				Entity::RemoveEntity(entity);
 
-				break;
-			}
+			break;
 		}
 	}
 

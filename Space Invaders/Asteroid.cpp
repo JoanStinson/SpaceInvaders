@@ -12,7 +12,6 @@ Asteroid::~Asteroid()
 
 UpdateStatus Asteroid::Update(float delta_time)
 {
-	Entity::DrawBoxCollider();
 	Entity::DrawEntity();
 	return UpdateStatus::CONTINUE;
 }

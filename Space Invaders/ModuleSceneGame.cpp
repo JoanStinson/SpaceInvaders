@@ -8,6 +8,7 @@
 #include "ModuleWindow.h"
 #include "ModuleFadeToBlack.h"
 #include "Asteroid.h"
+#include "Enemy.h"
 
 ModuleSceneGame::ModuleSceneGame(bool start_enabled) : Module(start_enabled)
 {
@@ -31,10 +32,6 @@ bool ModuleSceneGame::Start()
 	// Background
 	texture = App->textures->LoadImage("Game/Background/background.jpg");
 
-	// Player
-	player = new Player(App->textures->LoadImage("Game/Player/spaceship.png"), SDL_Rect{ 0, 0, 102, 102 }, fPoint{ SCREEN_WIDTH/2, SCREEN_HEIGHT-140}, 3, 1, 0.5f);
-	Entity::AddEntity(player);
-
 	// Asteroids
 	fPoint asteroid_positions[]{ fPoint{100, 350}, fPoint{200, 350}, fPoint{300, 350}, fPoint{400, 350} };
 
@@ -44,7 +41,13 @@ bool ModuleSceneGame::Start()
 		Entity::AddEntity(asteroid);
 	}
 
-	//TODO Enemies
+	// Enemies
+	Enemy* enemy = new Enemy(App->textures->LoadImage("Game/Enemy/spaceship_enemy_red.png"), SDL_Rect{ 0, 0, 102, 102 }, fPoint{ 100, 0 }, 3, 1, 0.1f);
+	Entity::AddEntity(enemy);
+
+	// Player
+	player = new Player(App->textures->LoadImage("Game/Player/spaceship.png"), SDL_Rect{ 0, 0, 102, 102 }, fPoint{ SCREEN_WIDTH / 2, SCREEN_HEIGHT - 140 }, 3, 1, 0.5f);
+	Entity::AddEntity(player);
 
 	return ret;
 }
@@ -60,6 +63,9 @@ UpdateStatus ModuleSceneGame::Update()
 	for (std::list<Entity*>::iterator it = Entity::entities.begin(); it != Entity::entities.end() && ret == UpdateStatus::CONTINUE; ++it)
 		if ((*it)->IsActive())
 			ret = (*it)->Update((float)clock.delta_time);
+
+	if (App->input->GetKeyDown(SDL_SCANCODE_D))
+		Entity::debug_draw = !Entity::debug_draw;
 
 	return ret;
 }

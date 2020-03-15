@@ -37,9 +37,6 @@
     <ClInclude Include="Application.h">
       <Filter>Main</Filter>
     </ClInclude>
-    <ClInclude Include="Globals.h">
-      <Filter>Main</Filter>
-    </ClInclude>
     <ClInclude Include="ModuleAudio.h">
       <Filter>Core Modules</Filter>
     </ClInclude>
@@ -90,6 +87,12 @@
     </ClInclude>
     <ClInclude Include="Asteroid.h">
       <Filter>Game Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Game Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Globals.h">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -154,6 +157,9 @@
       <Filter>Game Data</Filter>
     </ClCompile>
     <ClCompile Include="Asteroid.cpp">
+      <Filter>Game Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
       <Filter>Game Data</Filter>
     </ClCompile>
   </ItemGroup>

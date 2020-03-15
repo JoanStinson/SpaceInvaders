@@ -6,6 +6,7 @@
 #include <SDL_render.h>
 
 std::list<Entity*> Entity::entities;
+bool Entity::debug_draw = true;
 
 Entity::Entity(SDL_Texture* texture, SDL_Rect rect, fPoint position, int health) :
 	texture(texture), rect(rect), position(position), health(health)
@@ -15,6 +16,9 @@ Entity::Entity(SDL_Texture* texture, SDL_Rect rect, fPoint position, int health)
 
 void Entity::DrawEntity()
 {
+	if (debug_draw)
+		DrawBoxCollider();
+
 	App->renderer->Draw(texture, position, &rect);
 }
 
@@ -74,7 +78,7 @@ bool Entity::IsActive() const
 	return active;
 }
 
-bool Entity::CompareTag(Type type) const
+bool Entity::CompareType(Type type) const
 {
 	return this->type == type;
 }

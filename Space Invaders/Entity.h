@@ -39,7 +39,7 @@ public:
 	void SetTexture(SDL_Texture* texture);
 
 	bool IsActive() const;
-	bool CompareTag(Type type) const;
+	bool CompareType(Type type) const;
 	SDL_Rect GetBoxCollider() const;
 
 private:
@@ -47,6 +47,7 @@ private:
 
 public:
 	static std::list<Entity*> entities;
+	static bool debug_draw;
 	int health;
 
 protected:
