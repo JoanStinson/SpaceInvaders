@@ -8,7 +8,7 @@ Bullet::Bullet(SDL_Texture* texture, SDL_Rect rect, fPoint position, int health,
 	Creature(texture, rect, position, health, damage, speed)
 {
 	type = Type::BULLET;
-	SetActive(false);
+	enabled = false;
 }
 
 Bullet::~Bullet()
@@ -23,14 +23,18 @@ UpdateStatus Bullet::Update(float delta_time)
 
 	Entity::DrawEntity();
 
+	// Top limit
+	if (position.y < rect.w)
+		enabled = false;
+
 	// Collisions
 	for (auto& entity : Entity::entities)
 	{
-		if (!entity->IsActive()) continue;
+		if (!entity->enabled) continue;
 
-		if (entity->CompareType(Type::ASTEROID) && SDL_HasIntersection(&box_collider, &entity->GetBoxCollider()))
+		if ((entity->CompareType(Type::ASTEROID) || entity->CompareType(Type::ENEMY)) && SDL_HasIntersection(&box_collider, &entity->GetBoxCollider()))
 		{
-			SetActive(false);
+			enabled = false;
 
 			entity->health--;
 
@@ -40,9 +44,6 @@ UpdateStatus Bullet::Update(float delta_time)
 			break;
 		}
 	}
-
-	if (position.y < rect.w)
-		SetActive(false);
 
 	return UpdateStatus::CONTINUE;
 }

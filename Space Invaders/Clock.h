@@ -28,7 +28,7 @@ struct Clock
 		{
 			callback();
 			last_invoke_time = current_invoke_time;
-			LOG("Invoke");
+			//LOG("Invoke");
 		}
 	}
 };

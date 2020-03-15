@@ -57,7 +57,7 @@ UpdateStatus ModuleSceneGame::Update()
 	App->renderer->Draw(texture, fPoint(), &background);
 
 	for (std::list<Entity*>::iterator it = Entity::entities.begin(); it != Entity::entities.end() && ret == UpdateStatus::CONTINUE; ++it)
-		if ((*it)->IsActive())
+		if ((*it)->enabled)
 			ret = (*it)->Update((float)App->clock.delta_time);
 
 	if (App->input->GetKeyDown(SDL_SCANCODE_D))

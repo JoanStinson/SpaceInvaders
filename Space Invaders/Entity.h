@@ -8,7 +8,6 @@
 
 struct SDL_Texture;
 struct SDL_Rect;
-typedef void (*callback)(void); 
 
 enum class Type
 {
@@ -31,24 +30,24 @@ public:
 	static void RemoveEntity(Entity* entity);
 
 	void DrawEntity();
-	void DrawBoxCollider();
-	void ReceiveDamage(int damage, callback on_death = nullptr);
+	//void Entity::ReceiveDamage(int damage);
 
-	void SetActive(bool active);
 	void SetPosition(fPoint position);
 	void SetTexture(SDL_Texture* texture);
 
-	bool IsActive() const;
 	bool CompareType(Type type) const;
 	SDL_Rect GetBoxCollider() const;
 
 private:
 	void CreateBoxCollider();
+	void DrawBoxCollider();
 
 public:
+	int health;
+	bool enabled = true;
+
 	static std::list<Entity*> entities;
 	static bool debug_draw;
-	int health;
 
 protected:
 	Type type;
@@ -57,9 +56,6 @@ protected:
 	SDL_Rect rect;
 	SDL_Rect box_collider;
 	SDL_Texture* texture = nullptr;
-
-private:
-	bool active = true;
 };
 
 #endif // _ENTITY_H_

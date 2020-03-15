@@ -55,9 +55,9 @@ UpdateStatus Player::Update(float delta_time)
 			Bullet* bullet = pooled_bullets[i];
 
 			// Instead of new/delete, enable/disable
-			if (!bullet->IsActive())
+			if (!bullet->enabled)
 			{
-				bullet->SetActive(true);
+				bullet->enabled = true;
 				bullet->SetPosition(position);
 				break;
 			}

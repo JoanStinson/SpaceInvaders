@@ -36,16 +36,16 @@ void Entity::CreateBoxCollider()
 	box_collider.h = rect.h;
 }
 
-void Entity::ReceiveDamage(int damage, callback on_death)
-{
-	health -= damage;
-
-	if (health < 1 && on_death != nullptr)
-	{
-		on_death();
-		//Remove entity
-	}	
-}
+//void Entity::ReceiveDamage(int damage)
+//{
+//	health -= damage;
+//
+//	if (health < 1 && on_death != nullptr)
+//	{
+//		on_death();
+//		//Remove entity
+//	}	
+//}
 
 void Entity::AddEntity(Entity* entity)
 {
@@ -58,11 +58,6 @@ void Entity::RemoveEntity(Entity* entity)
 	delete entity;
 }
 
-void Entity::SetActive(bool active)
-{
-	this->active = active;
-}
-
 void Entity::SetPosition(fPoint position)
 {
 	this->position = position;
@@ -71,11 +66,6 @@ void Entity::SetPosition(fPoint position)
 void Entity::SetTexture(SDL_Texture* texture)
 {
 	this->texture = texture;
-}
-
-bool Entity::IsActive() const
-{
-	return active;
 }
 
 bool Entity::CompareType(Type type) const
