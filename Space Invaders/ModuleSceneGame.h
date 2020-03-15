@@ -18,14 +18,14 @@ public:
 	bool Start() override;
 	UpdateStatus Update() override;
 	bool CleanUp() override;
-
+	Clock clock;
 private:
 	Player* player = nullptr;
 
 	SDL_Texture* texture = nullptr;
 	SDL_Rect background;
 
-	Clock clock;
+
 };
 
 #endif // _MODULESCENEGAME_H_

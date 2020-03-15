@@ -16,6 +16,8 @@ public:
 
 	UpdateStatus Update(float delta_time) override;
 
+	void Move();
+
 private:
 	std::vector<Bullet*> pooled_bullets;
 

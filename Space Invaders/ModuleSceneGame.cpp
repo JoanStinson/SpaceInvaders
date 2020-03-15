@@ -10,11 +10,9 @@
 #include "Asteroid.h"
 #include "Enemy.h"
 
-ModuleSceneGame::ModuleSceneGame(bool start_enabled) : Module(start_enabled)
+ModuleSceneGame::ModuleSceneGame(bool start_enabled) 
+	: Module(start_enabled), background(SDL_Rect{ 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT })
 {
-	background = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
-
-	//TODO remember that cant use modules until Start, because they are not initialized before
 }
 
 ModuleSceneGame::~ModuleSceneGame()
@@ -33,16 +31,14 @@ bool ModuleSceneGame::Start()
 	texture = App->textures->LoadImage("Game/Background/background.jpg");
 
 	// Asteroids
+	SDL_Texture* asteroid_texture = App->textures->LoadImage("Game/Aestroids/aestroid_brown.png");
 	fPoint asteroid_positions[]{ fPoint{100, 350}, fPoint{200, 350}, fPoint{300, 350}, fPoint{400, 350} };
 
 	for (int i = 0; i < sizeof(asteroid_positions) / sizeof(asteroid_positions[0]); ++i)
-	{
-		Asteroid* asteroid = new Asteroid(App->textures->LoadImage("Game/Aestroids/aestroid_brown.png"), SDL_Rect{ 0, 0, 102, 102 }, asteroid_positions[i], 3);
-		Entity::AddEntity(asteroid);
-	}
+		Entity::AddEntity(new Asteroid(asteroid_texture, SDL_Rect{ 0, 0, 102, 102 }, asteroid_positions[i], 3));
 
 	// Enemies
-	Enemy* enemy = new Enemy(App->textures->LoadImage("Game/Enemy/spaceship_enemy_red.png"), SDL_Rect{ 0, 0, 102, 102 }, fPoint{ 100, 0 }, 3, 1, 0.1f);
+	Enemy* enemy = new Enemy(App->textures->LoadImage("Game/Enemy/spaceship_enemy_red.png"), SDL_Rect{ 0, 0, 102, 102 }, fPoint{ 100, 0 }, 3, 1, 30.1f);
 	Entity::AddEntity(enemy);
 
 	// Player
@@ -66,6 +62,8 @@ UpdateStatus ModuleSceneGame::Update()
 
 	if (App->input->GetKeyDown(SDL_SCANCODE_D))
 		Entity::debug_draw = !Entity::debug_draw;
+
+	//LOG("Current: %d, Last: %d", clock.current_time, clock.last_time);
 
 	return ret;
 }
