@@ -3,7 +3,6 @@
 
 #include "Module.h"
 #include "Player.h"
-#include "Clock.h"
 
 struct SDL_Texture;
 struct SDL_Rect;
@@ -18,14 +17,12 @@ public:
 	bool Start() override;
 	UpdateStatus Update() override;
 	bool CleanUp() override;
-	Clock clock;
+
 private:
 	Player* player = nullptr;
 
 	SDL_Texture* texture = nullptr;
 	SDL_Rect background;
-
-
 };
 
 #endif // _MODULESCENEGAME_H_

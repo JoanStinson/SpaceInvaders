@@ -2,6 +2,7 @@
 #define _APPLICATION_H_
 
 #include "Module.h"
+#include "Clock.h"
 
 #include <list>
 #include <memory>
@@ -34,6 +35,8 @@ public:
 	std::unique_ptr<ModuleFadeToBlack> fade;
 	std::unique_ptr<ModuleSceneMenu> sceneMenu;
 	std::unique_ptr<ModuleSceneGame> sceneGame;
+
+	Clock clock;
 
 private:
 	std::list<Module*> modules;

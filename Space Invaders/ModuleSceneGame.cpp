@@ -52,18 +52,16 @@ UpdateStatus ModuleSceneGame::Update()
 {
 	UpdateStatus ret = UpdateStatus::CONTINUE;
 
-	clock.Tick();
+	App->clock.Tick();
 
 	App->renderer->Draw(texture, fPoint(), &background);
 
 	for (std::list<Entity*>::iterator it = Entity::entities.begin(); it != Entity::entities.end() && ret == UpdateStatus::CONTINUE; ++it)
 		if ((*it)->IsActive())
-			ret = (*it)->Update((float)clock.delta_time);
+			ret = (*it)->Update((float)App->clock.delta_time);
 
 	if (App->input->GetKeyDown(SDL_SCANCODE_D))
 		Entity::debug_draw = !Entity::debug_draw;
-
-	//LOG("Current: %d, Last: %d", clock.current_time, clock.last_time);
 
 	return ret;
 }

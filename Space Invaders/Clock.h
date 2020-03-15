@@ -22,11 +22,11 @@ struct Clock
 	}
 
 	template <typename CallableObject>
-	void Invoke(float delay_seconds, CallableObject action) 
+	void Invoke(float delay_seconds, CallableObject callback) 
 	{
-		if (current_invoke_time > last_invoke_time + (delay_seconds * 1000))
+		if (current_invoke_time > last_invoke_time + (delay_seconds * 100) * delta_time)
 		{
-			action();
+			callback();
 			last_invoke_time = current_invoke_time;
 			LOG("Invoke");
 		}

@@ -16,6 +16,7 @@ public:
 
 	UpdateStatus Update(float delta_time) override;
 
+private:
 	void Move();
 
 private:
@@ -23,7 +24,13 @@ private:
 
 	SDL_Texture* bulletTexture = nullptr;
 
-	Uint8 direction = -1;
+	const int RIGHT_LIMIT = SCREEN_WIDTH - rect.w;
+	const int LEFT_LIMIT = 0;
+	const int BOTTOM_LIMIT = SCREEN_HEIGHT - (rect.h * 4);
+	const int BOUNCE_LIMIT = 0;
+
+	Uint8 bounces_count = 0;
+	bool jump_frame = false;
 };
 
 #endif // _ENEMY_H_
