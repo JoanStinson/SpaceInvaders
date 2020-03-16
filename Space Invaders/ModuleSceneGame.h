@@ -27,10 +27,10 @@ private:
 	SDL_Rect background;
 
 	Clock clock;
+
 	int rows = 3;
 	int cols = 4;
 	int offset = 20;
-
 	EnemyGrid enemy_grid;
 };
 

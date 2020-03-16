@@ -10,7 +10,7 @@
 #include "Asteroid.h"
 #include "Enemy.h"
 
-ModuleSceneGame::ModuleSceneGame(bool start_enabled) 
+ModuleSceneGame::ModuleSceneGame(bool start_enabled)
 	: Module(start_enabled), background(SDL_Rect{ 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT })
 {
 }
@@ -38,25 +38,25 @@ bool ModuleSceneGame::Start()
 		Entity::AddEntity(new Asteroid(asteroid_texture, SDL_Rect{ 0, 0, 102, 102 }, asteroid_positions[i], 3));
 
 	// Enemies
-	SDL_Texture* enemy_texture = App->textures->LoadImage("Game/Enemy/spaceship_enemy_red.png");
-
 	enemy_grid = EnemyGrid(rows, cols);
+	SDL_Texture* enemy_texture = App->textures->LoadImage("Game/Enemy/spaceship_enemy_red.png");
 
 	for (int i = 0; i < rows; ++i)
 	{
-		std::vector<Enemy*> temp;
+		std::vector<Enemy*> enemy_row;
+
 		for (int j = 0; j < cols; ++j)
 		{
-			float posX = (102 * j) + 12;
-			float posY = (102 * i) + 0;
-			LOG("%f %f", posX, posY);
-			Enemy* enemy = new Enemy(enemy_texture, SDL_Rect{ 0, 0, 102, 102 }, fPoint{ posX, posY }, 3, 1, 10.01f, j, cols);
-			temp.push_back(enemy);
+			fPoint position = { float((102 * j) + 12), float((102 * i) + 1) }; // calculation to have enemies aligned in grid
+			Enemy* enemy = new Enemy(enemy_texture, SDL_Rect{ 0, 0, 102, 102 }, position, 3, 1, 10.f);
+			enemy_row.push_back(enemy);
 			Entity::AddEntity(enemy);
 		}
 
-		enemy_grid.grid.push_back(temp);
+		enemy_grid.grid.push_back(enemy_row);
 	}
+
+	enemy_grid.CreateGridRects();
 
 	// Player
 	player = new Player(App->textures->LoadImage("Game/Player/spaceship.png"), SDL_Rect{ 0, 0, 102, 102 }, fPoint{ SCREEN_WIDTH / 2, SCREEN_HEIGHT - 140 }, 3, 1, 0.5f);
@@ -71,14 +71,18 @@ UpdateStatus ModuleSceneGame::Update()
 
 	clock.Tick();
 
+	// Draw background
 	App->renderer->Draw(texture, fPoint(), &background);
 
+	// Update enemies
 	enemy_grid.Update((float)clock.delta_time);
 
+	// Update entities
 	for (std::list<Entity*>::iterator it = Entity::entities.begin(); it != Entity::entities.end() && ret == UpdateStatus::CONTINUE; ++it)
 		if ((*it)->enabled)
 			ret = (*it)->Update((float)clock.delta_time);
 
+	// Toggle box colliders
 	if (App->input->GetKeyDown(SDL_SCANCODE_D))
 		Entity::debug_draw = !Entity::debug_draw;
 

@@ -10,13 +10,8 @@ EnemyGrid::EnemyGrid()
 {
 }
 
-EnemyGrid::EnemyGrid(Uint8 rows, Uint8 cols) : rows(rows), cols(cols)
+EnemyGrid::EnemyGrid(Uint8 rows, Uint8 cols) : rows(rows), cols(cols), current_row(rows - 1), grid_rect(SDL_Rect{ 0, 0, 0, 0 })
 {
-	//grid = (Enemy*) [rows]();
-
-	//for (int i = 0; i < rows; ++i)
-	//	grid[i] = new Enemy[cols]();
-
 	grid.reserve(rows);
 
 	row_rects.reserve(rows);
@@ -25,8 +20,6 @@ EnemyGrid::EnemyGrid(Uint8 rows, Uint8 cols) : rows(rows), cols(cols)
 	{
 		row_rects.push_back(SDL_Rect{ 0, 0, 0, 0 });
 	}
-
-	current_row = rows-1;
 }
 
 EnemyGrid::~EnemyGrid()
@@ -37,58 +30,77 @@ void EnemyGrid::Update(float delta_time)
 {
 	clock.Tick();
 
+	DrawEnemies();
 
+	DrawGridRects();
 
+	clock.Invoke(0.3f, std::bind(&EnemyGrid::MoveEnemyRow, this));
+}
+
+void EnemyGrid::CreateGridRects()
+{
+	// Calculate rects
 	for (int i = 0; i < rows; ++i)
 	{
 		SDL_Rect row_rect{ 0, 0, 0, };
 
 		for (int j = 0; j < cols; ++j)
 		{
-			if (grid[i][j]->enabled)
-				grid[i][j]->Draw();
-
 			SDL_UnionRect(&row_rect, &grid[i][j]->GetBoxCollider(), &row_rect);
 		}
 
 		row_rects[i] = row_rect;
 	}
-	final_rect = SDL_Rect{ 0, 0, 0, 0 };
-	for (int i = 0; i < row_rects.size(); ++i)
-	{
-		SDL_SetRenderDrawColor(&App->renderer->GetRenderer(), 255, 0, 0, SDL_ALPHA_OPAQUE);
-		//SDL_RenderDrawRect(&App->renderer->GetRenderer(), &row_rects[i]);
-		LOG("posx: %d\n", row_rects[i].x);
-		SDL_UnionRect(&final_rect, &row_rects[i], &final_rect);
-	}
 
-	SDL_SetRenderDrawColor(&App->renderer->GetRenderer(), 0, 0, 255, SDL_ALPHA_OPAQUE);
-	SDL_RenderDrawRect(&App->renderer->GetRenderer(), &final_rect);
-
-	current_pos = row_rects[current_row].x;
-	posy = row_rects[current_row].y;
-	LOG("%f", current_pos);
-	//row_rects.clear();
-
-	clock.Invoke(0.3f, std::bind(&EnemyGrid::MoveEnemies, this));
+	grid_rect = SDL_Rect{ 0, 0, 0, 0 };
 }
 
-void EnemyGrid::MoveEnemies()
+void EnemyGrid::DrawEnemies()
 {
+	for (int i = 0; i < rows; ++i)
+	{
+		for (int j = 0; j < cols; ++j)
+		{
+			if (grid[i][j]->enabled)
+				grid[i][j]->Draw();
+		}
+	}
+}
 
+void EnemyGrid::DrawGridRects()
+{
+	if (!Entity::debug_draw) return;
+
+	// Draw row rects
+	SDL_SetRenderDrawColor(&App->renderer->GetRenderer(), 255, 0, 0, SDL_ALPHA_OPAQUE);
+	for (int i = 0; i < row_rects.size(); ++i)
+	{
+		SDL_RenderDrawRect(&App->renderer->GetRenderer(), &row_rects[i]);
+		SDL_UnionRect(&grid_rect, &row_rects[i], &grid_rect);
+	}
+
+	// Draw grid rect
+	SDL_SetRenderDrawColor(&App->renderer->GetRenderer(), 0, 0, 255, SDL_ALPHA_OPAQUE);
+	SDL_RenderDrawRect(&App->renderer->GetRenderer(), &grid_rect);
+}
+
+void EnemyGrid::MoveEnemyRow()
+{
+	LOG("%d", grid_rect.y);
 	for (int j = 0; j < cols; ++j)
 	{
-		grid[current_row][j]->Move(row_rects[current_row].x, final_rect.y);
+		grid[current_row][j]->Move(iPoint(row_rects[current_row].x, grid_rect.y));
 	}
-
 
 	current_row--;
-	speed += 0.15f;
+
+	speed += 0.15f; // each row has different speed
+
 	if (current_row < 0)
 	{
-		current_row = rows-1;
-		speed = 0.5f;
+		current_row = rows - 1;
+		speed = init_speed;
 	}
 
-	//row_rects.clear();
+	CreateGridRects(); // update only after moving
 }

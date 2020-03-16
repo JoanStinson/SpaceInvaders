@@ -1,13 +1,13 @@
 #include "Application.h"
 
+#include "ModuleInput.h"
 #include "ModuleWindow.h"
 #include "ModuleRender.h"
 #include "ModuleTextures.h"
-#include "ModuleInput.h"
 #include "ModuleAudio.h"
 #include "ModuleFadeToBlack.h"
-#include "ModuleSceneGame.h"
 #include "ModuleSceneMenu.h"
+#include "ModuleSceneGame.h"
 
 Application::Application()
 {

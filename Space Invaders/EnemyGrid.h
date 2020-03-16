@@ -15,23 +15,27 @@ public:
 	~EnemyGrid();
 
 	void Update(float delta_time);
+	void CreateGridRects();
 
-	void MoveEnemies();
+private:
+	void DrawEnemies();
+	void DrawGridRects();
+	void MoveEnemyRow();
 
 public:
-	std::vector<std::vector<Enemy*>> grid;
-	std::vector<SDL_Rect> row_rects;
-	SDL_Rect final_rect;
 	Uint8 rows;
 	Uint8 cols;
 
+	std::vector<std::vector<Enemy*>> grid;
+
+	std::vector<SDL_Rect> row_rects;
+	SDL_Rect grid_rect;
+
 	Clock clock;
 
-	int current_row = rows;
-
+	int current_row;
 	float speed = 0.5f;
-	float current_pos;
-	float posy;
+	float init_speed = speed;
 };
 
 #endif // _ENEMYGRID_H_
