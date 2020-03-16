@@ -11,7 +11,7 @@ struct SDL_Rect;
 #define RIGHT_LIMIT 72
 #define LEFT_LIMIT 11
 #define BOTTOM_LIMIT 204
-#define BOUNCE_LIMIT 0 // default = 2
+#define BOUNCE_LIMIT 4 // default = 2
 
 class Enemy : public Creature
 {

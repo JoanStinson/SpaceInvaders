@@ -86,6 +86,12 @@ UpdateStatus ModuleSceneGame::Update()
 	if (App->input->GetKeyDown(SDL_SCANCODE_D))
 		Entity::debug_draw = !Entity::debug_draw;
 
+	//TODO check if player win or game over
+	//if (player->win)
+	//{
+	//	//todo
+	//}
+
 	return ret;
 }
 
