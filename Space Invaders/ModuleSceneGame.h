@@ -43,6 +43,14 @@ private:
 
 	Animation player_animation;
 	SDL_Texture* player_texture = nullptr;
+
+	Text* lives_title = nullptr;
+	Text* score_title = nullptr;
+	Text* hiscore_title = nullptr;
+
+	Text* lives_value = nullptr;
+	Text* score_value = nullptr;
+	Text* hiscore_value = nullptr;
 };
 
 #endif // _MODULESCENEGAME_H_

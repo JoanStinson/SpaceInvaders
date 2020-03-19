@@ -79,6 +79,11 @@ bool ModuleSceneGame::Start()
 	player = new Player(App->textures->LoadImage("Sprites/spaceship.png"), player_animation, SDL_Rect{ 0, 0, 64, 64 }, fPoint{ (SCREEN_WIDTH / 2)-(64/2), SCREEN_HEIGHT - 96 }, 3, 1, 0.5f);
 	AddEntity(player);
 
+	// Text
+	lives_title = new Text(App->textures->LoadText("LIVES", 24, SDL_Color{ 255, 255, 255, 255 }, false, "Font/space_invaders.ttf"));
+	score_title = new Text(App->textures->LoadText("SCORE", 24, SDL_Color{ 255, 255, 255, 255 }, false, "Font/space_invaders.ttf"));
+	hiscore_title = new Text(App->textures->LoadText("HI-SCORE", 24, SDL_Color{ 255, 255, 255, 255 }, false, "Font/space_invaders.ttf"));
+
 	return ret;
 }
 
@@ -91,7 +96,9 @@ UpdateStatus ModuleSceneGame::Update()
 	// Draw background
 	App->renderer->Draw(texture, fPoint(), &background);
 
-
+	App->renderer->Draw(lives_title->texture, fPoint{ 30, 15 }, &lives_title->rect);
+	App->renderer->Draw(score_title->texture, fPoint{ 170, 15 }, &score_title->rect);
+	App->renderer->Draw(hiscore_title->texture, fPoint{ 310, 15 }, &hiscore_title->rect);
 	//App->renderer->Draw(player_texture, fPoint{ 0, 100 }, &(player_animation.GetCurrentFrame()));
 
 	// Update enemies
