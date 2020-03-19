@@ -12,6 +12,13 @@ Bullet::Bullet(SDL_Texture* texture, SDL_Rect rect, fPoint position, int health,
 	enabled = false;
 }
 
+Bullet::Bullet(SDL_Texture* texture, Animation animation, SDL_Rect rect, fPoint position, int health, int damage, float speed, Entity* owner) :
+	Creature(texture, animation, rect, position, health, damage, speed), owner(owner)
+{
+	type = Type::BULLET;
+	enabled = false;
+}
+
 Bullet::~Bullet()
 {
 }
@@ -22,11 +29,18 @@ UpdateStatus Bullet::Update(float delta_time)
 
 	Creature::UpdateBoxCollider();
 
-	Entity::DrawEntity();
+
 
 	// Top limit
 	if (position.y < rect.w)
-		enabled = false;
+	{
+		Entity::DrawAnimation();
+	}
+	else
+	{
+		Entity::DrawEntity();
+	}
+		//enabled = false;
 
 	// Collisions
 	auto entities = App->sceneGame->GetEntities();
@@ -52,6 +66,14 @@ UpdateStatus Bullet::Update(float delta_time)
 
 			
 
+			break;
+		}
+
+		if (entity->CompareType(Type::ASTEROID) && SDL_HasIntersection(&box_collider, &entity->GetBoxCollider()))
+		{
+			enabled = false;
+
+			entity->health--;
 			break;
 		}
 	}

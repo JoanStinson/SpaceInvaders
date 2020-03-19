@@ -3,6 +3,7 @@
 #include "Application.h"
 #include "ModuleTextures.h"
 #include "ModuleInput.h"
+#include "Animation.h"
 
 Player::Player(SDL_Texture* texture, Animation animation, SDL_Rect rect, fPoint position, int health, int damage, float speed) :
 	Creature(texture, animation, rect, position, health, damage, speed)
@@ -13,7 +14,13 @@ Player::Player(SDL_Texture* texture, Animation animation, SDL_Rect rect, fPoint 
 
 	// Load bullet texture once, instead of MAX_BULLETS times
 	SDL_Texture* bullet_texture = App->textures->LoadImage("Sprites/bullet.png");
-
+	Animation die_animation(17, 0.5f);
+	for (int i = 0; i < 17; ++i)
+	{
+		int pos_x = i * 64;
+		die_animation.AddFrame({ pos_x, 0, 64, 64 });
+	}
+	die = die_animation;
 	for (int i = 0; i < MAX_BULLETS; ++i)
 	{
 		Bullet* bullet = new Bullet(bullet_texture, SDL_Rect{ 0, 0, 32, 32 }, fPoint(), 1, 1, 0.1f, this);

@@ -14,6 +14,7 @@ public:
 	void UpdateBoxCollider();
 	int GetDamage() const;
 
+
 protected:
 	int damage;
 	float speed;

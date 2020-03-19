@@ -2,6 +2,7 @@
 #define _PLAYER_H_
 
 #include "Bullet.h"
+#include "Animation.h"
 
 #include <vector>
 
@@ -23,6 +24,7 @@ private:
 	std::vector<Bullet*> pooled_bullets;
 
 	SDL_Texture* bulletTexture = nullptr;
+	Animation die;
 };
 
 #endif // _PLAYER_H_

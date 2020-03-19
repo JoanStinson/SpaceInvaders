@@ -48,6 +48,8 @@ public:
 
 	static bool debug_draw;
 
+	SDL_Texture* die_texture;
+	Animation die_animation;
 protected:
 	Type type;
 	fPoint position;

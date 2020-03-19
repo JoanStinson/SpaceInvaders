@@ -2,6 +2,7 @@
 #define _ENEMY_H_
 
 #include "Bullet.h"
+#include "Animation.h"
 
 #include <vector>
 
@@ -32,6 +33,8 @@ private:
 
 	Uint8 bounces_count = 0;
 	bool jump_frame = false;
+
+	Animation die;
 };
 
 #endif // _ENEMY_H_

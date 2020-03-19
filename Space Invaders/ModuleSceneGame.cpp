@@ -40,8 +40,23 @@ bool ModuleSceneGame::Start()
 	float offset = 64;
 	fPoint asteroid_positions[]{ fPoint{asteroid_x+0, asteroid_y}, fPoint{asteroid_x+(offset *2), asteroid_y}, fPoint{asteroid_x+(offset *4), asteroid_y}, fPoint{asteroid_x+(offset *6), asteroid_y} };
 
+	SDL_Texture* asteroid_anim_texture = App->textures->LoadImage("Sprites/galaxy.png");
+	Animation asteroid_anim(17, 0.4f);
+	for (int i = 0; i < 17; ++i)
+	{
+		int pos_x = i * 64;
+		asteroid_anim.AddFrame({pos_x, 0, 64, 64});
+	}
+
+
 	for (int i = 0; i < sizeof(asteroid_positions) / sizeof(asteroid_positions[0]); ++i)
-		AddEntity(new Asteroid(asteroid_texture, SDL_Rect{ 0, 0, 64, 64 }, asteroid_positions[i], 3));
+	{
+		Asteroid* as = new Asteroid(asteroid_texture, SDL_Rect{ 0, 0, 64, 64 }, asteroid_positions[i], 3);
+		as->die_texture = asteroid_anim_texture;
+		as->die_animation = asteroid_anim;
+		AddEntity(as);
+	}
+		
 
 	// Enemies
 	enemy_grid = EnemyGrid(rows, cols);
