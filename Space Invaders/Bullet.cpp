@@ -1,6 +1,7 @@
 #include "Bullet.h"
 
 #include "Application.h"
+#include "ModuleSceneGame.h"
 
 #include <SDL_rect.h>
 
@@ -28,7 +29,9 @@ UpdateStatus Bullet::Update(float delta_time)
 		enabled = false;
 
 	// Collisions
-	for (auto& entity : Entity::entities)
+	auto entities = App->sceneGame->GetEntities();
+
+	for (auto& entity : entities)
 	{
 		if (!entity->enabled) continue;
 
@@ -41,7 +44,7 @@ UpdateStatus Bullet::Update(float delta_time)
 			if (entity->health < 1)
 				entity->enabled = false;
 
-				//Entity::RemoveEntity(entity);
+				//App->sceneGame->RemoveEntity(entity);
 
 			break;
 		}

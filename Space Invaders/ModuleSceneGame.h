@@ -20,18 +20,25 @@ public:
 	UpdateStatus Update() override;
 	bool CleanUp() override;
 
+public:
+	void AddEntity(Entity* entity);
+	void RemoveEntity(Entity* entity);
+	const std::list<Entity*>& GetEntities() const;
+
 private:
 	Player* player = nullptr;
+	EnemyGrid enemy_grid;
+	std::list<Entity*> entities;
 
-	SDL_Texture* texture = nullptr;
-	SDL_Rect background;
-
+private:
 	Clock clock;
 
 	int rows = 3;
 	int cols = 4;
 	int offset = 20;
-	EnemyGrid enemy_grid;
+
+	SDL_Texture* texture = nullptr;
+	SDL_Rect background;
 };
 
 #endif // _MODULESCENEGAME_H_

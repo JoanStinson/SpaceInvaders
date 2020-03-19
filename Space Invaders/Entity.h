@@ -26,9 +26,6 @@ public:
 
 	virtual UpdateStatus Update(float delta_time) = 0;
 
-	static void AddEntity(Entity* entity);
-	static void RemoveEntity(Entity* entity);
-
 	void DrawEntity();
 	//void Entity::ReceiveDamage(int damage);
 
@@ -46,7 +43,6 @@ public:
 	int health;
 	bool enabled = true;
 
-	static std::list<Entity*> entities;
 	static bool debug_draw;
 
 protected:

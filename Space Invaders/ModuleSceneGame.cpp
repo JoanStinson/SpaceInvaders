@@ -17,7 +17,7 @@ ModuleSceneGame::ModuleSceneGame(bool start_enabled)
 
 ModuleSceneGame::~ModuleSceneGame()
 {
-	for (std::list<Entity*>::iterator it = Entity::entities.begin(); it != Entity::entities.end(); ++it)
+	for (std::list<Entity*>::iterator it = entities.begin(); it != entities.end(); ++it)
 		delete (*it);
 }
 
@@ -35,7 +35,7 @@ bool ModuleSceneGame::Start()
 	fPoint asteroid_positions[]{ fPoint{100, 350}, fPoint{200, 350}, fPoint{300, 350}, fPoint{400, 350} };
 
 	for (int i = 0; i < sizeof(asteroid_positions) / sizeof(asteroid_positions[0]); ++i)
-		Entity::AddEntity(new Asteroid(asteroid_texture, SDL_Rect{ 0, 0, 102, 102 }, asteroid_positions[i], 3));
+		AddEntity(new Asteroid(asteroid_texture, SDL_Rect{ 0, 0, 102, 102 }, asteroid_positions[i], 3));
 
 	// Enemies
 	enemy_grid = EnemyGrid(rows, cols);
@@ -50,7 +50,7 @@ bool ModuleSceneGame::Start()
 			fPoint position = { float((102 * j) + 12), float((102 * i) + 1) }; // calculation to have enemies aligned in grid
 			Enemy* enemy = new Enemy(enemy_texture, SDL_Rect{ 0, 0, 102, 102 }, position, 3, 1, 10.f);
 			enemy_row.push_back(enemy);
-			Entity::AddEntity(enemy);
+			AddEntity(enemy);
 		}
 
 		enemy_grid.grid.push_back(enemy_row);
@@ -60,7 +60,7 @@ bool ModuleSceneGame::Start()
 
 	// Player
 	player = new Player(App->textures->LoadImage("Game/Player/spaceship.png"), SDL_Rect{ 0, 0, 102, 102 }, fPoint{ SCREEN_WIDTH / 2, SCREEN_HEIGHT - 140 }, 3, 1, 0.5f);
-	Entity::AddEntity(player);
+	AddEntity(player);
 
 	return ret;
 }
@@ -78,7 +78,7 @@ UpdateStatus ModuleSceneGame::Update()
 	enemy_grid.Update((float)clock.delta_time);
 
 	// Update entities
-	for (std::list<Entity*>::iterator it = Entity::entities.begin(); it != Entity::entities.end() && ret == UpdateStatus::CONTINUE; ++it)
+	for (std::list<Entity*>::iterator it = entities.begin(); it != entities.end() && ret == UpdateStatus::CONTINUE; ++it)
 		if ((*it)->enabled)
 			ret = (*it)->Update((float)clock.delta_time);
 
@@ -101,4 +101,20 @@ bool ModuleSceneGame::CleanUp()
 	bool ret = true;
 
 	return ret;
+}
+
+void ModuleSceneGame::AddEntity(Entity* entity)
+{
+	entities.push_back(entity);
+}
+
+void ModuleSceneGame::RemoveEntity(Entity* entity)
+{
+	entities.remove(entity);
+	delete entity;
+}
+
+const std::list<Entity*>& ModuleSceneGame::GetEntities() const
+{
+	return entities;
 }

@@ -5,7 +5,6 @@
 
 #include <SDL_render.h>
 
-std::list<Entity*> Entity::entities;
 bool Entity::debug_draw = true;
 
 Entity::Entity(SDL_Texture* texture, SDL_Rect rect, fPoint position, int health) :
@@ -46,17 +45,6 @@ void Entity::CreateBoxCollider()
 //		//Remove entity
 //	}	
 //}
-
-void Entity::AddEntity(Entity* entity)
-{
-	entities.push_back(entity);
-}
-
-void Entity::RemoveEntity(Entity* entity)
-{
-	entities.remove(entity);
-	delete entity;
-}
 
 void Entity::SetPosition(fPoint position)
 {
