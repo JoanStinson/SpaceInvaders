@@ -18,7 +18,7 @@ public:
 	~Player();
 
 	UpdateStatus Update(float delta_time) override;
-
+	int score = 0;
 private:
 	std::vector<Bullet*> pooled_bullets;
 

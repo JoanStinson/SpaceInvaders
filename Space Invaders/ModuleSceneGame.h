@@ -19,6 +19,7 @@ public:
 
 	bool Start() override;
 	UpdateStatus Update() override;
+	UpdateStatus PostUpdate() override;
 	bool CleanUp() override;
 
 public:
@@ -51,6 +52,10 @@ private:
 	Text* lives_value = nullptr;
 	Text* score_value = nullptr;
 	Text* hiscore_value = nullptr;
+
+	int lives = 3;
+	int score = 1260;
+	int hiscore = 0;
 };
 
 #endif // _MODULESCENEGAME_H_

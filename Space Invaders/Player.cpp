@@ -16,7 +16,7 @@ Player::Player(SDL_Texture* texture, Animation animation, SDL_Rect rect, fPoint 
 
 	for (int i = 0; i < MAX_BULLETS; ++i)
 	{
-		Bullet* bullet = new Bullet(bullet_texture, SDL_Rect{ 0, 0, 32, 32 }, fPoint(), 1, 1, 0.1f, Type::PLAYER);
+		Bullet* bullet = new Bullet(bullet_texture, SDL_Rect{ 0, 0, 32, 32 }, fPoint(), 1, 1, 0.1f, this);
 		pooled_bullets.push_back(bullet);
 	}
 }

@@ -5,7 +5,7 @@
 
 #include <SDL_rect.h>
 
-Bullet::Bullet(SDL_Texture* texture, SDL_Rect rect, fPoint position, int health, int damage, float speed, Type owner) :
+Bullet::Bullet(SDL_Texture* texture, SDL_Rect rect, fPoint position, int health, int damage, float speed, Entity* owner) :
 	Creature(texture, rect, position, health, damage, speed), owner(owner)
 {
 	type = Type::BULLET;
@@ -35,16 +35,22 @@ UpdateStatus Bullet::Update(float delta_time)
 	{
 		if (!entity->enabled) continue;
 
-		if ((entity->CompareType(Type::ASTEROID) || entity->CompareType(Type::ENEMY)) && SDL_HasIntersection(&box_collider, &entity->GetBoxCollider()))
+		if ((/*entity->CompareType(Type::ASTEROID) ||*/ entity->CompareType(Type::ENEMY)) && SDL_HasIntersection(&box_collider, &entity->GetBoxCollider()))
 		{
 			enabled = false;
 
 			entity->health--;
 
 			if (entity->health < 1)
+			{
 				entity->enabled = false;
+				dynamic_cast<Player*>(owner)->score += 10;
+			}
+				
 
 				//App->sceneGame->RemoveEntity(entity);
+
+			
 
 			break;
 		}

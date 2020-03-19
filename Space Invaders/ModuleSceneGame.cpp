@@ -11,6 +11,8 @@
 #include "Enemy.h"
 //#include "Animation.h"
 
+#include <string>
+
 ModuleSceneGame::ModuleSceneGame(bool start_enabled)
 	: Module(start_enabled), background(SDL_Rect{ 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT })
 {
@@ -44,7 +46,7 @@ bool ModuleSceneGame::Start()
 	// Enemies
 	enemy_grid = EnemyGrid(rows, cols);
 	SDL_Texture* enemy_texture = App->textures->LoadImage("Sprites/spaceship_enemy.png");
-	Animation enemy_animation(8, 0.8f);
+	Animation enemy_animation(8, 0.4f);
 	for (int i = 0; i < 8; ++i)
 	{
 		int pos_x = i * 64;
@@ -68,7 +70,7 @@ bool ModuleSceneGame::Start()
 	enemy_grid.CreateGridRects();
 
 	// Player
-	player_animation = Animation(8, 0.8f);
+	player_animation = Animation(8, 0.4f);
 	for (int i = 0; i < 8; ++i)
 	{
 		int pos_x = i * 64;
@@ -83,6 +85,10 @@ bool ModuleSceneGame::Start()
 	lives_title = new Text(App->textures->LoadText("LIVES", 24, SDL_Color{ 255, 255, 255, 255 }, false, "Font/space_invaders.ttf"));
 	score_title = new Text(App->textures->LoadText("SCORE", 24, SDL_Color{ 255, 255, 255, 255 }, false, "Font/space_invaders.ttf"));
 	hiscore_title = new Text(App->textures->LoadText("HI-SCORE", 24, SDL_Color{ 255, 255, 255, 255 }, false, "Font/space_invaders.ttf"));
+
+	lives_value = new Text(App->textures->LoadText(std::to_string(lives).c_str(), 24, SDL_Color{ 255, 255, 255, 255 }, false, "Font/space_invaders.ttf"));
+	score_value = new Text(App->textures->LoadText(std::to_string(score).c_str(), 24, SDL_Color{ 255, 255, 255, 255 }, false, "Font/space_invaders.ttf"));
+	hiscore_value = new Text(App->textures->LoadText(std::to_string(hiscore).c_str(), 24, SDL_Color{ 255, 255, 255, 255 }, false, "Font/space_invaders.ttf"));
 
 	return ret;
 }
@@ -99,6 +105,19 @@ UpdateStatus ModuleSceneGame::Update()
 	App->renderer->Draw(lives_title->texture, fPoint{ 30, 15 }, &lives_title->rect);
 	App->renderer->Draw(score_title->texture, fPoint{ 170, 15 }, &score_title->rect);
 	App->renderer->Draw(hiscore_title->texture, fPoint{ 310, 15 }, &hiscore_title->rect);
+
+	lives_value->Update(App->textures->LoadText(("000"+std::to_string(player->health)).c_str(), 24, SDL_Color{ 255, 255, 255, 255 }, false, "Font/space_invaders.ttf"));
+	score_value->Update(App->textures->LoadText(std::to_string(player->score).c_str(), 24, SDL_Color{ 255, 255, 255, 255 }, false, "Font/space_invaders.ttf"));
+	hiscore_value->Update(App->textures->LoadText(/*std::to_string(hiscore).c_str()*/"0000", 24, SDL_Color{ 255, 255, 255, 255 }, false, "Font/space_invaders.ttf"));
+
+	App->renderer->Draw(lives_value->texture, fPoint{ 34, 55 }, &lives_value->rect);
+	App->renderer->Draw(score_value->texture, fPoint{ 181, 55 }, &score_value->rect);
+	App->renderer->Draw(hiscore_value->texture, fPoint{ 340, 55 }, &hiscore_value->rect);
+
+	//App->renderer->Draw(lives_title->texture, fPoint{ 30, 15 }, &lives_title->rect);
+	//App->renderer->Draw(score_title->texture, fPoint{ 170, 15 }, &score_title->rect);
+	//App->renderer->Draw(hiscore_title->texture, fPoint{ 310, 15 }, &hiscore_title->rect);
+
 	//App->renderer->Draw(player_texture, fPoint{ 0, 100 }, &(player_animation.GetCurrentFrame()));
 
 	// Update enemies
@@ -119,6 +138,14 @@ UpdateStatus ModuleSceneGame::Update()
 	//	//todo
 	//}
 	return ret;
+}
+
+UpdateStatus ModuleSceneGame::PostUpdate()
+{
+	App->textures->Unload(lives_value->texture);
+	App->textures->Unload(score_value->texture);
+	App->textures->Unload(hiscore_value->texture);
+	return UpdateStatus::CONTINUE;
 }
 
 bool ModuleSceneGame::CleanUp()
