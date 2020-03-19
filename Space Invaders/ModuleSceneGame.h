@@ -6,6 +6,8 @@
 #include "Clock.h"
 #include "EnemyGrid.h"
 
+#include <string>
+
 struct SDL_Texture;
 struct SDL_Rect;
 struct Text;
@@ -25,6 +27,7 @@ public:
 	void AddEntity(Entity* entity);
 	void RemoveEntity(Entity* entity);
 	const std::list<Entity*>& GetEntities() const;
+	std::string PadZerosLeft(int value) const;
 
 private:
 	Player* player = nullptr;
