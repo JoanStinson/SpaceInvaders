@@ -2,7 +2,6 @@
 #define _ENEMY_H_
 
 #include "Bullet.h"
-#include "Animation.h"
 
 #include <vector>
 
@@ -22,17 +21,13 @@ public:
 private:
 	std::vector<Bullet*> pooled_bullets;
 
-	SDL_Texture* bulletTexture = nullptr;
-
-	Uint8 bounces_count = 0;
+	int bounces_count = 0;
 	bool jump_frame = false;
-
-	Animation die;
 
 	const int RIGHT_LIMIT = 74;
 	const int LEFT_LIMIT = 24;
 	const int BOTTOM_LIMIT = 289;
-	const int BOUNCE_LIMIT = 0; // default = 2
+	const int BOUNCE_LIMIT = 0; 
 };
 
 #endif // _ENEMY_H_

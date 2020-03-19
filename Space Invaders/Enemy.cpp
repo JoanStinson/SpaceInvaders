@@ -27,7 +27,7 @@ UpdateStatus Enemy::Update(float delta_time)
 		}
 		else
 		{
-			dead = true;
+			alive = false;
 		}
 	}
 	else

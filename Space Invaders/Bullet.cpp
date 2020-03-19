@@ -23,13 +23,11 @@ Bullet::~Bullet()
 
 UpdateStatus Bullet::Update(float delta_time)
 {
-	// Top limit
-	if (position.y < rect.w + 70)
+	if (position.y < TOP_LIMIT)
 	{
-		//position.y = position.y;
 		if (!animation_death.HasAnimationEnded())
 		{
-			App->renderer->Draw(texture_death, fPoint{ position.x - 16, position.y - 16 }, &(animation_death.GetCurrentFrameOnce()));
+			App->renderer->Draw(texture_death, fPoint{ position.x - (rect.w / 2), position.y - (rect.w / 2) }, &(animation_death.GetCurrentFrameOnce()));
 		}
 		else
 		{
@@ -42,40 +40,48 @@ UpdateStatus Bullet::Update(float delta_time)
 		position.y -= move_speed * delta_time;
 
 		Entity::UpdateBoxCollider();
-		Entity::DrawEntity();
+		Entity::Draw();
+		CheckCollisions();
+	}
 
-		// Collisions
-		auto entities = App->sceneGame->GetEntities();
+	return UpdateStatus::CONTINUE;
+}
 
-		for (auto& entity : entities)
+void Bullet::CheckCollisions()
+{
+	auto entities = App->sceneGame->GetEntities();
+
+	for (auto& entity : entities)
+	{
+		if (!entity->enabled || !entity->alive) continue;
+
+		if (SDL_HasIntersection(&box_collider, &entity->GetBoxCollider()))
 		{
-			if (!entity->enabled) continue;
-			if (entity->dead) continue;
-
-			if ((/*entity->CompareType(Type::ASTEROID) ||*/ entity->CompareType(Type::ENEMY)) && SDL_HasIntersection(&box_collider, &entity->GetBoxCollider()))
+			// Player shot bullet to asteroid or enemy
+			if (owner->CompareType(Type::PLAYER) && (entity->CompareType(Type::ASTEROID) || entity->CompareType(Type::ENEMY)))
 			{
 				enabled = false;
-
 				entity->life_points--;
 
 				if (entity->life_points < 1)
 				{
 					//entity->enabled = false;
-					dynamic_cast<Player*>(owner)->score += 10;
-				}
 
-				//App->sceneGame->RemoveEntity(entity);
+					if (entity->CompareType(Type::ENEMY))
+						dynamic_cast<Player*>(owner)->score += 10;
+
+					//App->sceneGame->RemoveEntity(entity);
+				}
 				break;
 			}
-
-			if (entity->CompareType(Type::ASTEROID) && SDL_HasIntersection(&box_collider, &entity->GetBoxCollider()))
+			// Enemy shot bullet to player
+			else if (owner->CompareType(Type::ENEMY) && entity->CompareType(Type::PLAYER))
 			{
 				enabled = false;
 				entity->life_points--;
+
 				break;
 			}
 		}
 	}
-
-	return UpdateStatus::CONTINUE;
 }

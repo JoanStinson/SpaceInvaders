@@ -14,7 +14,7 @@ public:
 
 public:
 	void FadeToBlack(Module* module_on, Module* module_off = nullptr, float time = 1.f);
-	bool isFading() const;
+	bool IsFading() const;
 
 private:
 	bool fading_in = true;

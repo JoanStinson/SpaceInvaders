@@ -13,7 +13,12 @@ public:
 	UpdateStatus Update(float delta_time) override;
 
 private:
+	void CheckCollisions();
+
+private:
 	Entity* owner = nullptr;
+
+	const int TOP_LIMIT = rect.w + 70;
 };
 
 #endif // _BULLET_H

@@ -5,8 +5,6 @@
 
 #include <vector>
 
-#define FADE_TIME 2.f
-
 struct _Mix_Music;
 struct Mix_Chunk;
 typedef struct _Mix_Music Mix_Music;
@@ -21,7 +19,7 @@ public:
 	bool CleanUp() override;
 
 public:
-	bool PlayMusic(const char* path, float fade_time = FADE_TIME);
+	bool PlayMusic(const char* path, float fade_time = 2.f);
 	void PauseMusic();
 	void ResumeMusic();
 	void StopMusic();

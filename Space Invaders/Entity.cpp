@@ -23,7 +23,7 @@ Entity::Entity(SDL_Rect rect, SDL_Texture* texture, Animation animation, SDL_Tex
 	SetDefaultBoxCollider();
 }
 
-void Entity::DrawEntity()
+void Entity::Draw()
 {
 	if (debug_draw)
 		DrawBoxCollider();
@@ -39,10 +39,24 @@ void Entity::DrawAnimation()
 	App->renderer->Draw(texture, position, &(animation.GetCurrentFrame()));
 }
 
-void Entity::DrawBoxCollider()
+bool Entity::CompareType(Type type) const
 {
-	SDL_SetRenderDrawColor(&App->renderer->GetRenderer(), 0, 255, 0, SDL_ALPHA_OPAQUE);
-	SDL_RenderDrawRect(&App->renderer->GetRenderer(), &box_collider);
+	return this->type == type;
+}
+
+SDL_Rect Entity::GetBoxCollider() const
+{
+	return box_collider;
+}
+
+void Entity::SetPosition(fPoint position)
+{
+	this->position = position;
+}
+
+void Entity::SetBoxCollider(SDL_Rect rect_collider)
+{
+	box_collider = rect_collider;
 }
 
 void Entity::UpdateBoxCollider()
@@ -59,27 +73,8 @@ void Entity::SetDefaultBoxCollider()
 	box_collider.h = rect.h;
 }
 
-void Entity::SetBoxCollider(SDL_Rect rect_collider)
+void Entity::DrawBoxCollider()
 {
-	box_collider = rect_collider;
-}
-
-void Entity::SetPosition(fPoint position)
-{
-	this->position = position;
-}
-
-void Entity::SetTexture(SDL_Texture* texture)
-{
-	this->texture = texture;
-}
-
-bool Entity::CompareType(Type type) const
-{
-	return this->type == type;
-}
-
-SDL_Rect Entity::GetBoxCollider() const
-{
-	return box_collider;
+	SDL_SetRenderDrawColor(&App->renderer->GetRenderer(), 0, 255, 0, SDL_ALPHA_OPAQUE);
+	SDL_RenderDrawRect(&App->renderer->GetRenderer(), &box_collider);
 }

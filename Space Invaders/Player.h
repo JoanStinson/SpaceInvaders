@@ -22,8 +22,6 @@ public:
 private:
 	std::vector<Bullet*> pooled_bullets;
 
-	SDL_Texture* bulletTexture = nullptr;
-
 	const int MAX_BULLETS = 50;
 };
 

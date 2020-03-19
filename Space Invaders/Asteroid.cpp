@@ -32,7 +32,7 @@ UpdateStatus Asteroid::Update(float delta_time)
 	}
 	else
 	{
-		Entity::DrawEntity();
+		Entity::Draw();
 	}
 
 	return UpdateStatus::CONTINUE;

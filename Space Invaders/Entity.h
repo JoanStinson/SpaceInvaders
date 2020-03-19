@@ -28,35 +28,27 @@ public:
 
 	virtual UpdateStatus Update(float delta_time) = 0;
 
-	void DrawEntity();
+	void Draw();
 	void DrawAnimation();
-
-	void SetPosition(fPoint position);
-	void SetTexture(SDL_Texture* texture);
 
 	bool CompareType(Type type) const;
 	SDL_Rect GetBoxCollider() const;
-	void DrawBoxCollider();
-	void UpdateBoxCollider();
-	void SetDefaultBoxCollider();
-	void SetBoxCollider(SDL_Rect rect_collider);
 
+	void SetPosition(fPoint position);
+	void SetBoxCollider(SDL_Rect rect_collider);
+	void UpdateBoxCollider();
+
+private:
+	void SetDefaultBoxCollider();
+	void DrawBoxCollider();
 
 public:
-	int life_points = 1;
 	bool enabled = true;
+	bool alive = true;
 
+	int life_points;
 	static bool debug_draw;
 
-	SDL_Texture* texture = nullptr;
-	SDL_Texture* texture_death = nullptr;
-
-	Animation animation;
-	Animation animation_death;
-
-	bool dead = false;
-	int damage = 1;
-	float move_speed;
 protected:
 	Type type;
 	fPoint position;
@@ -64,6 +56,14 @@ protected:
 	SDL_Rect rect;
 	SDL_Rect box_collider;
 
+	Animation animation;
+	Animation animation_death;
+
+	SDL_Texture* texture = nullptr;
+	SDL_Texture* texture_death = nullptr;
+
+	int damage;
+	float move_speed;
 };
 
 #endif // _ENTITY_H_

@@ -77,7 +77,7 @@ void ModuleFadeToBlack::FadeToBlack(Module* module_on, Module* module_off, float
 	this->module_off = module_off;
 }
 
-bool ModuleFadeToBlack::isFading() const
+bool ModuleFadeToBlack::IsFading() const
 {
 	return start_time > 0;
 }
