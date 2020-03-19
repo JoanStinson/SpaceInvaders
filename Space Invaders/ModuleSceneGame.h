@@ -35,7 +35,7 @@ private:
 	Clock clock;
 
 	int rows = 3;
-	int cols = 4;
+	int cols = 6;
 	int offset = 20;
 
 	SDL_Texture* texture = nullptr;

@@ -11,13 +11,13 @@ struct SDL_Rect;
 #define RIGHT_LIMIT 72
 #define LEFT_LIMIT 11
 #define BOTTOM_LIMIT 204
-#define BOUNCE_LIMIT 4 // default = 2
+#define BOUNCE_LIMIT 0 // default = 2
 
 class Enemy : public Creature
 {
 public:
 	Enemy();
-	Enemy(SDL_Texture* texture, SDL_Rect rect, fPoint position, int health, int damage, float speed);
+	Enemy(SDL_Texture* texture, Animation animation, SDL_Rect rect, fPoint position, int health, int damage, float speed);
 	~Enemy();
 
 	UpdateStatus Update(float delta_time) override;

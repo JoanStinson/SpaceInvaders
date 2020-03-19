@@ -6,8 +6,8 @@ Enemy::Enemy()
 {
 }
 
-Enemy::Enemy(SDL_Texture* texture, SDL_Rect rect, fPoint position, int health, int damage, float speed) :
-	Creature(texture, rect, position, health, damage, speed)
+Enemy::Enemy(SDL_Texture* texture, Animation animation, SDL_Rect rect, fPoint position, int health, int damage, float speed) :
+	Creature(texture, animation, rect, position, health, damage, speed)
 {
 	type = Type::ENEMY;
 }
@@ -25,7 +25,7 @@ UpdateStatus Enemy::Update(float delta_time)
 void Enemy::Draw()
 {
 	Creature::UpdateBoxCollider();
-	Entity::DrawEntity();
+	Entity::DrawAnimation();
 }
 
 void Enemy::Move(iPoint position)
