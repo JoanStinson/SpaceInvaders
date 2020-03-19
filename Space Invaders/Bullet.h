@@ -6,10 +6,13 @@
 class Bullet : public Creature
 {
 public:
-	Bullet(SDL_Texture* texture, SDL_Rect rect, fPoint position, int health, int damage, float speed);
+	Bullet(SDL_Texture* texture, SDL_Rect rect, fPoint position, int health, int damage, float speed, Type owner);
 	~Bullet();
 
 	UpdateStatus Update(float delta_time) override;
+
+private:
+	Type owner;
 };
 
 #endif // _BULLET_H

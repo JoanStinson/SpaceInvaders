@@ -16,18 +16,22 @@ Player::Player(SDL_Texture* texture, SDL_Rect rect, fPoint position, int health,
 
 	for (int i = 0; i < MAX_BULLETS; ++i)
 	{
-		Bullet* bullet = new Bullet(bullet_texture, SDL_Rect{ 0, 0, 26,26 }, fPoint(), 1, 1, 0.1f);
+		Bullet* bullet = new Bullet(bullet_texture, SDL_Rect{ 0, 0, 26,26 }, fPoint(), 1, 1, 0.1f, Type::PLAYER);
 		pooled_bullets.push_back(bullet);
-		Entity::AddEntity(bullet);
 	}
 }
 
 Player::~Player()
 {
+	for (int i = 0; i < pooled_bullets.size(); ++i)
+	{
+		delete pooled_bullets[i];
+	}
 }
 
 UpdateStatus Player::Update(float delta_time)
 {
+	// Move right
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT))
 	{
 		position.x += speed * delta_time;
@@ -37,6 +41,7 @@ UpdateStatus Player::Update(float delta_time)
 
 		Creature::UpdateBoxCollider();
 	}
+	// Move left
 	else if (App->input->GetKey(SDL_SCANCODE_LEFT))
 	{
 		position.x -= speed * delta_time;
@@ -47,10 +52,10 @@ UpdateStatus Player::Update(float delta_time)
 		Creature::UpdateBoxCollider();
 	}
 
+	// Shoot pooled bullets
 	if (App->input->GetKeyDown(SDL_SCANCODE_SPACE))
 	{
-		// Shoot pooled projectile
-		for (unsigned i = 0; i < pooled_bullets.size(); ++i)
+		for (int i = 0; i < pooled_bullets.size(); ++i)
 		{
 			Bullet* bullet = pooled_bullets[i];
 
@@ -65,6 +70,17 @@ UpdateStatus Player::Update(float delta_time)
 	}
 
 	Entity::DrawEntity();
+
+	// Update shooted bullets if enabled
+	for (int i = 0; i < pooled_bullets.size(); ++i)
+	{
+		Bullet* bullet = pooled_bullets[i];
+
+		if (bullet->enabled)
+		{
+			bullet->Update(delta_time);
+		}
+	}
 
 	return UpdateStatus::CONTINUE;
 }

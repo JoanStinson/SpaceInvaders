@@ -4,8 +4,8 @@
 
 #include <SDL_rect.h>
 
-Bullet::Bullet(SDL_Texture* texture, SDL_Rect rect, fPoint position, int health, int damage, float speed) :
-	Creature(texture, rect, position, health, damage, speed)
+Bullet::Bullet(SDL_Texture* texture, SDL_Rect rect, fPoint position, int health, int damage, float speed, Type owner) :
+	Creature(texture, rect, position, health, damage, speed), owner(owner)
 {
 	type = Type::BULLET;
 	enabled = false;
