@@ -9,8 +9,8 @@ class Animation
 {
 public:
 	Animation();
-	Animation(int num_frames, float speed = 0.4f); 
-	Animation(int num_frames, int size, float speed = 0.4f);
+	Animation(int num_frames, float speed = 0.5f); 
+	Animation(int num_frames, int size, float speed = 0.5f);
 
 	void AddFrame(SDL_Rect frame);
 	SDL_Rect& GetCurrentFrame();

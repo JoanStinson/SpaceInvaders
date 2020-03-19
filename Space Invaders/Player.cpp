@@ -17,12 +17,12 @@ Player::Player(SDL_Rect rect, SDL_Texture* texture, Animation animation, SDL_Tex
 
 	SDL_Texture* bullet_texture = App->textures->LoadImage("Sprites/bullet.png");
 	SDL_Texture* bullet_texture_death = App->textures->LoadImage("Sprites/blue.png");
-	Animation bullet_animation_death(17, 64, 0.5f);
+	Animation bullet_animation_death(17, 64, 0.8f);
 
 	pooled_bullets.reserve(MAX_BULLETS);
 
 	for (int i = 0; i < MAX_BULLETS; ++i)
-		pooled_bullets.push_back(new Bullet({ 0, 0, 32, 32 }, bullet_texture, bullet_texture_death, bullet_animation_death, fPoint(), 1, 1, 0.1f, this));
+		pooled_bullets.push_back(new Bullet({ 0, 0, 32, 32 }, bullet_texture, bullet_texture_death, bullet_animation_death, fPoint(), 1, 1, 0.5f, this));
 }
 
 Player::~Player()
@@ -38,8 +38,8 @@ UpdateStatus Player::Update(float delta_time)
 	{
 		position.x += move_speed * delta_time;
 
-		if (position.x > SCREEN_WIDTH - rect.w - 15)
-			position.x = (float)SCREEN_WIDTH - rect.w - 15;
+		if (position.x > RIGHT_LIMIT)
+			position.x = RIGHT_LIMIT;
 
 		Entity::UpdateBoxCollider();
 	}
@@ -48,11 +48,13 @@ UpdateStatus Player::Update(float delta_time)
 	{
 		position.x -= move_speed * delta_time;
 
-		if (position.x < 0 + 15)
-			position.x = 0 + 15;
+		if (position.x < LEFT_LIMIT)
+			position.x = LEFT_LIMIT;
 
 		Entity::UpdateBoxCollider();
 	}
+
+	Entity::DrawAnimation();
 
 	// Shoot pooled bullets
 	if (App->input->GetKeyDown(SDL_SCANCODE_SPACE))
@@ -71,19 +73,13 @@ UpdateStatus Player::Update(float delta_time)
 		}
 	}
 
-	//Entity::DrawEntity();
-	Entity::DrawAnimation();
-	//App->renderer->Draw(texture, position, &(animation.frames[0]));
-
-	// Update shooted bullets if enabled
+	// Update enabled shot bullets
 	for (int i = 0; i < pooled_bullets.size(); ++i)
 	{
 		Bullet* bullet = pooled_bullets[i];
 
 		if (bullet->enabled)
-		{
 			bullet->Update(delta_time);
-		}
 	}
 
 	return UpdateStatus::CONTINUE;

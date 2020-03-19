@@ -5,10 +5,6 @@
 
 #include <vector>
 
-struct SDL_Texture;
-struct SDL_Rect;
-struct SDL_Button_t;
-
 class Player : public Entity
 {
 public:
@@ -17,12 +13,17 @@ public:
 	~Player();
 
 	UpdateStatus Update(float delta_time) override;
+
+public:
 	int score = 0;
 	int high_score = 0;
+
 private:
 	std::vector<Bullet*> pooled_bullets;
 
 	const int MAX_BULLETS = 50;
+	const int RIGHT_LIMIT = SCREEN_WIDTH - rect.w - 15;
+	const int LEFT_LIMIT = 15;
 };
 
 #endif // _PLAYER_H_

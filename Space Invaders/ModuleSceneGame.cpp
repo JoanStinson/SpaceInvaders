@@ -36,7 +36,7 @@ bool ModuleSceneGame::Start()
 
 	// Generic
 	SDL_Texture* entity_texture_death = App->textures->LoadImage("Sprites/galaxy.png");
-	Animation entity_animation_death(17, 64);
+	Animation entity_animation_death(17, 64, 0.8f);
 
 	// Asteroids
 	SDL_Texture* asteroid_texture = App->textures->LoadImage("Sprites/asteroid.png");
@@ -58,7 +58,7 @@ bool ModuleSceneGame::Start()
 
 	// Enemies
 	SDL_Texture* enemy_texture = App->textures->LoadImage("Sprites/spaceship_enemy.png");
-	Animation enemy_animation(8, 64);
+	Animation enemy_animation(8, 64, 0.4f);
 	enemy_grid = new EnemyGrid(ROWS, COLS);
 
 	for (int i = 0; i < ROWS; ++i)

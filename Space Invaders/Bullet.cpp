@@ -23,7 +23,7 @@ Bullet::~Bullet()
 
 UpdateStatus Bullet::Update(float delta_time)
 {
-	if (position.y < TOP_LIMIT)
+	if (position.y <= TOP_LIMIT)
 	{
 		if (!animation_death.HasAnimationEnded())
 		{
