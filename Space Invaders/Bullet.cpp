@@ -57,7 +57,7 @@ UpdateStatus Bullet::Update(float delta_time)
 
 			if (entity->health < 1)
 			{
-				entity->enabled = false;
+				//entity->enabled = false;
 				dynamic_cast<Player*>(owner)->score += 10;
 			}
 				

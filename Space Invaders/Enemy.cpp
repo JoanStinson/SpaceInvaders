@@ -1,6 +1,7 @@
 #include "Enemy.h"
 
 #include "Application.h"
+#include "ModuleRender.h"
 
 Enemy::Enemy()
 {
@@ -24,8 +25,27 @@ UpdateStatus Enemy::Update(float delta_time)
 
 void Enemy::Draw()
 {
-	Creature::UpdateBoxCollider();
-	Entity::DrawAnimation();
+
+
+	if (health < 1)
+	{
+
+
+		if (!die_animation.HasAnimationEnded())
+		{
+			App->renderer->Draw(die_texture, position, &(die_animation.GetCurrentFrameOnce()));
+
+		}
+		else
+		{
+			enabled = false;
+		}
+	}
+	else
+	{
+		Creature::UpdateBoxCollider();
+		Entity::DrawAnimation();
+	}
 }
 
 void Enemy::Move(iPoint position)

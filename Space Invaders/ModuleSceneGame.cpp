@@ -67,6 +67,15 @@ bool ModuleSceneGame::Start()
 		int pos_x = i * 64;
 		enemy_animation.AddFrame({ pos_x, 0, 64, 64 });
 	}
+
+	SDL_Texture* enemy_anim_texture = App->textures->LoadImage("Sprites/red.png");
+	Animation enemy_anim(17, 0.4f);
+	for (int i = 0; i < 17; ++i)
+	{
+		int pos_x = i * 64;
+		enemy_anim.AddFrame({ pos_x, 0, 64, 64 });
+	}
+
 	for (int i = 0; i < rows; ++i)
 	{
 		std::vector<Enemy*> enemy_row;
@@ -75,6 +84,8 @@ bool ModuleSceneGame::Start()
 		{
 			fPoint position = { float((64 * j) + 12), float((64 * i) + (64*2)) }; // calculation to have enemies aligned in grid
 			Enemy* enemy = new Enemy(enemy_texture, enemy_animation, SDL_Rect{ 0, 0, 64, 64 }, position, 3, 1, 10.f);
+			enemy->die_texture = enemy_anim_texture;
+			enemy->die_animation = enemy_anim;
 			enemy_row.push_back(enemy);
 			AddEntity(enemy);
 		}
