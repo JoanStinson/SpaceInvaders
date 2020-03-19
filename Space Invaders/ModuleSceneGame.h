@@ -5,7 +5,6 @@
 #include "Player.h"
 #include "Clock.h"
 #include "EnemyGrid.h"
-#include "Animation.h"
 
 struct SDL_Texture;
 struct SDL_Rect;
@@ -29,21 +28,14 @@ public:
 
 private:
 	Player* player = nullptr;
-	EnemyGrid enemy_grid;
+	EnemyGrid* enemy_grid = nullptr;
 	std::list<Entity*> entities;
 
 private:
 	Clock clock;
 
-	int rows = 3;
-	int cols = 6;
-	int offset = 20;
-
 	SDL_Texture* texture = nullptr;
 	SDL_Rect background;
-
-	Animation player_animation;
-	SDL_Texture* player_texture = nullptr;
 
 	Text* lives_title = nullptr;
 	Text* score_title = nullptr;
@@ -53,9 +45,8 @@ private:
 	Text* score_value = nullptr;
 	Text* hiscore_value = nullptr;
 
-	int lives = 3;
-	int score = 1260;
-	int hiscore = 0;
+	const int ROWS = 3;
+	const int COLS = 6;
 };
 
 #endif // _MODULESCENEGAME_H_

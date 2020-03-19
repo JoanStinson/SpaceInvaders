@@ -1,13 +1,13 @@
 #ifndef _BULLET_H_
 #define _BULLET_H_
 
-#include "Creature.h"
+#include "Entity.h"
 
-class Bullet : public Creature
+class Bullet : public Entity
 {
 public:
-	Bullet(SDL_Texture* texture, SDL_Rect rect, fPoint position, int health, int damage, float speed, Entity* owner);
-	Bullet(SDL_Texture* texture, Animation animation, SDL_Rect rect, fPoint position, int health, int damage, float speed, Entity* owner);
+	Bullet();
+	Bullet(SDL_Rect rect, SDL_Texture* texture, SDL_Texture* texture_death, Animation animation_death, fPoint position, int life_points, int damage, float move_speed, Entity* owner);
 	~Bullet();
 
 	UpdateStatus Update(float delta_time) override;

@@ -2,29 +2,29 @@
 #define _PLAYER_H_
 
 #include "Bullet.h"
-#include "Animation.h"
 
 #include <vector>
-
-#define MAX_BULLETS 50
 
 struct SDL_Texture;
 struct SDL_Rect;
 struct SDL_Button_t;
 
-class Player : public Creature
+class Player : public Entity
 {
 public:
-	Player(SDL_Texture* texture, Animation animation, SDL_Rect rect, fPoint position, int health, int damage, float speed);
+	Player();
+	Player(SDL_Rect rect, SDL_Texture* texture, Animation animation, SDL_Texture* texture_death, Animation animation_death, fPoint position, int life_points, int damage, float move_speed);
 	~Player();
 
 	UpdateStatus Update(float delta_time) override;
 	int score = 0;
+	int high_score = 0;
 private:
 	std::vector<Bullet*> pooled_bullets;
 
 	SDL_Texture* bulletTexture = nullptr;
-	Animation die;
+
+	const int MAX_BULLETS = 50;
 };
 
 #endif // _PLAYER_H_

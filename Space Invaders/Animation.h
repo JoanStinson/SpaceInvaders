@@ -8,8 +8,9 @@ struct SDL_Rect;
 class Animation
 {
 public:
-	Animation(){}
-	Animation(int num_frames, float speed = 0.1f); 
+	Animation();
+	Animation(int num_frames, float speed = 0.4f); 
+	Animation(int num_frames, int size, float speed = 0.4f);
 
 	void AddFrame(SDL_Rect frame);
 	SDL_Rect& GetCurrentFrame();
@@ -21,6 +22,7 @@ public:
 private:
 	float speed;
 	float current_frame;
+public:
 	std::vector<SDL_Rect> frames;
 	int num_frames;
 };

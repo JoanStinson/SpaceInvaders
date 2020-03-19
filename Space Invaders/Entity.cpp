@@ -5,18 +5,22 @@
 
 #include <SDL_render.h>
 
-bool Entity::debug_draw = false;
+bool Entity::debug_draw = true;
 
-Entity::Entity(SDL_Texture* texture, SDL_Rect rect, fPoint position, int health) :
-	texture(texture), rect(rect), position(position), health(health)
+Entity::Entity()
 {
-	CreateBoxCollider();
 }
 
-Entity::Entity(SDL_Texture* texture, Animation animation, SDL_Rect rect, fPoint position, int health) :
-	texture(texture), animation(animation), rect(rect), position(position), health(health)
+Entity::Entity(SDL_Rect rect, SDL_Texture* texture, SDL_Texture* texture_death, Animation animation_death, fPoint position, int life_points, int damage, float move_speed) :
+	rect(rect), texture(texture), texture_death(texture_death), animation_death(animation_death), position(position), life_points(life_points), damage(damage), move_speed(move_speed)
 {
-	CreateBoxCollider();
+	SetDefaultBoxCollider();
+}
+
+Entity::Entity(SDL_Rect rect, SDL_Texture* texture, Animation animation, SDL_Texture* texture_death, Animation animation_death, fPoint position, int life_points, int damage, float move_speed) :
+	rect(rect), texture(texture), animation(animation), texture_death(texture_death), animation_death(animation_death), position(position), life_points(life_points), damage(damage), move_speed(move_speed)
+{
+	SetDefaultBoxCollider();
 }
 
 void Entity::DrawEntity()
@@ -41,7 +45,13 @@ void Entity::DrawBoxCollider()
 	SDL_RenderDrawRect(&App->renderer->GetRenderer(), &box_collider);
 }
 
-void Entity::CreateBoxCollider()
+void Entity::UpdateBoxCollider()
+{
+	box_collider.x = position.x;
+	box_collider.y = position.y;
+}
+
+void Entity::SetDefaultBoxCollider()
 {
 	box_collider.x = position.x;
 	box_collider.y = position.y;
@@ -49,16 +59,10 @@ void Entity::CreateBoxCollider()
 	box_collider.h = rect.h;
 }
 
-//void Entity::ReceiveDamage(int damage)
-//{
-//	health -= damage;
-//
-//	if (health < 1 && on_death != nullptr)
-//	{
-//		on_death();
-//		//Remove entity
-//	}	
-//}
+void Entity::SetBoxCollider(SDL_Rect rect_collider)
+{
+	box_collider = rect_collider;
+}
 
 void Entity::SetPosition(fPoint position)
 {

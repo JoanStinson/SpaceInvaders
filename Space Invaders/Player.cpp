@@ -4,42 +4,31 @@
 #include "ModuleTextures.h"
 #include "ModuleInput.h"
 #include "Animation.h"
+#include "ModuleRender.h"
 
-Player::Player(SDL_Texture* texture, Animation animation, SDL_Rect rect, fPoint position, int health, int damage, float speed) :
-	Creature(texture, animation, rect, position, health, damage, speed)
+Player::Player()
+{
+}
+
+Player::Player(SDL_Rect rect, SDL_Texture* texture, Animation animation, SDL_Texture* texture_death, Animation animation_death, fPoint position, int life_points, int damage, float move_speed) :
+	Entity(rect, texture, animation, texture_death, animation_death, position, life_points, damage, move_speed)
 {
 	type = Type::PLAYER;
 
+	SDL_Texture* bullet_texture = App->textures->LoadImage("Sprites/bullet.png");
+	SDL_Texture* bullet_texture_death = App->textures->LoadImage("Sprites/blue.png");
+	Animation bullet_animation_death(17, 64, 0.5f);
+
 	pooled_bullets.reserve(MAX_BULLETS);
 
-	// Load bullet texture once, instead of MAX_BULLETS times
-	SDL_Texture* bullet_texture = App->textures->LoadImage("Sprites/bullet.png");
-	SDL_Texture* bullet_die_texture = App->textures->LoadImage("Sprites/blue.png");
-
-
-	Animation die_animation(17, 0.5f);
-	for (int i = 0; i < 17; ++i)
-	{
-		int pos_x = i * 64;
-		die_animation.AddFrame({ pos_x, 0, 64, 64 });
-	}
-
-	die = die_animation;
 	for (int i = 0; i < MAX_BULLETS; ++i)
-	{
-		Bullet* bullet = new Bullet(bullet_texture, SDL_Rect{ 0, 0, 32, 32 }, fPoint(), 1, 1, 0.1f, this);
-		bullet->die_texture = bullet_die_texture;
-		bullet->die_animation = die_animation;
-		pooled_bullets.push_back(bullet);
-	}
+		pooled_bullets.push_back(new Bullet({ 0, 0, 32, 32 }, bullet_texture, bullet_texture_death, bullet_animation_death, fPoint(), 1, 1, 0.1f, this));
 }
 
 Player::~Player()
 {
 	for (int i = 0; i < pooled_bullets.size(); ++i)
-	{
 		delete pooled_bullets[i];
-	}
 }
 
 UpdateStatus Player::Update(float delta_time)
@@ -47,22 +36,22 @@ UpdateStatus Player::Update(float delta_time)
 	// Move right
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT))
 	{
-		position.x += speed * delta_time;
+		position.x += move_speed * delta_time;
 
 		if (position.x > SCREEN_WIDTH - rect.w - 15)
 			position.x = (float)SCREEN_WIDTH - rect.w - 15;
 
-		Creature::UpdateBoxCollider();
+		Entity::UpdateBoxCollider();
 	}
 	// Move left
 	else if (App->input->GetKey(SDL_SCANCODE_LEFT))
 	{
-		position.x -= speed * delta_time;
+		position.x -= move_speed * delta_time;
 
 		if (position.x < 0 + 15)
 			position.x = 0 + 15;
 
-		Creature::UpdateBoxCollider();
+		Entity::UpdateBoxCollider();
 	}
 
 	// Shoot pooled bullets
@@ -82,7 +71,9 @@ UpdateStatus Player::Update(float delta_time)
 		}
 	}
 
+	//Entity::DrawEntity();
 	Entity::DrawAnimation();
+	//App->renderer->Draw(texture, position, &(animation.frames[0]));
 
 	// Update shooted bullets if enabled
 	for (int i = 0; i < pooled_bullets.size(); ++i)

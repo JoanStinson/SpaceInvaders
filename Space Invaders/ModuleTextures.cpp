@@ -77,7 +77,7 @@ SDL_Texture* const ModuleTextures::LoadImage(const char* path)
 	return texture;
 }
 
-SDL_Texture* const ModuleTextures::LoadText(const char* text, int size, SDL_Color& text_color, bool bold, const char* font_path)
+SDL_Texture* const ModuleTextures::LoadText(const char* text, int size, const SDL_Color& text_color, bool bold, const char* font_path)
 {
 	SDL_Texture* texture = nullptr;
 	TTF_Font* font = TTF_OpenFont(font_path, size);
@@ -88,7 +88,7 @@ SDL_Texture* const ModuleTextures::LoadText(const char* text, int size, SDL_Colo
 	}
 	else
 	{
-		if (bold) 
+		if (bold)
 			TTF_SetFontStyle(font, TTF_STYLE_BOLD);
 
 		SDL_Surface* surface = TTF_RenderText_Blended(font, text, text_color);

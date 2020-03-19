@@ -3,8 +3,12 @@
 #include "Application.h"
 #include "ModuleRender.h"
 
-Asteroid::Asteroid(SDL_Texture* texture, SDL_Rect rect, fPoint position, int health) :
-	Entity(texture, rect, position, health)
+Asteroid::Asteroid()
+{
+}
+
+Asteroid::Asteroid(SDL_Rect rect, SDL_Texture* texture, SDL_Texture* texture_death, Animation animation_death, fPoint position, int life_points, int damage, float move_speed) :
+	Entity(rect, texture, texture_death, animation_death, position, life_points, damage, move_speed)
 {
 	type = Type::ASTEROID;
 }
@@ -15,18 +19,11 @@ Asteroid::~Asteroid()
 
 UpdateStatus Asteroid::Update(float delta_time)
 {
-	//Entity::DrawEntity();
-	//Entity::DrawAnimation();
-
-
-	if (health < 1)
+	if (life_points < 1)
 	{
-		
-
-		if (!die_animation.HasAnimationEnded())
+		if (!animation_death.HasAnimationEnded())
 		{
-			App->renderer->Draw(die_texture, position, &(die_animation.GetCurrentFrameOnce()));
-			
+			App->renderer->Draw(texture_death, position, &(animation_death.GetCurrentFrameOnce()));
 		}
 		else
 		{
@@ -37,7 +34,6 @@ UpdateStatus Asteroid::Update(float delta_time)
 	{
 		Entity::DrawEntity();
 	}
-
 
 	return UpdateStatus::CONTINUE;
 }

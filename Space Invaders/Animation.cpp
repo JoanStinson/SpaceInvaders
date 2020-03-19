@@ -2,9 +2,21 @@
 
 #include <SDL_rect.h>
 
-Animation::Animation(int num_frames, float speed) : frames(), speed(speed), current_frame(0.f), num_frames(num_frames)
+Animation::Animation()
+{
+}
+
+Animation::Animation(int num_frames, float speed) : num_frames(num_frames), speed(speed), current_frame(0.f)
 {
 	frames.reserve(this->num_frames);
+}
+
+Animation::Animation(int num_frames, int size, float speed) : num_frames(num_frames), speed(speed), current_frame(0.f)
+{
+	frames.reserve(this->num_frames);
+
+	for (int i = 0; i < num_frames; ++i)
+		frames.push_back({ i * size, 0, size, size});
 }
 
 void Animation::AddFrame(SDL_Rect frame)

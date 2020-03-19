@@ -26,15 +26,17 @@ EnemyGrid::~EnemyGrid()
 {
 }
 
-void EnemyGrid::Update(float delta_time)
+UpdateStatus EnemyGrid::Update(float delta_time)
 {
 	clock.Tick();
 
-	DrawEnemies();
+	//UpdateEnemies(delta_time);
 
 	DrawGridRects();
 
 	clock.Invoke(0.3f, std::bind(&EnemyGrid::MoveEnemyRow, this));
+
+	return UpdateStatus::CONTINUE;
 }
 
 void EnemyGrid::CreateGridRects()
@@ -55,14 +57,14 @@ void EnemyGrid::CreateGridRects()
 	grid_rect = SDL_Rect{ 0, 0, 0, 0 };
 }
 
-void EnemyGrid::DrawEnemies()
+void EnemyGrid::UpdateEnemies(float delta_time)
 {
 	for (int i = 0; i < rows; ++i)
 	{
 		for (int j = 0; j < cols; ++j)
 		{
 			if (grid[i][j]->enabled)
-				grid[i][j]->Draw();
+				grid[i][j]->Update(delta_time);
 		}
 	}
 }

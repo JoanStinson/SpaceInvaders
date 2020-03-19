@@ -9,21 +9,14 @@
 struct SDL_Texture;
 struct SDL_Rect;
 
-#define RIGHT_LIMIT 74
-#define LEFT_LIMIT 24
-#define BOTTOM_LIMIT 289
-#define BOUNCE_LIMIT 0 // default = 2
-
-class Enemy : public Creature
+class Enemy : public Entity
 {
 public:
 	Enemy();
-	Enemy(SDL_Texture* texture, Animation animation, SDL_Rect rect, fPoint position, int health, int damage, float speed);
+	Enemy(SDL_Rect rect, SDL_Texture* texture, Animation animation, SDL_Texture* texture_death, Animation animation_death, fPoint position, int life_points, int damage, float move_speed);
 	~Enemy();
 
 	UpdateStatus Update(float delta_time) override;
-
-	void Draw();
 	void Move(iPoint position);
 
 private:
@@ -35,6 +28,11 @@ private:
 	bool jump_frame = false;
 
 	Animation die;
+
+	const int RIGHT_LIMIT = 74;
+	const int LEFT_LIMIT = 24;
+	const int BOTTOM_LIMIT = 289;
+	const int BOUNCE_LIMIT = 0; // default = 2
 };
 
 #endif // _ENEMY_H_

@@ -7,18 +7,18 @@
 
 struct SDL_Rect;
 
-class EnemyGrid
+class EnemyGrid : public Entity
 {
 public:
 	EnemyGrid();
 	EnemyGrid(Uint8 rows, Uint8 cols);
 	~EnemyGrid();
 
-	void Update(float delta_time);
+	UpdateStatus Update(float delta_time) override;
 	void CreateGridRects();
 
 private:
-	void DrawEnemies();
+	void UpdateEnemies(float delta_time);
 	void DrawGridRects();
 	void MoveEnemyRow();
 

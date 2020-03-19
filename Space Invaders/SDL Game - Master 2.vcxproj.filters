@@ -76,9 +76,6 @@
     <ClInclude Include="Entity.h">
       <Filter>Game Data</Filter>
     </ClInclude>
-    <ClInclude Include="Creature.h">
-      <Filter>Game Data</Filter>
-    </ClInclude>
     <ClInclude Include="Bullet.h">
       <Filter>Game Data</Filter>
     </ClInclude>
@@ -149,9 +146,6 @@
     </ClCompile>
     <ClCompile Include="Animation.cpp">
       <Filter>Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="Creature.cpp">
-      <Filter>Game Data</Filter>
     </ClCompile>
     <ClCompile Include="Entity.cpp">
       <Filter>Game Data</Filter>

@@ -8,10 +8,6 @@
 #include <SDL_ttf.h>
 #include <list>
 
-#define DEFAULT_COLOR SDL_Color { 67, 91, 55 }
-#define DEFAULT_TEXT_SIZE 24
-#define FONT_PATH "Game/candy.ttf"
-
 struct Text
 {
 	SDL_Texture* texture = nullptr;
@@ -41,7 +37,7 @@ public:
 
 public:
 	SDL_Texture* const LoadImage(const char* path);
-	SDL_Texture* const LoadText(const char* text, int size = DEFAULT_TEXT_SIZE, SDL_Color& text_color = DEFAULT_COLOR, bool bold = false, const char* font_path = FONT_PATH);
+	SDL_Texture* const LoadText(const char* text, int size = 24, const SDL_Color& text_color = { 255, 255, 255, 255 }, bool bold = false, const char* font_path = "Font/space_invaders.ttf");
 	void Unload(SDL_Texture* texture);
 
 private:

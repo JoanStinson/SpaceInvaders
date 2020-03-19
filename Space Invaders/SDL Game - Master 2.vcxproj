@@ -89,7 +89,6 @@
     <ClInclude Include="CEV_gifDeflate.h" />
     <ClInclude Include="CEV_gifToSurface.h" />
     <ClInclude Include="Clock.h" />
-    <ClInclude Include="Creature.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyGrid.h" />
     <ClInclude Include="Entity.h" />
@@ -115,7 +114,6 @@
     <ClCompile Include="CEV_gifDeflate.c" />
     <ClCompile Include="CEV_gifToSurface.c" />
     <ClCompile Include="CEV_gifUser.c" />
-    <ClCompile Include="Creature.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyGrid.cpp" />
     <ClCompile Include="Entity.cpp" />

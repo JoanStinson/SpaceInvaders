@@ -21,16 +21,15 @@ enum class Type
 class Entity
 {
 public:
-	Entity() {}
-	Entity(SDL_Texture* texture, SDL_Rect rect, fPoint position, int health);
-	Entity(SDL_Texture* texture, Animation animation, SDL_Rect rect, fPoint position, int health);
+	Entity();
+	Entity(SDL_Rect rect, SDL_Texture* texture, SDL_Texture* texture_death, Animation animation_death, fPoint position, int life_points, int damage, float move_speed);
+	Entity(SDL_Rect rect, SDL_Texture* texture, Animation animation, SDL_Texture* texture_death, Animation animation_death, fPoint position, int life_points, int damage, float move_speed);
 	virtual ~Entity() {};
 
 	virtual UpdateStatus Update(float delta_time) = 0;
 
 	void DrawEntity();
 	void DrawAnimation();
-	//void Entity::ReceiveDamage(int damage);
 
 	void SetPosition(fPoint position);
 	void SetTexture(SDL_Texture* texture);
@@ -38,27 +37,33 @@ public:
 	bool CompareType(Type type) const;
 	SDL_Rect GetBoxCollider() const;
 	void DrawBoxCollider();
-private:
-	void CreateBoxCollider();
+	void UpdateBoxCollider();
+	void SetDefaultBoxCollider();
+	void SetBoxCollider(SDL_Rect rect_collider);
 
 
 public:
-	int health;
+	int life_points = 1;
 	bool enabled = true;
 
 	static bool debug_draw;
 
-	SDL_Texture* die_texture;
-	Animation die_animation;
-	bool isDead = false;
+	SDL_Texture* texture = nullptr;
+	SDL_Texture* texture_death = nullptr;
+
+	Animation animation;
+	Animation animation_death;
+
+	bool dead = false;
+	int damage = 1;
+	float move_speed;
 protected:
 	Type type;
 	fPoint position;
 
 	SDL_Rect rect;
 	SDL_Rect box_collider;
-	SDL_Texture* texture = nullptr;
-	Animation animation;
+
 };
 
 #endif // _ENTITY_H_
