@@ -36,8 +36,8 @@ UpdateStatus Player::Update(float delta_time)
 	{
 		position.x += speed * delta_time;
 
-		if (position.x > SCREEN_WIDTH - rect.w)
-			position.x = (float)SCREEN_WIDTH - rect.w;
+		if (position.x > SCREEN_WIDTH - rect.w - 15)
+			position.x = (float)SCREEN_WIDTH - rect.w - 15;
 
 		Creature::UpdateBoxCollider();
 	}
@@ -46,8 +46,8 @@ UpdateStatus Player::Update(float delta_time)
 	{
 		position.x -= speed * delta_time;
 
-		if (position.x < 0)
-			position.x = 0;
+		if (position.x < 0 + 15)
+			position.x = 0 + 15;
 
 		Creature::UpdateBoxCollider();
 	}
@@ -69,7 +69,6 @@ UpdateStatus Player::Update(float delta_time)
 		}
 	}
 
-	Entity::DrawBoxCollider();
 	Entity::DrawAnimation();
 
 	// Update shooted bullets if enabled

@@ -29,6 +29,9 @@ void Entity::DrawEntity()
 
 void Entity::DrawAnimation()
 {
+	if (debug_draw)
+		DrawBoxCollider();
+
 	App->renderer->Draw(texture, position, &(animation.GetCurrentFrame()));
 }
 

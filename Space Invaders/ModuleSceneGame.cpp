@@ -32,11 +32,14 @@ bool ModuleSceneGame::Start()
 	texture = App->textures->LoadImage("Sprites/background.jpg");
 
 	// Asteroids
-	//SDL_Texture* asteroid_texture = App->textures->LoadImage("Game/Aestroids/aestroid_brown.png");
-	//fPoint asteroid_positions[]{ fPoint{100, 350}, fPoint{200, 350}, fPoint{300, 350}, fPoint{400, 350} };
+	SDL_Texture* asteroid_texture = App->textures->LoadImage("Sprites/asteroid.png");
+	float asteroid_y = SCREEN_HEIGHT - (64 * 3) + 12;
+	float asteroid_x = 15;
+	float offset = 64;
+	fPoint asteroid_positions[]{ fPoint{asteroid_x+0, asteroid_y}, fPoint{asteroid_x+(offset *2), asteroid_y}, fPoint{asteroid_x+(offset *4), asteroid_y}, fPoint{asteroid_x+(offset *6), asteroid_y} };
 
-	//for (int i = 0; i < sizeof(asteroid_positions) / sizeof(asteroid_positions[0]); ++i)
-	//	AddEntity(new Asteroid(asteroid_texture, SDL_Rect{ 0, 0, 102, 102 }, asteroid_positions[i], 3));
+	for (int i = 0; i < sizeof(asteroid_positions) / sizeof(asteroid_positions[0]); ++i)
+		AddEntity(new Asteroid(asteroid_texture, SDL_Rect{ 0, 0, 64, 64 }, asteroid_positions[i], 3));
 
 	// Enemies
 	//enemy_grid = EnemyGrid(rows, cols);
