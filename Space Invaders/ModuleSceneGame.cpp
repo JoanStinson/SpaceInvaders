@@ -68,7 +68,7 @@ bool ModuleSceneGame::Start()
 		enemy_animation.AddFrame({ pos_x, 0, 64, 64 });
 	}
 
-	SDL_Texture* enemy_anim_texture = App->textures->LoadImage("Sprites/red.png");
+	SDL_Texture* enemy_anim_texture = App->textures->LoadImage("Sprites/galaxy.png");
 	Animation enemy_anim(17, 0.4f);
 	for (int i = 0; i < 17; ++i)
 	{
@@ -87,13 +87,13 @@ bool ModuleSceneGame::Start()
 			enemy->die_texture = enemy_anim_texture;
 			enemy->die_animation = enemy_anim;
 			enemy_row.push_back(enemy);
-			AddEntity(enemy);
+			//AddEntity(enemy);
 		}
 
-		enemy_grid.grid.push_back(enemy_row);
+		//enemy_grid.grid.push_back(enemy_row);
 	}
 
-	enemy_grid.CreateGridRects();
+	//enemy_grid.CreateGridRects();
 
 	// Player
 	player_animation = Animation(8, 0.4f);
@@ -147,7 +147,7 @@ UpdateStatus ModuleSceneGame::Update()
 	//App->renderer->Draw(player_texture, fPoint{ 0, 100 }, &(player_animation.GetCurrentFrame()));
 
 	// Update enemies
-	enemy_grid.Update((float)clock.delta_time);
+	//enemy_grid.Update((float)clock.delta_time);
 
 	// Update entities
 	for (std::list<Entity*>::iterator it = entities.begin(); it != entities.end() && ret == UpdateStatus::CONTINUE; ++it)

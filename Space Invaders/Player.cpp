@@ -14,16 +14,22 @@ Player::Player(SDL_Texture* texture, Animation animation, SDL_Rect rect, fPoint 
 
 	// Load bullet texture once, instead of MAX_BULLETS times
 	SDL_Texture* bullet_texture = App->textures->LoadImage("Sprites/bullet.png");
+	SDL_Texture* bullet_die_texture = App->textures->LoadImage("Sprites/blue.png");
+
+
 	Animation die_animation(17, 0.5f);
 	for (int i = 0; i < 17; ++i)
 	{
 		int pos_x = i * 64;
 		die_animation.AddFrame({ pos_x, 0, 64, 64 });
 	}
+
 	die = die_animation;
 	for (int i = 0; i < MAX_BULLETS; ++i)
 	{
 		Bullet* bullet = new Bullet(bullet_texture, SDL_Rect{ 0, 0, 32, 32 }, fPoint(), 1, 1, 0.1f, this);
+		bullet->die_texture = bullet_die_texture;
+		bullet->die_animation = die_animation;
 		pooled_bullets.push_back(bullet);
 	}
 }

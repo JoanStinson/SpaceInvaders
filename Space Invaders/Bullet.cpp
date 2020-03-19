@@ -2,6 +2,7 @@
 
 #include "Application.h"
 #include "ModuleSceneGame.h"
+#include "ModuleRender.h"
 
 #include <SDL_rect.h>
 
@@ -25,58 +26,72 @@ Bullet::~Bullet()
 
 UpdateStatus Bullet::Update(float delta_time)
 {
-	position.y -= speed * delta_time;
 
-	Creature::UpdateBoxCollider();
 
 
 
 	// Top limit
-	if (position.y < rect.w)
+	if (position.y < rect.w + 70)
 	{
-		Entity::DrawAnimation();
+		//position.y = position.y;
+		if (!die_animation.HasAnimationEnded())
+		{
+			App->renderer->Draw(die_texture, fPoint{ position.x - 16, position.y - 16 }, &(die_animation.GetCurrentFrameOnce()));
+
+		}
+		else
+		{
+			enabled = false;
+			die_animation.ResetAnim();
+		}
 	}
 	else
 	{
+		position.y -= speed * delta_time;
+
+		Creature::UpdateBoxCollider();
+
 		Entity::DrawEntity();
-	}
-		//enabled = false;
 
-	// Collisions
-	auto entities = App->sceneGame->GetEntities();
+		// Collisions
+		auto entities = App->sceneGame->GetEntities();
 
-	for (auto& entity : entities)
-	{
-		if (!entity->enabled) continue;
-
-		if ((/*entity->CompareType(Type::ASTEROID) ||*/ entity->CompareType(Type::ENEMY)) && SDL_HasIntersection(&box_collider, &entity->GetBoxCollider()))
+		for (auto& entity : entities)
 		{
-			enabled = false;
+			if (!entity->enabled) continue;
 
-			entity->health--;
-
-			if (entity->health < 1)
+			if ((/*entity->CompareType(Type::ASTEROID) ||*/ entity->CompareType(Type::ENEMY)) && SDL_HasIntersection(&box_collider, &entity->GetBoxCollider()))
 			{
-				//entity->enabled = false;
-				dynamic_cast<Player*>(owner)->score += 10;
-			}
-				
+				enabled = false;
+
+				entity->health--;
+
+				if (entity->health < 1)
+				{
+					//entity->enabled = false;
+					dynamic_cast<Player*>(owner)->score += 10;
+				}
+
 
 				//App->sceneGame->RemoveEntity(entity);
 
-			
 
-			break;
-		}
 
-		if (entity->CompareType(Type::ASTEROID) && SDL_HasIntersection(&box_collider, &entity->GetBoxCollider()))
-		{
-			enabled = false;
+				break;
+			}
 
-			entity->health--;
-			break;
+			if (entity->CompareType(Type::ASTEROID) && SDL_HasIntersection(&box_collider, &entity->GetBoxCollider()))
+			{
+				enabled = false;
+
+				entity->health--;
+				break;
+			}
 		}
 	}
+		//enabled = false;
+
+
 
 	return UpdateStatus::CONTINUE;
 }

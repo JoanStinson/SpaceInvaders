@@ -12,7 +12,7 @@ void Animation::AddFrame(SDL_Rect frame)
 	frames.push_back(frame);
 }
 
-SDL_Rect& Animation::GetCurrentFrame()
+SDL_Rect& Animation::GetCurrentFrame()//TODO pass deltatimehere
 {
 	current_frame += speed;
 
