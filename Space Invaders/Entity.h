@@ -3,6 +3,7 @@
 
 #include "Globals.h"
 #include "Point.h"
+#include "Animation.h"
 
 #include <list>
 
@@ -22,11 +23,13 @@ class Entity
 public:
 	Entity() {}
 	Entity(SDL_Texture* texture, SDL_Rect rect, fPoint position, int health);
+	Entity(SDL_Texture* texture, Animation animation, SDL_Rect rect, fPoint position, int health);
 	virtual ~Entity() {};
 
 	virtual UpdateStatus Update(float delta_time) = 0;
 
 	void DrawEntity();
+	void DrawAnimation();
 	//void Entity::ReceiveDamage(int damage);
 
 	void SetPosition(fPoint position);
@@ -34,10 +37,10 @@ public:
 
 	bool CompareType(Type type) const;
 	SDL_Rect GetBoxCollider() const;
-
+	void DrawBoxCollider();
 private:
 	void CreateBoxCollider();
-	void DrawBoxCollider();
+
 
 public:
 	int health;
@@ -52,6 +55,7 @@ protected:
 	SDL_Rect rect;
 	SDL_Rect box_collider;
 	SDL_Texture* texture = nullptr;
+	Animation animation;
 };
 
 #endif // _ENTITY_H_

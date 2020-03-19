@@ -4,19 +4,19 @@
 #include "ModuleTextures.h"
 #include "ModuleInput.h"
 
-Player::Player(SDL_Texture* texture, SDL_Rect rect, fPoint position, int health, int damage, float speed) :
-	Creature(texture, rect, position, health, damage, speed)
+Player::Player(SDL_Texture* texture, Animation animation, SDL_Rect rect, fPoint position, int health, int damage, float speed) :
+	Creature(texture, animation, rect, position, health, damage, speed)
 {
 	type = Type::PLAYER;
 
 	pooled_bullets.reserve(MAX_BULLETS);
 
 	// Load bullet texture once, instead of MAX_BULLETS times
-	SDL_Texture* bullet_texture = App->textures->LoadImage("Game/Player/bullet.png");
+	SDL_Texture* bullet_texture = App->textures->LoadImage("Sprites/bullet.png");
 
 	for (int i = 0; i < MAX_BULLETS; ++i)
 	{
-		Bullet* bullet = new Bullet(bullet_texture, SDL_Rect{ 0, 0, 26,26 }, fPoint(), 1, 1, 0.1f, Type::PLAYER);
+		Bullet* bullet = new Bullet(bullet_texture, SDL_Rect{ 0, 0, 32, 32 }, fPoint(), 1, 1, 0.1f, Type::PLAYER);
 		pooled_bullets.push_back(bullet);
 	}
 }
@@ -63,13 +63,14 @@ UpdateStatus Player::Update(float delta_time)
 			if (!bullet->enabled)
 			{
 				bullet->enabled = true;
-				bullet->SetPosition(position);
+				bullet->SetPosition(fPoint{ position.x + 14, position.y - 16 });
 				break;
 			}
 		}
 	}
 
-	Entity::DrawEntity();
+	Entity::DrawBoxCollider();
+	Entity::DrawAnimation();
 
 	// Update shooted bullets if enabled
 	for (int i = 0; i < pooled_bullets.size(); ++i)

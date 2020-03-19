@@ -54,7 +54,6 @@ UpdateStatus ModuleRender::Update()
 
 UpdateStatus ModuleRender::PostUpdate()
 {
-	//SDL_RenderSetScale(renderer, 0.8f, 0.8f);
 	SDL_RenderPresent(renderer);
 	return UpdateStatus::CONTINUE;
 }

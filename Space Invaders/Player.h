@@ -14,7 +14,7 @@ struct SDL_Button_t;
 class Player : public Creature
 {
 public:
-	Player(SDL_Texture* texture, SDL_Rect rect, fPoint position, int health, int damage, float speed);
+	Player(SDL_Texture* texture, Animation animation, SDL_Rect rect, fPoint position, int health, int damage, float speed);
 	~Player();
 
 	UpdateStatus Update(float delta_time) override;

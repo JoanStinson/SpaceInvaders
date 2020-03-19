@@ -10,6 +10,11 @@ Creature::Creature(SDL_Texture* texture, SDL_Rect rect, fPoint position, int hea
 {
 }
 
+Creature::Creature(SDL_Texture* texture, Animation animation, SDL_Rect rect, fPoint position, int health, int damage, float speed) :
+	Entity(texture, animation, rect, position, health), damage(damage), speed(speed)
+{
+}
+
 void Creature::UpdateBoxCollider()
 {
 	box_collider.x = position.x;

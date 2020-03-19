@@ -9,6 +9,7 @@
 #include "ModuleFadeToBlack.h"
 #include "Asteroid.h"
 #include "Enemy.h"
+//#include "Animation.h"
 
 ModuleSceneGame::ModuleSceneGame(bool start_enabled)
 	: Module(start_enabled), background(SDL_Rect{ 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT })
@@ -28,38 +29,46 @@ bool ModuleSceneGame::Start()
 	bool ret = true;
 
 	// Background
-	texture = App->textures->LoadImage("Game/Background/background.jpg");
+	texture = App->textures->LoadImage("Sprites/background.jpg");
 
 	// Asteroids
-	SDL_Texture* asteroid_texture = App->textures->LoadImage("Game/Aestroids/aestroid_brown.png");
-	fPoint asteroid_positions[]{ fPoint{100, 350}, fPoint{200, 350}, fPoint{300, 350}, fPoint{400, 350} };
+	//SDL_Texture* asteroid_texture = App->textures->LoadImage("Game/Aestroids/aestroid_brown.png");
+	//fPoint asteroid_positions[]{ fPoint{100, 350}, fPoint{200, 350}, fPoint{300, 350}, fPoint{400, 350} };
 
-	for (int i = 0; i < sizeof(asteroid_positions) / sizeof(asteroid_positions[0]); ++i)
-		AddEntity(new Asteroid(asteroid_texture, SDL_Rect{ 0, 0, 102, 102 }, asteroid_positions[i], 3));
+	//for (int i = 0; i < sizeof(asteroid_positions) / sizeof(asteroid_positions[0]); ++i)
+	//	AddEntity(new Asteroid(asteroid_texture, SDL_Rect{ 0, 0, 102, 102 }, asteroid_positions[i], 3));
 
 	// Enemies
-	enemy_grid = EnemyGrid(rows, cols);
-	SDL_Texture* enemy_texture = App->textures->LoadImage("Game/Enemy/spaceship_enemy_red.png");
+	//enemy_grid = EnemyGrid(rows, cols);
+	//SDL_Texture* enemy_texture = App->textures->LoadImage("Game/Enemy/spaceship_enemy_red.png");
 
-	for (int i = 0; i < rows; ++i)
-	{
-		std::vector<Enemy*> enemy_row;
+	//for (int i = 0; i < rows; ++i)
+	//{
+	//	std::vector<Enemy*> enemy_row;
 
-		for (int j = 0; j < cols; ++j)
-		{
-			fPoint position = { float((102 * j) + 12), float((102 * i) + 1) }; // calculation to have enemies aligned in grid
-			Enemy* enemy = new Enemy(enemy_texture, SDL_Rect{ 0, 0, 102, 102 }, position, 3, 1, 10.f);
-			enemy_row.push_back(enemy);
-			AddEntity(enemy);
-		}
+	//	for (int j = 0; j < cols; ++j)
+	//	{
+	//		fPoint position = { float((102 * j) + 12), float((102 * i) + 1) }; // calculation to have enemies aligned in grid
+	//		Enemy* enemy = new Enemy(enemy_texture, SDL_Rect{ 0, 0, 102, 102 }, position, 3, 1, 10.f);
+	//		enemy_row.push_back(enemy);
+	//		AddEntity(enemy);
+	//	}
 
-		enemy_grid.grid.push_back(enemy_row);
-	}
+	//	enemy_grid.grid.push_back(enemy_row);
+	//}
 
-	enemy_grid.CreateGridRects();
+	//enemy_grid.CreateGridRects();
 
 	// Player
-	player = new Player(App->textures->LoadImage("Game/Player/spaceship.png"), SDL_Rect{ 0, 0, 102, 102 }, fPoint{ SCREEN_WIDTH / 2, SCREEN_HEIGHT - 140 }, 3, 1, 0.5f);
+	player_animation = Animation(8, 0.8f);
+	for (int i = 0; i < 8; ++i)
+	{
+		int pos_x = i * 64;
+		player_animation.AddFrame({pos_x, 0, 64, 64});
+	}
+	player_texture = App->textures->LoadImage("Sprites/spaceship.png");
+
+	player = new Player(App->textures->LoadImage("Sprites/spaceship.png"), player_animation, SDL_Rect{ 0, 0, 64, 64 }, fPoint{ (SCREEN_WIDTH / 2)-(64/2), SCREEN_HEIGHT - 96 }, 3, 1, 0.5f);
 	AddEntity(player);
 
 	return ret;
@@ -74,8 +83,11 @@ UpdateStatus ModuleSceneGame::Update()
 	// Draw background
 	App->renderer->Draw(texture, fPoint(), &background);
 
+
+	//App->renderer->Draw(player_texture, fPoint{ 0, 100 }, &(player_animation.GetCurrentFrame()));
+
 	// Update enemies
-	enemy_grid.Update((float)clock.delta_time);
+	//enemy_grid.Update((float)clock.delta_time);
 
 	// Update entities
 	for (std::list<Entity*>::iterator it = entities.begin(); it != entities.end() && ret == UpdateStatus::CONTINUE; ++it)

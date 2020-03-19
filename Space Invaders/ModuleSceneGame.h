@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "Clock.h"
 #include "EnemyGrid.h"
+#include "Animation.h"
 
 struct SDL_Texture;
 struct SDL_Rect;
@@ -39,6 +40,9 @@ private:
 
 	SDL_Texture* texture = nullptr;
 	SDL_Rect background;
+
+	Animation player_animation;
+	SDL_Texture* player_texture = nullptr;
 };
 
 #endif // _MODULESCENEGAME_H_

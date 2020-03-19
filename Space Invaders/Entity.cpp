@@ -13,12 +13,23 @@ Entity::Entity(SDL_Texture* texture, SDL_Rect rect, fPoint position, int health)
 	CreateBoxCollider();
 }
 
+Entity::Entity(SDL_Texture* texture, Animation animation, SDL_Rect rect, fPoint position, int health) :
+	texture(texture), animation(animation), rect(rect), position(position), health(health)
+{
+	CreateBoxCollider();
+}
+
 void Entity::DrawEntity()
 {
 	if (debug_draw)
 		DrawBoxCollider();
 
 	App->renderer->Draw(texture, position, &rect);
+}
+
+void Entity::DrawAnimation()
+{
+	App->renderer->Draw(texture, position, &(animation.GetCurrentFrame()));
 }
 
 void Entity::DrawBoxCollider()
