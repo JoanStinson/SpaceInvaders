@@ -69,7 +69,12 @@ void EnemyGrid::DrawEnemies()
 
 void EnemyGrid::DrawGridRects()
 {
-	if (!Entity::debug_draw) return;
+	if (!Entity::debug_draw)
+	{
+		for (int i = 0; i < row_rects.size(); ++i)
+			SDL_UnionRect(&grid_rect, &row_rects[i], &grid_rect);
+		return;
+	}
 
 	// Draw row rects
 	SDL_SetRenderDrawColor(&App->renderer->GetRenderer(), 255, 0, 0, SDL_ALPHA_OPAQUE);

@@ -50,6 +50,7 @@ public:
 
 	SDL_Texture* die_texture;
 	Animation die_animation;
+	bool isDead = false;
 protected:
 	Type type;
 	fPoint position;

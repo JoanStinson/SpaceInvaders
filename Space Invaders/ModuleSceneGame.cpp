@@ -35,7 +35,7 @@ bool ModuleSceneGame::Start()
 
 	// Asteroids
 	SDL_Texture* asteroid_texture = App->textures->LoadImage("Sprites/asteroid.png");
-	float asteroid_y = SCREEN_HEIGHT - (64 * 3) + 12;
+	float asteroid_y = SCREEN_HEIGHT - (64 * 3) + 20;
 	float asteroid_x = 15;
 	float offset = 64;
 	fPoint asteroid_positions[]{ fPoint{asteroid_x+0, asteroid_y}, fPoint{asteroid_x+(offset *2), asteroid_y}, fPoint{asteroid_x+(offset *4), asteroid_y}, fPoint{asteroid_x+(offset *6), asteroid_y} };
@@ -82,18 +82,18 @@ bool ModuleSceneGame::Start()
 
 		for (int j = 0; j < cols; ++j)
 		{
-			fPoint position = { float((64 * j) + 12), float((64 * i) + (64*2)) }; // calculation to have enemies aligned in grid
+			fPoint position = { float((64 * j) + 25), float((64 * i) + (48*2)) }; // calculation to have enemies aligned in grid
 			Enemy* enemy = new Enemy(enemy_texture, enemy_animation, SDL_Rect{ 0, 0, 64, 64 }, position, 3, 1, 10.f);
 			enemy->die_texture = enemy_anim_texture;
 			enemy->die_animation = enemy_anim;
 			enemy_row.push_back(enemy);
-			//AddEntity(enemy);
+			AddEntity(enemy);
 		}
 
-		//enemy_grid.grid.push_back(enemy_row);
+		enemy_grid.grid.push_back(enemy_row);
 	}
 
-	//enemy_grid.CreateGridRects();
+	enemy_grid.CreateGridRects();
 
 	// Player
 	player_animation = Animation(8, 0.4f);
@@ -147,7 +147,7 @@ UpdateStatus ModuleSceneGame::Update()
 	//App->renderer->Draw(player_texture, fPoint{ 0, 100 }, &(player_animation.GetCurrentFrame()));
 
 	// Update enemies
-	//enemy_grid.Update((float)clock.delta_time);
+	enemy_grid.Update((float)clock.delta_time);
 
 	// Update entities
 	for (std::list<Entity*>::iterator it = entities.begin(); it != entities.end() && ret == UpdateStatus::CONTINUE; ++it)

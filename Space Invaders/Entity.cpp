@@ -5,7 +5,7 @@
 
 #include <SDL_render.h>
 
-bool Entity::debug_draw = true;
+bool Entity::debug_draw = false;
 
 Entity::Entity(SDL_Texture* texture, SDL_Rect rect, fPoint position, int health) :
 	texture(texture), rect(rect), position(position), health(health)

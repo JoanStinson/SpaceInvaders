@@ -38,14 +38,16 @@ void Enemy::Draw()
 		}
 		else
 		{
-			enabled = false;
+			isDead = true;
 		}
 	}
 	else
 	{
-		Creature::UpdateBoxCollider();
+	
 		Entity::DrawAnimation();
 	}
+
+	Creature::UpdateBoxCollider();
 }
 
 void Enemy::Move(iPoint position)

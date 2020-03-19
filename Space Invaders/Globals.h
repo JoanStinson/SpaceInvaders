@@ -36,7 +36,7 @@ enum class UpdateStatus
 
 // Settings
 #define SCREEN_WIDTH 480
-#define SCREEN_HEIGHT 640
+#define SCREEN_HEIGHT 720
 #define VSYNC true
 #define TITLE "Space Invaders"
 

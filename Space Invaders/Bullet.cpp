@@ -59,6 +59,7 @@ UpdateStatus Bullet::Update(float delta_time)
 		for (auto& entity : entities)
 		{
 			if (!entity->enabled) continue;
+			if (entity->isDead) continue;
 
 			if ((/*entity->CompareType(Type::ASTEROID) ||*/ entity->CompareType(Type::ENEMY)) && SDL_HasIntersection(&box_collider, &entity->GetBoxCollider()))
 			{
