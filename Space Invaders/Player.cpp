@@ -33,6 +33,20 @@ Player::~Player()
 
 UpdateStatus Player::Update(float delta_time)
 {
+	if (!alive)
+	{
+		if (!animation_death.HasAnimationEnded())
+		{
+			App->renderer->Draw(texture_death, position, &(animation_death.GetCurrentFrameOnce()));
+		}
+		else
+		{
+			alive = true;
+			animation_death.ResetAnim();
+		}
+
+		return UpdateStatus::CONTINUE;
+	}
 	// Move right
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT))
 	{
@@ -82,8 +96,6 @@ UpdateStatus Player::Update(float delta_time)
 		if (bullet->enabled)
 			bullet->Update(delta_time);
 	}
-
-	//LOG("%f", position.x);
 
 	return UpdateStatus::CONTINUE;
 }

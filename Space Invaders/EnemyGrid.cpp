@@ -35,7 +35,7 @@ UpdateStatus EnemyGrid::Update(float delta_time)
 
 	clock_move.Invoke(0.3f, std::bind(&EnemyGrid::MoveEnemyRow, this));
 
-	clock_shoot.Invoke(1.f, std::bind(&EnemyGrid::ShootBullet, this));
+	clock_shoot.Invoke(0.5f, std::bind(&EnemyGrid::ShootBullet, this));
 
 	return UpdateStatus::CONTINUE;
 }

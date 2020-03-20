@@ -60,11 +60,16 @@ void Bullet::CheckCollisions()
 			// Player shot bullet to asteroid or enemy
 			if (owner->CompareType(Type::PLAYER) && (entity->CompareType(Type::ASTEROID) || entity->CompareType(Type::ENEMY)))
 			{
-				alive = false;
+				if (entity->CompareType(Type::ASTEROID))
+					alive = false;
+				else 
+					enabled = false;
+
 				entity->life_points--;
 
 				if (entity->life_points < 1)
 				{
+					enabled = false;
 					//entity->enabled = false;
 
 					if (entity->CompareType(Type::ENEMY))
@@ -82,9 +87,10 @@ void Bullet::CheckCollisions()
 			// Enemy shot bullet to player
 			else if (owner->CompareType(Type::ENEMY) && entity->CompareType(Type::PLAYER))
 			{
-				alive = false;
+				//alive = false;
+				enabled = false;
 				entity->life_points--;
-
+				entity->alive = false;
 				break;
 			}
 		}
