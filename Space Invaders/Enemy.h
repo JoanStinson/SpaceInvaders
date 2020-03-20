@@ -15,6 +15,7 @@ public:
 	UpdateStatus Update(float delta_time) override;
 	void Move(iPoint position);
 	void Shoot();
+	SDL_Rect GetRectColliderGrid() const;
 
 private:
 	std::vector<Bullet*> pooled_bullets;
@@ -27,6 +28,8 @@ private:
 	const int LEFT_LIMIT = 24;
 	const int BOTTOM_LIMIT = 289;
 	const int BOUNCE_LIMIT = 0; 
+
+	SDL_Rect rect_collider_grid;
 };
 
 #endif // _ENEMY_H_

@@ -75,7 +75,7 @@ bool ModuleSceneGame::Start()
 				(float)(64 * i) + (48 * 2)
 			};
 
-			Enemy* enemy = new Enemy({ 0, 0, 64, 64 }, { 0, 0, 64, 64 }, enemy_texture, enemy_animation, entity_texture_death, entity_animation_death, enemy_position, 1, 1, 10.f);
+			Enemy* enemy = new Enemy({ 0, 0, 64, 64 }, { 20, 20, 22, 22 }, enemy_texture, enemy_animation, entity_texture_death, entity_animation_death, enemy_position, 1, 1, 10.f);
 			enemy_row.push_back(enemy);
 			AddEntity(enemy);
 		}
