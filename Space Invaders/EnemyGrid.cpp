@@ -47,7 +47,7 @@ void EnemyGrid::CreateGridRects()
 		SDL_Rect row_rect{ 0, 0, 0, };
 
 		for (int j = 0; j < cols; ++j)
-			SDL_UnionRect(&row_rect, &grid[i][j]->GetBoxCollider(), &row_rect);
+			SDL_UnionRect(&row_rect, &grid[i][j]->GetRectCollider(), &row_rect);
 
 		row_rects[i] = row_rect;
 	}

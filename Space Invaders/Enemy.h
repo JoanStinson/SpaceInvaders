@@ -9,7 +9,7 @@ class Enemy : public Entity
 {
 public:
 	Enemy();
-	Enemy(SDL_Rect rect, SDL_Texture* texture, Animation animation, SDL_Texture* texture_death, Animation animation_death, fPoint position, int life_points, int damage, float move_speed);
+	Enemy(SDL_Rect rect, SDL_Rect rect_collider, SDL_Texture* texture, Animation animation, SDL_Texture* texture_death, Animation animation_death, fPoint position, int life_points, int damage, float move_speed);
 	~Enemy();
 
 	UpdateStatus Update(float delta_time) override;

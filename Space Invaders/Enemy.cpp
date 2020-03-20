@@ -9,8 +9,8 @@ Enemy::Enemy()
 {
 }
 
-Enemy::Enemy(SDL_Rect rect, SDL_Texture* texture, Animation animation, SDL_Texture* texture_death, Animation animation_death, fPoint position, int life_points, int damage, float move_speed) :
-	Entity(rect, texture, animation, texture_death, animation_death, position, life_points, damage, move_speed)
+Enemy::Enemy(SDL_Rect rect, SDL_Rect rect_collider, SDL_Texture* texture, Animation animation, SDL_Texture* texture_death, Animation animation_death, fPoint position, int life_points, int damage, float move_speed) :
+	Entity(rect, rect_collider, texture, animation, texture_death, animation_death, position, life_points, damage, move_speed)
 {
 	type = Type::ENEMY;
 
@@ -21,7 +21,7 @@ Enemy::Enemy(SDL_Rect rect, SDL_Texture* texture, Animation animation, SDL_Textu
 	pooled_bullets.reserve(MAX_BULLETS);
 
 	for (int i = 0; i < MAX_BULLETS; ++i)
-		pooled_bullets.push_back(new Bullet({ 0, 0, 32, 32 }, bullet_texture, bullet_texture_death, bullet_animation_death, fPoint(), 1, 1, -0.25f, this));
+		pooled_bullets.push_back(new Bullet({ 0, 0, 32, 32 }, { 8, 8, 16, 16 }, bullet_texture, bullet_texture_death, bullet_animation_death, fPoint(), 1, 1, -0.1f, this)); //default -0.25f
 }
 
 Enemy::~Enemy()
@@ -46,7 +46,7 @@ UpdateStatus Enemy::Update(float delta_time)
 		Entity::DrawAnimation();
 	}
 
-	Entity::UpdateBoxCollider();
+	Entity::UpdateRectCollider();
 
 	// Update enabled shot bullets
 	for (int i = 0; i < pooled_bullets.size(); ++i)

@@ -56,7 +56,7 @@ bool ModuleSceneGame::Start()
 	};
 
 	for (int i = 0; i < sizeof(asteroid_positions) / sizeof(asteroid_positions[0]); ++i)
-		AddEntity(new Asteroid({ 0, 0, 64, 64 }, asteroid_texture, entity_texture_death, entity_animation_death, asteroid_positions[i], 4));
+		AddEntity(new Asteroid({ 0, 0, 64, 64 }, { 12, 12, 38, 38 }, asteroid_texture, entity_texture_death, entity_animation_death, asteroid_positions[i], 4));
 
 	// Enemies
 	SDL_Texture* enemy_texture = App->textures->LoadImage("Sprites/spaceship_enemy.png");
@@ -75,7 +75,7 @@ bool ModuleSceneGame::Start()
 				(float)(64 * i) + (48 * 2)
 			};
 
-			Enemy* enemy = new Enemy({ 0, 0, 64, 64 }, enemy_texture, enemy_animation, entity_texture_death, entity_animation_death, enemy_position, 1, 1, 10.f);
+			Enemy* enemy = new Enemy({ 0, 0, 64, 64 }, { 0, 0, 64, 64 }, enemy_texture, enemy_animation, entity_texture_death, entity_animation_death, enemy_position, 1, 1, 10.f);
 			enemy_row.push_back(enemy);
 			AddEntity(enemy);
 		}
@@ -95,7 +95,7 @@ bool ModuleSceneGame::Start()
 		SCREEN_HEIGHT - 96
 	};
 
-	player = new Player({ 0, 0, 64, 64 }, player_texture, player_animation, entity_texture_death, entity_animation_death, player_position, 3, 1, 0.5f);
+	player = new Player({ 0, 0, 64, 64 }, { 12, 26, 40, 16 }, player_texture, player_animation, entity_texture_death, entity_animation_death, player_position, 3, 1, 0.5f);
 	AddEntity(player);
 
 	// Static text
