@@ -49,7 +49,7 @@ bool ModuleTextures::CleanUp()
 	return true;
 }
 
-SDL_Texture* const ModuleTextures::LoadImage(const char* path)
+SDL_Texture* const ModuleTextures::LoadTexture(const char* path)
 {
 	SDL_Texture* texture = nullptr;
 	SDL_Surface* surface = IMG_Load(path);

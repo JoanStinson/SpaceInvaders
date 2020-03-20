@@ -76,6 +76,7 @@ void Bullet::CheckCollisions()
 
 					if (entity->life_points < 1)
 					{
+						entity->alive = false;
 						dynamic_cast<Enemy*>(entity)->PlayKillSound();
 						dynamic_cast<Player*>(owner)->score += 10;
 					}

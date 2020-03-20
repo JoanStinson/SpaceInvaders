@@ -39,7 +39,7 @@ public:
 	float speed = 0.5f;
 	float init_speed = speed;
 
-	unsigned int sound_move;
+	unsigned int sfx_move;
 };
 
 #endif // _ENEMYGRID_H_

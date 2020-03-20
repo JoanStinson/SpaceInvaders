@@ -10,9 +10,7 @@
 #include "Asteroid.h"
 #include "Enemy.h"
 #include "Animation.h"
-
-#include <sstream>
-#include <iomanip>
+#include "Utils.h"
 
 ModuleSceneGame::ModuleSceneGame(bool start_enabled)
 	: Module(start_enabled), rect_background(SDL_Rect{ 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT })
@@ -34,14 +32,14 @@ bool ModuleSceneGame::Start()
 	bool ret = true;
 
 	// Background
-	texture_background = App->textures->LoadImage("Sprites/background.jpg");
+	texture_background = App->textures->LoadTexture("Sprites/background.jpg");
 
 	// Generic
-	SDL_Texture* entity_texture_death = App->textures->LoadImage("Sprites/galaxy.png");
+	SDL_Texture* entity_texture_death = App->textures->LoadTexture("Sprites/galaxy.png");
 	Animation entity_animation_death(17, 64, 0.8f);
 
 	// Asteroids
-	SDL_Texture* asteroid_texture = App->textures->LoadImage("Sprites/asteroid.png");
+	SDL_Texture* asteroid_texture = App->textures->LoadTexture("Sprites/asteroid.png");
 
 	float asteroid_position_y = SCREEN_HEIGHT - (64 * 3) + 20;
 	float asteroid_position_x = 15;
@@ -59,7 +57,7 @@ bool ModuleSceneGame::Start()
 		AddEntity(new Asteroid({ 0, 0, 64, 64 }, { 12, 12, 38, 38 }, asteroid_texture, entity_texture_death, entity_animation_death, asteroid_positions[i], 4));
 
 	// Enemies
-	SDL_Texture* enemy_texture = App->textures->LoadImage("Sprites/spaceship_enemy.png");
+	SDL_Texture* enemy_texture = App->textures->LoadTexture("Sprites/spaceship_enemy.png");
 	Animation enemy_animation(8, 64, 0.4f);
 	enemy_grid = new EnemyGrid(ROWS, COLS);
 
@@ -86,7 +84,7 @@ bool ModuleSceneGame::Start()
 	enemy_grid->CreateGridRects();
 
 	// Player
-	SDL_Texture* player_texture = App->textures->LoadImage("Sprites/spaceship.png");
+	SDL_Texture* player_texture = App->textures->LoadTexture("Sprites/spaceship.png");
 	Animation player_animation(8, 64);
 
 	fPoint player_position
@@ -104,9 +102,9 @@ bool ModuleSceneGame::Start()
 	hiscore_title = new Text(App->textures->LoadText("HI-SCORE"));
 
 	// Dynamic text
-	lives_value = new Text(App->textures->LoadText(PadZerosLeft(player->life_points).c_str()));
-	score_value = new Text(App->textures->LoadText(PadZerosLeft(player->score).c_str()));
-	hiscore_value = new Text(App->textures->LoadText(PadZerosLeft(player->high_score).c_str()));
+	lives_value = new Text(App->textures->LoadText(utils::PadZerosLeft(player->life_points).c_str()));
+	score_value = new Text(App->textures->LoadText(utils::PadZerosLeft(player->score).c_str()));
+	hiscore_value = new Text(App->textures->LoadText(utils::PadZerosLeft(player->high_score).c_str()));
 
 	return ret;
 }
@@ -126,9 +124,9 @@ UpdateStatus ModuleSceneGame::Update()
 	App->renderer->Draw(hiscore_title->texture, fPoint{ 310, 15 }, &hiscore_title->rect);
 
 	// Draw dynamic text
-	lives_value->Update(App->textures->LoadText(PadZerosLeft(player->life_points).c_str()));
-	score_value->Update(App->textures->LoadText(PadZerosLeft(player->score).c_str()));
-	hiscore_value->Update(App->textures->LoadText(PadZerosLeft(player->high_score).c_str()));
+	lives_value->Update(App->textures->LoadText(utils::PadZerosLeft(player->life_points).c_str()));
+	score_value->Update(App->textures->LoadText(utils::PadZerosLeft(player->score).c_str()));
+	hiscore_value->Update(App->textures->LoadText(utils::PadZerosLeft(player->high_score).c_str()));
 
 	App->renderer->Draw(lives_value->texture, fPoint{ 34, 55 }, &lives_value->rect);
 	App->renderer->Draw(score_value->texture, fPoint{ 181, 55 }, &score_value->rect);
@@ -186,12 +184,4 @@ void ModuleSceneGame::RemoveEntity(Entity* entity)
 const std::list<Entity*>& ModuleSceneGame::GetEntities() const
 {
 	return entities;
-}
-
-std::string ModuleSceneGame::PadZerosLeft(int value) const
-{
-	std::stringstream ss;
-	ss << std::setw(4) << std::setfill('0') << value;
-	std::string s = ss.str();
-	return s;
 }

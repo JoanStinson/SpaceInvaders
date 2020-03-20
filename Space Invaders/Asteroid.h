@@ -15,7 +15,7 @@ public:
 
 	void PlayKillSound();
 
-	unsigned int sound_killed;
+	unsigned int sfx_killed;
 };
 
 #endif // _ASTEROID_H_

@@ -35,7 +35,7 @@ private:
 
 	SDL_Rect rect_collider_grid;
 
-	unsigned int sound_killed;
+	unsigned int sfx_killed;
 };
 
 #endif // _ENEMY_H_

@@ -12,7 +12,7 @@ Asteroid::Asteroid(SDL_Rect rect, SDL_Rect rect_collider, SDL_Texture* texture, 
 {
 	type = Type::ASTEROID;
 
-	sound_killed = App->audio->LoadSound("Audio/Sounds/player_killed.wav");
+	sfx_killed = App->audio->LoadSfx("Audio/Sfx/player_killed.wav");
 }
 
 Asteroid::~Asteroid()
@@ -36,5 +36,5 @@ void Asteroid::OnDeath()
 
 void Asteroid::PlayKillSound()
 {
-	App->audio->PlaySound(sound_killed);
+	App->audio->PlaySfx(sfx_killed);
 }

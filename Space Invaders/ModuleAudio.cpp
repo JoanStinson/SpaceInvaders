@@ -54,10 +54,10 @@ bool ModuleAudio::CleanUp()
 		Mix_FreeMusic(music);
 	}
 
-	for (std::vector<Mix_Chunk*>::iterator it = sounds.begin(); it != sounds.end(); ++it)
+	for (std::vector<Mix_Chunk*>::iterator it = sfxs.begin(); it != sfxs.end(); ++it)
 		Mix_FreeChunk(*it);
 
-	sounds.clear();
+	sfxs.clear();
 	Mix_CloseAudio();
 	Mix_Quit();
 	SDL_QuitSubSystem(SDL_INIT_AUDIO);
@@ -129,7 +129,7 @@ void ModuleAudio::StopMusic()
 	Mix_HaltMusic();
 }
 
-unsigned int ModuleAudio::LoadSound(const char* path)
+unsigned int ModuleAudio::LoadSfx(const char* path)
 {
 	unsigned int ret = 0;
 	Mix_Chunk* chunk = Mix_LoadWAV(path);
@@ -140,20 +140,20 @@ unsigned int ModuleAudio::LoadSound(const char* path)
 	}
 	else
 	{
-		sounds.push_back(chunk);
-		ret = sounds.size() - 1;
+		sfxs.push_back(chunk);
+		ret = sfxs.size() - 1;
 	}
 
 	return ret;
 }
 
-bool ModuleAudio::PlaySound(unsigned int sound, int repeat)
+bool ModuleAudio::PlaySfx(unsigned int sfx, int repeat)
 {
 	bool ret = false;
 
-	if (sound < sounds.size())
+	if (sfx < sfxs.size())
 	{
-		Mix_PlayChannel(-1, sounds[sound], repeat);
+		Mix_PlayChannel(-1, sfxs[sfx], repeat);
 		ret = true;
 	}
 

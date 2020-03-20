@@ -2,11 +2,7 @@
 #define _MODULESCENEMENU_H_
 
 #include "Module.h"
-#include "SDL_Button.h"
-
-enum class MouseMove;
-struct SDL_Texture;
-struct SDL_Rect;
+#include "Button.h"
 
 class ModuleSceneMenu : public Module
 {
@@ -26,6 +22,12 @@ private:
 	SDL_Rect rect_logo;
 
 	SDL_Texture* texture_buttons = nullptr;
+	Button button_play;
+	Button button_credits;
+	Button button_exit;
+
+	unsigned int sfx_hover;
+	unsigned int sfx_pressed;
 };
 
 #endif // _MODULESCENEMENU_H_

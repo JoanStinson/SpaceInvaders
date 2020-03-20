@@ -64,9 +64,6 @@
     <ClInclude Include="ModuleSceneGame.h">
       <Filter>Game Modules</Filter>
     </ClInclude>
-    <ClInclude Include="SDL_Button.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
     <ClInclude Include="ModuleSceneMenu.h">
       <Filter>Game Modules</Filter>
     </ClInclude>
@@ -93,6 +90,12 @@
     </ClInclude>
     <ClInclude Include="EnemyGrid.h">
       <Filter>Game Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils.h">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -134,9 +137,6 @@
     </ClCompile>
     <ClCompile Include="ModuleSceneGame.cpp">
       <Filter>Game Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="SDL_Button.cpp">
-      <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="ModuleSceneMenu.cpp">
       <Filter>Game Modules</Filter>

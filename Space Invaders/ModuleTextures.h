@@ -36,7 +36,7 @@ public:
 	bool CleanUp() override;
 
 public:
-	SDL_Texture* const LoadImage(const char* path);
+	SDL_Texture* const LoadTexture(const char* path);
 	SDL_Texture* const LoadText(const char* text, int size = 24, const SDL_Color& text_color = { 255, 255, 255, 255 }, bool bold = false, const char* font_path = "Font/space_invaders.ttf");
 	void Unload(SDL_Texture* texture);
 

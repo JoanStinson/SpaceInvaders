@@ -28,8 +28,8 @@ private:
 	const int RIGHT_LIMIT = SCREEN_WIDTH - rect.w - 15;
 	const int LEFT_LIMIT = 15;
 
-	unsigned int sound_shoot;
-	unsigned int sound_killed;
+	unsigned int sfx_shoot;
+	unsigned int sfx_killed;
 };
 
 #endif // _PLAYER_H_

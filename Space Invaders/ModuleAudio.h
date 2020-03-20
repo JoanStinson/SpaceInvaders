@@ -23,12 +23,12 @@ public:
 	void ResumeMusic();
 	void StopMusic();
 
-	unsigned int LoadSound(const char* path);
-	bool PlaySound(unsigned int sound, int repeat = 0);
+	unsigned int LoadSfx(const char* path);
+	bool PlaySfx(unsigned int sfx, int repeat = 0);
 
 private:
 	Mix_Music* music = nullptr;
-	std::vector<Mix_Chunk*>	sounds;
+	std::vector<Mix_Chunk*>	sfxs;
 };
 
 #endif // _MODULEAUDIO_H_
