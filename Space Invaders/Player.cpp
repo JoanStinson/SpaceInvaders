@@ -45,57 +45,58 @@ UpdateStatus Player::Update(float delta_time)
 			alive = true;
 			animation_death.ResetAnim();
 		}
-
-		return UpdateStatus::CONTINUE;
 	}
-	// Move right
-	if (App->input->GetKey(SDL_SCANCODE_RIGHT))
+	else
 	{
-		position.x += move_speed * delta_time;
+		// Move right
+		if (App->input->GetKey(SDL_SCANCODE_RIGHT))
+		{
+			position.x += move_speed * delta_time;
 
-		if (position.x > RIGHT_LIMIT)
-			position.x = RIGHT_LIMIT;
+			if (position.x > RIGHT_LIMIT)
+				position.x = RIGHT_LIMIT;
 
-		Entity::UpdateRectCollider();
-	}
-	// Move left
-	else if (App->input->GetKey(SDL_SCANCODE_LEFT))
-	{
-		position.x -= move_speed * delta_time;
+			Entity::UpdateRectCollider();
+		}
+		// Move left
+		else if (App->input->GetKey(SDL_SCANCODE_LEFT))
+		{
+			position.x -= move_speed * delta_time;
 
-		if (position.x < LEFT_LIMIT)
-			position.x = LEFT_LIMIT;
+			if (position.x < LEFT_LIMIT)
+				position.x = LEFT_LIMIT;
 
-		Entity::UpdateRectCollider();
-	}
+			Entity::UpdateRectCollider();
+		}
 
-	Entity::DrawAnimation();
+		Entity::DrawAnimation();
 
-	// Shoot pooled bullets
-	if (App->input->GetKeyDown(SDL_SCANCODE_SPACE))
-	{
+		// Shoot pooled bullets
+		if (App->input->GetKeyDown(SDL_SCANCODE_SPACE))
+		{
+			for (int i = 0; i < pooled_bullets.size(); ++i)
+			{
+				Bullet* bullet = pooled_bullets[i];
+
+				// Instead of new/delete, enable/disable
+				if (!bullet->enabled)
+				{
+					bullet->enabled = true;
+					bullet->alive = true;
+					bullet->SetPosition(fPoint{ position.x + 14, position.y - 16 });
+					break;
+				}
+			}
+		}
+
+		// Update enabled shot bullets
 		for (int i = 0; i < pooled_bullets.size(); ++i)
 		{
 			Bullet* bullet = pooled_bullets[i];
 
-			// Instead of new/delete, enable/disable
-			if (!bullet->enabled)
-			{
-				bullet->enabled = true;
-				bullet->alive = true;
-				bullet->SetPosition(fPoint{ position.x + 14, position.y - 16 });
-				break;
-			}
+			if (bullet->enabled)
+				bullet->Update(delta_time);
 		}
-	}
-
-	// Update enabled shot bullets
-	for (int i = 0; i < pooled_bullets.size(); ++i)
-	{
-		Bullet* bullet = pooled_bullets[i];
-
-		if (bullet->enabled)
-			bullet->Update(delta_time);
 	}
 
 	return UpdateStatus::CONTINUE;
