@@ -1,7 +1,5 @@
 #include "ModuleWindow.h"
 
-#include "Application.h"
-
 #include <SDL_image.h>
 
 ModuleWindow::ModuleWindow()

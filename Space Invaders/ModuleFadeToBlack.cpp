@@ -3,8 +3,8 @@
 #include "Application.h"
 #include "ModuleRender.h"
 
-#include <math.h>
 #include <SDL.h>
+#include <math.h>
 
 ModuleFadeToBlack::ModuleFadeToBlack(bool start_enabled) : Module(start_enabled)
 {

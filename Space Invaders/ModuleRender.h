@@ -16,7 +16,6 @@ public:
 
 	bool Init() override;
 	UpdateStatus PreUpdate() override;
-	UpdateStatus Update() override;
 	UpdateStatus PostUpdate() override;
 	bool CleanUp() override;
 

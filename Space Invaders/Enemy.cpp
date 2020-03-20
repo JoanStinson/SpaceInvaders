@@ -29,14 +29,14 @@ Enemy::Enemy(SDL_Rect rect, SDL_Rect rect_collider, SDL_Texture* texture, Animat
 
 Enemy::~Enemy()
 {
+	for (int i = 0; i < pooled_bullets.size(); ++i)
+		delete pooled_bullets[i];
 }
 
 UpdateStatus Enemy::Update(float delta_time)
 {
 	if (!DrawAnimationDeath(life_points < 1, position))
 		DrawAnimation();
-	//else
-		
 
 	rect_collider_grid.x = position.x; 
 	rect_collider_grid.y = position.y; 

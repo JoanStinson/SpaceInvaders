@@ -23,6 +23,14 @@ ModuleSceneGame::~ModuleSceneGame()
 		delete (*it);
 
 	delete enemy_grid;
+
+	delete lives_title;
+	delete score_title;
+	delete hiscore_title;
+
+	delete lives_value;
+	delete score_value;
+	delete hiscore_value;
 }
 
 bool ModuleSceneGame::Start()

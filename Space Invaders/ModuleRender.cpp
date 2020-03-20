@@ -2,8 +2,6 @@
 
 #include "Application.h"
 #include "ModuleWindow.h"
-#include "ModuleInput.h"
-#include "ModuleSceneMenu.h"
 
 #include <SDL_render.h>
 
@@ -44,11 +42,6 @@ UpdateStatus ModuleRender::PreUpdate()
 {
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
 	SDL_RenderClear(renderer);
-	return UpdateStatus::CONTINUE;
-}
-
-UpdateStatus ModuleRender::Update()
-{
 	return UpdateStatus::CONTINUE;
 }
 

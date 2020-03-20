@@ -1,7 +1,5 @@
 #include "ModuleInput.h"
 
-#include "Application.h"
-
 #include <SDL.h>
 
 ModuleInput::ModuleInput() : Module(), window_events(), mouse_buttons(), mouse_motion({ 0,0 }), mouse_pos({ 0, 0 })
@@ -17,7 +15,7 @@ ModuleInput::ModuleInput() : Module(), window_events(), mouse_buttons(), mouse_m
 
 ModuleInput::~ModuleInput()
 {
-	RELEASE_ARRAY(keyboard);
+	delete[] keyboard;
 }
 
 bool ModuleInput::Init()
@@ -33,11 +31,6 @@ bool ModuleInput::Init()
 	}
 
 	return ret;
-}
-
-bool ModuleInput::Start()
-{
-	return true;
 }
 
 UpdateStatus ModuleInput::PreUpdate()

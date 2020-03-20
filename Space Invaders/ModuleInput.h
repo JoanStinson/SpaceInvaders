@@ -40,7 +40,6 @@ public:
 	~ModuleInput();
 
 	bool Init() override;
-	bool Start() override;
 	UpdateStatus PreUpdate() override;
 	bool CleanUp() override;
 
