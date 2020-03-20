@@ -1,9 +1,7 @@
 #include "Enemy.h"
 
 #include "Application.h"
-#include "ModuleRender.h"
 #include "ModuleTextures.h"
-#include "Animation.h"
 
 Enemy::Enemy()
 {

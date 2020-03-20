@@ -3,9 +3,6 @@
 #include "Application.h"
 #include "ModuleTextures.h"
 #include "ModuleInput.h"
-#include "Animation.h"
-#include "ModuleRender.h"
-#include "Point.h"
 
 Player::Player()
 {

@@ -26,6 +26,8 @@ private:
 	const int MAX_BULLETS = 50;
 	const int RIGHT_LIMIT = SCREEN_WIDTH - rect.w - 15;
 	const int LEFT_LIMIT = 15;
+
+	unsigned int sfx_shoot;
 };
 
 #endif // _PLAYER_H_

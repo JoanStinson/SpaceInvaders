@@ -1,8 +1,5 @@
 #include "Asteroid.h"
 
-#include "Application.h"
-#include "ModuleRender.h"
-
 Asteroid::Asteroid()
 {
 }

@@ -2,9 +2,6 @@
 
 #include "Application.h"
 #include "ModuleSceneGame.h"
-#include "ModuleRender.h"
-
-#include <SDL_rect.h>
 
 Bullet::Bullet()
 {
