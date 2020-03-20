@@ -99,28 +99,33 @@ void EnemyGrid::MoveEnemyRow()
 void EnemyGrid::ShootBullet()
 {
 	std::vector<Enemy*> enemies_that_can_shoot;
+	std::vector<bool> has_enemy_in_col;
+	has_enemy_in_col.reserve(cols);
+	for (int i = 0; i < cols; ++i)
+		has_enemy_in_col.push_back(false);
 
-	// Iterate grid from bottom->top, right->left 
+	// Iterate grid from bottom->top, left<-right
 	for (int i = rows - 1; i >= 0; --i)
 	{
 		for (int j = cols - 1; j >= 0; --j)
 		{
-			if (!grid[i][j]->enabled || !grid[i][j]->alive) continue;
+			if (!grid[i][j]->enabled || !grid[i][j]->alive || has_enemy_in_col[j]) continue;
 
 			// If it can shoot save it, get the most bottom enemy of each col
-			if ((grid[i][j]->GetPosition().x >= 55 && grid[i][j]->GetPosition().x <= 99) ||
-				(grid[i][j]->GetPosition().x >= 195 && grid[i][j]->GetPosition().x <= 239) ||
-				(grid[i][j]->GetPosition().x >= 305 && grid[i][j]->GetPosition().x <= 349))
+			if ((grid[i][j]->GetPosition().x >= 55 && grid[i][j]->GetPosition().x <= 100) ||
+				(grid[i][j]->GetPosition().x >= 180 && grid[i][j]->GetPosition().x <= 225) ||
+				(grid[i][j]->GetPosition().x >= 305 && grid[i][j]->GetPosition().x <= 350))
 			{
 				enemies_that_can_shoot.push_back(grid[i][j]);
-				//grid[i][j]->Shoot();
-				//LOG("Pos (%d, %d)", i + 1, j + 1);
-				//break;
+				has_enemy_in_col[j] = true;
 			}
 		}
 	}
 
 	// From the enemies that can shoot, choose a random one
-	int random_index = rand() % enemies_that_can_shoot.size();
-	enemies_that_can_shoot[random_index]->Shoot();
+	if (enemies_that_can_shoot.size() > 0)
+	{
+		int random_index = rand() % enemies_that_can_shoot.size();
+		enemies_that_can_shoot[random_index]->Shoot();
+	}
 }

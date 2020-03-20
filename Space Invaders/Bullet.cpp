@@ -23,7 +23,7 @@ Bullet::~Bullet()
 
 UpdateStatus Bullet::Update(float delta_time)
 {
-	if (position.y <= TOP_LIMIT || position.y >= BOTTOM_LIMIT)
+	if (position.y <= TOP_LIMIT || position.y >= BOTTOM_LIMIT || !alive)
 	{
 		if (!animation_death.HasAnimationEnded())
 		{
@@ -60,7 +60,7 @@ void Bullet::CheckCollisions()
 			// Player shot bullet to asteroid or enemy
 			if (owner->CompareType(Type::PLAYER) && (entity->CompareType(Type::ASTEROID) || entity->CompareType(Type::ENEMY)))
 			{
-				enabled = false;
+				alive = false;
 				entity->life_points--;
 
 				if (entity->life_points < 1)
@@ -70,6 +70,11 @@ void Bullet::CheckCollisions()
 					if (entity->CompareType(Type::ENEMY))
 						dynamic_cast<Player*>(owner)->score += 10;
 
+					if (entity->CompareType(Type::ASTEROID))
+					{
+						dynamic_cast<Player*>(owner)->asteroids_destroyed += 1;
+					}
+
 					//App->sceneGame->RemoveEntity(entity);
 				}
 				break;
@@ -77,7 +82,7 @@ void Bullet::CheckCollisions()
 			// Enemy shot bullet to player
 			else if (owner->CompareType(Type::ENEMY) && entity->CompareType(Type::PLAYER))
 			{
-				enabled = false;
+				alive = false;
 				entity->life_points--;
 
 				break;

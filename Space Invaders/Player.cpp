@@ -67,6 +67,7 @@ UpdateStatus Player::Update(float delta_time)
 			if (!bullet->enabled)
 			{
 				bullet->enabled = true;
+				bullet->alive = true;
 				bullet->SetPosition(fPoint{ position.x + 14, position.y - 16 });
 				break;
 			}
