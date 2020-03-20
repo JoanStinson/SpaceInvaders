@@ -21,6 +21,7 @@ public:
 private:
 	void DrawGridRects();
 	void MoveEnemyRow();
+	void ShootBullet();
 
 public:
 	int rows;

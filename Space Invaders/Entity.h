@@ -33,6 +33,7 @@ public:
 
 	bool CompareType(Type type) const;
 	SDL_Rect GetBoxCollider() const;
+	fPoint GetPosition() const;
 
 	void SetPosition(fPoint position);
 	void SetBoxCollider(SDL_Rect rect_collider);

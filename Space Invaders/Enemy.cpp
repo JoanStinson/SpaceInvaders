@@ -2,6 +2,8 @@
 
 #include "Application.h"
 #include "ModuleRender.h"
+#include "ModuleTextures.h"
+#include "Animation.h"
 
 Enemy::Enemy()
 {
@@ -11,6 +13,15 @@ Enemy::Enemy(SDL_Rect rect, SDL_Texture* texture, Animation animation, SDL_Textu
 	Entity(rect, texture, animation, texture_death, animation_death, position, life_points, damage, move_speed)
 {
 	type = Type::ENEMY;
+
+	SDL_Texture* bullet_texture = App->textures->LoadImage("Sprites/bullet_enemy.png");
+	SDL_Texture* bullet_texture_death = App->textures->LoadImage("Sprites/red.png");
+	Animation bullet_animation_death(17, 64, 0.8f);
+
+	pooled_bullets.reserve(MAX_BULLETS);
+
+	for (int i = 0; i < MAX_BULLETS; ++i)
+		pooled_bullets.push_back(new Bullet({ 0, 0, 32, 32 }, bullet_texture, bullet_texture_death, bullet_animation_death, fPoint(), 1, 1, -0.1f, this));
 }
 
 Enemy::~Enemy()
@@ -33,6 +44,15 @@ UpdateStatus Enemy::Update(float delta_time)
 	else
 	{
 		Entity::DrawAnimation();
+
+		// Update enabled shot bullets
+		for (int i = 0; i < pooled_bullets.size(); ++i)
+		{
+			Bullet* bullet = pooled_bullets[i];
+
+			if (bullet->enabled)
+				bullet->Update(delta_time);
+		}
 	}
 
 	Entity::UpdateBoxCollider();
@@ -60,4 +80,23 @@ void Enemy::Move(iPoint position)
 	jump_frame = false;
 
 	this->position.x += move_speed;
+}
+
+void Enemy::Shoot()
+{
+	LOG("I shot! :)");
+
+	// Shoot pooled bullets
+	for (int i = 0; i < pooled_bullets.size(); ++i)
+	{
+		Bullet* bullet = pooled_bullets[i];
+
+		// Instead of new/delete, enable/disable
+		if (!bullet->enabled)
+		{
+			bullet->enabled = true;
+			bullet->SetPosition(fPoint{ position.x + 16, position.y + 34 });
+			break;
+		}
+	}
 }

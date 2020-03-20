@@ -49,6 +49,11 @@ SDL_Rect Entity::GetBoxCollider() const
 	return box_collider;
 }
 
+fPoint Entity::GetPosition() const
+{
+	return position;
+}
+
 void Entity::SetPosition(fPoint position)
 {
 	this->position = position;

@@ -82,5 +82,7 @@ UpdateStatus Player::Update(float delta_time)
 			bullet->Update(delta_time);
 	}
 
+	//LOG("%f", position.x);
+
 	return UpdateStatus::CONTINUE;
 }

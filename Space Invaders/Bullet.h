@@ -19,6 +19,7 @@ private:
 	Entity* owner = nullptr;
 
 	const int TOP_LIMIT = rect.w + 70;
+	const int BOTTOM_LIMIT = SCREEN_HEIGHT - rect.w;
 };
 
 #endif // _BULLET_H

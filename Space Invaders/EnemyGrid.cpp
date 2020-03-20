@@ -31,7 +31,9 @@ UpdateStatus EnemyGrid::Update(float delta_time)
 
 	DrawGridRects();
 
-	clock.Invoke(0.3f, std::bind(&EnemyGrid::MoveEnemyRow, this));
+	//clock.Invoke(0.3f, std::bind(&EnemyGrid::MoveEnemyRow, this));
+
+	clock.Invoke(1.f, std::bind(&EnemyGrid::ShootBullet, this));
 
 	return UpdateStatus::CONTINUE;
 }
@@ -90,4 +92,24 @@ void EnemyGrid::MoveEnemyRow()
 	}
 
 	CreateGridRects(); // update only after moving
+}
+
+void EnemyGrid::ShootBullet()
+{
+	for (int i = 0; i < rows; ++i)
+	{
+		for (int j = 0; j < cols; ++j)
+		{
+			if (!grid[i][j]->enabled || !grid[i][j]->alive) continue;
+
+			if ((grid[i][j]->GetPosition().x >= 55 && grid[i][j]->GetPosition().x <= 99)   ||
+				(grid[i][j]->GetPosition().x >= 195 && grid[i][j]->GetPosition().x <= 239) ||
+				(grid[i][j]->GetPosition().x >= 305 && grid[i][j]->GetPosition().x <= 349))
+			{
+				grid[i][j]->Shoot();
+				LOG("Pos (%d, %d)", i + 1, j + 1);
+				return;
+			}
+		}
+	}
 }

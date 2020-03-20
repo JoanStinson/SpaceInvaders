@@ -5,9 +5,6 @@
 
 #include <vector>
 
-struct SDL_Texture;
-struct SDL_Rect;
-
 class Enemy : public Entity
 {
 public:
@@ -17,6 +14,7 @@ public:
 
 	UpdateStatus Update(float delta_time) override;
 	void Move(iPoint position);
+	void Shoot();
 
 private:
 	std::vector<Bullet*> pooled_bullets;
@@ -24,6 +22,7 @@ private:
 	int bounces_count = 0;
 	bool jump_frame = false;
 
+	const int MAX_BULLETS = 10;
 	const int RIGHT_LIMIT = 74;
 	const int LEFT_LIMIT = 24;
 	const int BOTTOM_LIMIT = 289;
