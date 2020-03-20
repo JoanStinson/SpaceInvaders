@@ -5,7 +5,7 @@
 
 #include <SDL_render.h>
 
-bool Entity::debug_draw = true;
+bool Entity::debug_draw = false;
 
 Entity::Entity()
 {

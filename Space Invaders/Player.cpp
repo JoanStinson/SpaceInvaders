@@ -3,6 +3,7 @@
 #include "Application.h"
 #include "ModuleTextures.h"
 #include "ModuleInput.h"
+#include "ModuleAudio.h"
 
 Player::Player()
 {
@@ -21,6 +22,9 @@ Player::Player(SDL_Rect rect, SDL_Rect rect_collider, SDL_Texture* texture, Anim
 
 	for (int i = 0; i < MAX_BULLETS; ++i)
 		pooled_bullets.push_back(new Bullet({ 0, 0, 32, 32 }, { 8, 8, 16, 16 }, bullet_texture, bullet_texture_death, bullet_animation_death, fPoint(), 1, 1, 0.5f, this));
+
+	sound_shoot = App->audio->LoadSound("Audio/Sounds/player_shoot.wav");
+	sound_killed = App->audio->LoadSound("Audio/Sounds/player_killed.wav");
 }
 
 Player::~Player()
@@ -60,6 +64,8 @@ UpdateStatus Player::Update(float delta_time)
 	// Shoot pooled bullets
 	if (App->input->GetKeyDown(SDL_SCANCODE_SPACE))
 	{
+		App->audio->PlaySound(sound_shoot);
+
 		for (int i = 0; i < pooled_bullets.size(); ++i)
 		{
 			Bullet* bullet = pooled_bullets[i];
@@ -91,4 +97,9 @@ void Player::OnDeath()
 {
 	alive = true;
 	animation_death.ResetAnim();
+}
+
+void Player::PlayKillSound()
+{
+	App->audio->PlaySound(sound_killed);
 }

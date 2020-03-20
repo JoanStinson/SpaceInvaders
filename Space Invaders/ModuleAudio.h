@@ -5,7 +5,6 @@
 
 #include <vector>
 
-struct _Mix_Music;
 struct Mix_Chunk;
 typedef struct _Mix_Music Mix_Music;
 
@@ -24,12 +23,12 @@ public:
 	void ResumeMusic();
 	void StopMusic();
 
-	unsigned int LoadFx(const char* path);
-	bool PlayFx(unsigned int fx, int repeat = 0);
+	unsigned int LoadSound(const char* path);
+	bool PlaySound(unsigned int sound, int repeat = 0);
 
 private:
 	Mix_Music* music = nullptr;
-	std::vector<Mix_Chunk*>	fx;
+	std::vector<Mix_Chunk*>	sounds;
 };
 
 #endif // _MODULEAUDIO_H_

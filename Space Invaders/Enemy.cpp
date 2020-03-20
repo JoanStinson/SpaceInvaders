@@ -2,6 +2,7 @@
 
 #include "Application.h"
 #include "ModuleTextures.h"
+#include "ModuleAudio.h"
 
 Enemy::Enemy()
 {
@@ -22,6 +23,8 @@ Enemy::Enemy(SDL_Rect rect, SDL_Rect rect_collider, SDL_Texture* texture, Animat
 		pooled_bullets.push_back(new Bullet({ 0, 0, 32, 32 }, { 8, 8, 16, 16 }, bullet_texture, bullet_texture_death, bullet_animation_death, fPoint(), 1, 1, -0.25f, this));
 
 	rect_collider_grid = { (int)position.x, (int)position.y, rect.w, rect.h };
+
+	sound_killed = App->audio->LoadSound("Audio/Sounds/enemy_killed.wav");
 }
 
 Enemy::~Enemy()
@@ -32,6 +35,8 @@ UpdateStatus Enemy::Update(float delta_time)
 {
 	if (!DrawAnimationDeath(life_points < 1, position))
 		DrawAnimation();
+	//else
+		
 
 	rect_collider_grid.x = position.x; 
 	rect_collider_grid.y = position.y; 
@@ -79,8 +84,6 @@ void Enemy::Move(iPoint position)
 
 void Enemy::Shoot()
 {
-	LOG("%f", position.x);
-
 	// Shoot pooled bullets
 	for (int i = 0; i < pooled_bullets.size(); ++i)
 	{
@@ -100,4 +103,9 @@ void Enemy::Shoot()
 SDL_Rect Enemy::GetRectColliderGrid() const
 {
 	return rect_collider_grid;
+}
+
+void Enemy::PlayKillSound()
+{
+	App->audio->PlaySound(sound_killed);
 }

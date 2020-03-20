@@ -2,6 +2,7 @@
 
 #include "Application.h"
 #include "ModuleRender.h"
+#include "ModuleAudio.h"
 
 #include <SDL_render.h>
 #include <functional>
@@ -19,6 +20,8 @@ EnemyGrid::EnemyGrid(int rows, int cols) : rows(rows), cols(cols), current_row(r
 
 	for (int i = 0; i < rows; ++i)
 		row_rects.push_back(SDL_Rect{ 0, 0, 0, 0 });
+
+	sound_move = App->audio->LoadSound("Audio/Sounds/enemy_move.wav");
 }
 
 EnemyGrid::~EnemyGrid()
@@ -80,6 +83,8 @@ void EnemyGrid::DrawGridRects()
 
 void EnemyGrid::MoveEnemyRow()
 {
+	App->audio->PlaySound(sound_move);
+
 	for (int j = 0; j < cols; ++j)
 		grid[current_row][j]->Move(iPoint(row_rects[current_row].x, grid_rect.y));
 

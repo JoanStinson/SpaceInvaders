@@ -2,6 +2,7 @@
 
 #include "Application.h"
 #include "ModuleSceneGame.h"
+#include "Asteroid.h"
 
 Bullet::Bullet()
 {
@@ -63,8 +64,9 @@ void Bullet::CheckCollisions()
 					if (entity->life_points < 1)
 					{
 						enabled = false;
+						dynamic_cast<Asteroid*>(entity)->PlayKillSound();
 						dynamic_cast<Player*>(owner)->asteroids_destroyed += 1;
-						App->sceneGame->RemoveEntity(entity);
+						//App->sceneGame->RemoveEntity(entity);
 					}
 				}
 				else if (entity->CompareType(Type::ENEMY))
@@ -74,6 +76,7 @@ void Bullet::CheckCollisions()
 
 					if (entity->life_points < 1)
 					{
+						dynamic_cast<Enemy*>(entity)->PlayKillSound();
 						dynamic_cast<Player*>(owner)->score += 10;
 					}
 				}
@@ -83,6 +86,7 @@ void Bullet::CheckCollisions()
 			else if (owner->CompareType(Type::ENEMY) && entity->CompareType(Type::PLAYER))
 			{
 				enabled = false;
+				dynamic_cast<Player*>(entity)->PlayKillSound();
 				entity->life_points--;
 				entity->alive = false;
 				break;

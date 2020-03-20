@@ -38,6 +38,8 @@ public:
 	int current_row;
 	float speed = 0.5f;
 	float init_speed = speed;
+
+	unsigned int sound_move;
 };
 
 #endif // _ENEMYGRID_H_

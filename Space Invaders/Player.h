@@ -14,6 +14,7 @@ public:
 
 	UpdateStatus Update(float delta_time) override;
 	void OnDeath() override;
+	void PlayKillSound();
 
 public:
 	int score = 0;
@@ -27,7 +28,8 @@ private:
 	const int RIGHT_LIMIT = SCREEN_WIDTH - rect.w - 15;
 	const int LEFT_LIMIT = 15;
 
-	unsigned int sfx_shoot;
+	unsigned int sound_shoot;
+	unsigned int sound_killed;
 };
 
 #endif // _PLAYER_H_

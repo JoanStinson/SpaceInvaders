@@ -1,5 +1,8 @@
 #include "Asteroid.h"
 
+#include "Application.h"
+#include "ModuleAudio.h"
+
 Asteroid::Asteroid()
 {
 }
@@ -8,6 +11,8 @@ Asteroid::Asteroid(SDL_Rect rect, SDL_Rect rect_collider, SDL_Texture* texture, 
 	Entity(rect, rect_collider, texture, texture_death, animation_death, position, life_points, damage, move_speed)
 {
 	type = Type::ASTEROID;
+
+	sound_killed = App->audio->LoadSound("Audio/Sounds/player_killed.wav");
 }
 
 Asteroid::~Asteroid()
@@ -27,4 +32,9 @@ UpdateStatus Asteroid::Update(float delta_time)
 void Asteroid::OnDeath()
 {
 	enabled = false;
+}
+
+void Asteroid::PlayKillSound()
+{
+	App->audio->PlaySound(sound_killed);
 }

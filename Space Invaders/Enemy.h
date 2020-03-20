@@ -19,6 +19,8 @@ public:
 	void Shoot();
 	SDL_Rect GetRectColliderGrid() const;
 
+	void PlayKillSound();
+
 private:
 	std::vector<Bullet*> pooled_bullets;
 
@@ -32,6 +34,8 @@ private:
 	const int BOUNCE_LIMIT = 0; 
 
 	SDL_Rect rect_collider_grid;
+
+	unsigned int sound_killed;
 };
 
 #endif // _ENEMY_H_
