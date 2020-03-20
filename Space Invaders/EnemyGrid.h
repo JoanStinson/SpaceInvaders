@@ -8,14 +8,14 @@
 
 struct SDL_Rect;
 
-class EnemyGrid : public Entity
+class EnemyGrid
 {
 public:
 	EnemyGrid();
 	EnemyGrid(int rows, int cols);
 	~EnemyGrid();
 
-	UpdateStatus Update(float delta_time) override;
+	UpdateStatus Update(float delta_time);
 	void CreateGridRects();
 
 private:

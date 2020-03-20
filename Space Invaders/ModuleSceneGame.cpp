@@ -23,6 +23,8 @@ ModuleSceneGame::~ModuleSceneGame()
 {
 	for (std::list<Entity*>::iterator it = entities.begin(); it != entities.end(); ++it)
 		delete (*it);
+
+	delete enemy_grid;
 }
 
 bool ModuleSceneGame::Start()
@@ -82,7 +84,6 @@ bool ModuleSceneGame::Start()
 	}
 
 	enemy_grid->CreateGridRects();
-	AddEntity(enemy_grid);
 
 	// Player
 	SDL_Texture* player_texture = App->textures->LoadImage("Sprites/spaceship.png");
@@ -133,7 +134,10 @@ UpdateStatus ModuleSceneGame::Update()
 	App->renderer->Draw(score_value->texture, fPoint{ 181, 55 }, &score_value->rect);
 	App->renderer->Draw(hiscore_value->texture, fPoint{ 340, 55 }, &hiscore_value->rect);
 
-	// Draw entities
+	// Update enemy grid
+	enemy_grid->Update((float)clock.delta_time);
+
+	// Update entities
 	for (std::list<Entity*>::iterator it = entities.begin(); it != entities.end() && ret == UpdateStatus::CONTINUE; ++it)
 		if ((*it)->enabled)
 			ret = (*it)->Update((float)clock.delta_time);
