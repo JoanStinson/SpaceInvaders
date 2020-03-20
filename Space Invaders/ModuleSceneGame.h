@@ -37,8 +37,8 @@ private:
 private:
 	Clock clock;
 
-	SDL_Texture* texture = nullptr;
-	SDL_Rect background;
+	SDL_Texture* texture_background = nullptr;
+	SDL_Rect rect_background;
 
 	Text* lives_title = nullptr;
 	Text* score_title = nullptr;

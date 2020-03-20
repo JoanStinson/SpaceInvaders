@@ -38,7 +38,7 @@ bool Application::Init()
 			ret = (*it)->Start();
 
 	// Start the first scene 
-	fade->FadeToBlack(sceneGame.get(), nullptr, 3.f);
+	fade->FadeToBlack(sceneMenu.get(), nullptr, 3.f);
 
 	return ret;
 }

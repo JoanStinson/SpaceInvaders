@@ -15,7 +15,7 @@
 #include <iomanip>
 
 ModuleSceneGame::ModuleSceneGame(bool start_enabled)
-	: Module(start_enabled), background(SDL_Rect{ 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT })
+	: Module(start_enabled), rect_background(SDL_Rect{ 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT })
 {
 }
 
@@ -34,7 +34,7 @@ bool ModuleSceneGame::Start()
 	bool ret = true;
 
 	// Background
-	texture = App->textures->LoadImage("Sprites/background.jpg");
+	texture_background = App->textures->LoadImage("Sprites/background.jpg");
 
 	// Generic
 	SDL_Texture* entity_texture_death = App->textures->LoadImage("Sprites/galaxy.png");
@@ -118,7 +118,7 @@ UpdateStatus ModuleSceneGame::Update()
 	clock.Tick();
 
 	// Draw background
-	App->renderer->Draw(texture, fPoint(), &background);
+	App->renderer->Draw(texture_background, fPoint(), &rect_background);
 
 	// Draw static text
 	App->renderer->Draw(lives_title->texture, fPoint{ 30, 15 }, &lives_title->rect);
