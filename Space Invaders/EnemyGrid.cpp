@@ -5,6 +5,7 @@
 
 #include <SDL_render.h>
 #include <functional>
+#include <stdlib.h>  
 
 EnemyGrid::EnemyGrid()
 {
@@ -27,13 +28,14 @@ EnemyGrid::~EnemyGrid()
 
 UpdateStatus EnemyGrid::Update(float delta_time)
 {
-	clock.Tick();
+	clock_move.Tick();
+	clock_shoot.Tick();
 
 	DrawGridRects();
 
-	//clock.Invoke(0.3f, std::bind(&EnemyGrid::MoveEnemyRow, this));
+	clock_move.Invoke(0.3f, std::bind(&EnemyGrid::MoveEnemyRow, this));
 
-	clock.Invoke(1.f, std::bind(&EnemyGrid::ShootBullet, this));
+	clock_shoot.Invoke(1.f, std::bind(&EnemyGrid::ShootBullet, this));
 
 	return UpdateStatus::CONTINUE;
 }
@@ -96,20 +98,29 @@ void EnemyGrid::MoveEnemyRow()
 
 void EnemyGrid::ShootBullet()
 {
-	for (int i = rows-1; i >= 0; --i)
+	std::vector<Enemy*> enemies_that_can_shoot;
+
+	// Iterate grid from bottom->top, right->left 
+	for (int i = rows - 1; i >= 0; --i)
 	{
-		for (int j = cols-1; j >= 0; --j)
+		for (int j = cols - 1; j >= 0; --j)
 		{
 			if (!grid[i][j]->enabled || !grid[i][j]->alive) continue;
 
-			if ((grid[i][j]->GetPosition().x >= 55 && grid[i][j]->GetPosition().x <= 99)   ||
+			// If it can shoot save it, get the most bottom enemy of each col
+			if ((grid[i][j]->GetPosition().x >= 55 && grid[i][j]->GetPosition().x <= 99) ||
 				(grid[i][j]->GetPosition().x >= 195 && grid[i][j]->GetPosition().x <= 239) ||
 				(grid[i][j]->GetPosition().x >= 305 && grid[i][j]->GetPosition().x <= 349))
 			{
-				grid[i][j]->Shoot();
-				LOG("Pos (%d, %d)", i + 1, j + 1);
-				return;
+				enemies_that_can_shoot.push_back(grid[i][j]);
+				//grid[i][j]->Shoot();
+				//LOG("Pos (%d, %d)", i + 1, j + 1);
+				//break;
 			}
 		}
 	}
+
+	// From the enemies that can shoot, choose a random one
+	int random_index = rand() % enemies_that_can_shoot.size();
+	enemies_that_can_shoot[random_index]->Shoot();
 }

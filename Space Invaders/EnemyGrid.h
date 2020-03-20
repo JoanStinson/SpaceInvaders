@@ -32,7 +32,8 @@ public:
 	std::vector<SDL_Rect> row_rects;
 	SDL_Rect grid_rect;
 
-	Clock clock;
+	Clock clock_move;
+	Clock clock_shoot;
 
 	int current_row;
 	float speed = 0.5f;
