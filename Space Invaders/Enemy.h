@@ -13,6 +13,8 @@ public:
 	~Enemy();
 
 	UpdateStatus Update(float delta_time) override;
+	void OnDeath() override;
+
 	void Move(iPoint position);
 	void Shoot();
 	SDL_Rect GetRectColliderGrid() const;

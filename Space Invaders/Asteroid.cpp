@@ -19,21 +19,15 @@ Asteroid::~Asteroid()
 
 UpdateStatus Asteroid::Update(float delta_time)
 {
-	if (life_points < 1)
-	{
-		if (!animation_death.HasAnimationEnded())
-		{
-			App->renderer->Draw(texture_death, position, &(animation_death.GetCurrentFrameOnce()));
-		}
-		else
-		{
-			enabled = false;
-		}
-	}
-	else
-	{
-		Entity::Draw();
-	}
+	if (DrawAnimationDeath(life_points < 1)) 
+		return UpdateStatus::CONTINUE;
+
+	Draw();
 
 	return UpdateStatus::CONTINUE;
+}
+
+void Asteroid::OnDeath()
+{
+	enabled = false;
 }

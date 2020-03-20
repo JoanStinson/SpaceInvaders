@@ -14,8 +14,6 @@ Enemy::Enemy(SDL_Rect rect, SDL_Rect rect_collider, SDL_Texture* texture, Animat
 {
 	type = Type::ENEMY;
 
-	rect_collider_grid = { (int)position.x, (int)position.y, rect.w, rect.h };
-
 	SDL_Texture* bullet_texture = App->textures->LoadImage("Sprites/bullet_enemy.png");
 	SDL_Texture* bullet_texture_death = App->textures->LoadImage("Sprites/red.png");
 	Animation bullet_animation_death(17, 64, 0.8f);
@@ -23,7 +21,9 @@ Enemy::Enemy(SDL_Rect rect, SDL_Rect rect_collider, SDL_Texture* texture, Animat
 	pooled_bullets.reserve(MAX_BULLETS);
 
 	for (int i = 0; i < MAX_BULLETS; ++i)
-		pooled_bullets.push_back(new Bullet({ 0, 0, 32, 32 }, { 8, 8, 16, 16 }, bullet_texture, bullet_texture_death, bullet_animation_death, fPoint(), 1, 1, -0.25f, this)); //TODO default -0.25f
+		pooled_bullets.push_back(new Bullet({ 0, 0, 32, 32 }, { 8, 8, 16, 16 }, bullet_texture, bullet_texture_death, bullet_animation_death, fPoint(), 1, 1, -0.25f, this));
+
+	rect_collider_grid = { (int)position.x, (int)position.y, rect.w, rect.h };
 }
 
 Enemy::~Enemy()
@@ -32,26 +32,13 @@ Enemy::~Enemy()
 
 UpdateStatus Enemy::Update(float delta_time)
 {
-	if (life_points < 1)
-	{
-		if (!animation_death.HasAnimationEnded())
-		{
-			App->renderer->Draw(texture_death, position, &(animation_death.GetCurrentFrameOnce()));
-		}
-		else
-		{
-			alive = false;
-		}
-	}
-	else
-	{
-		Entity::DrawAnimation();
-	}
+	if (!DrawAnimationDeath(life_points < 1, position))
+		DrawAnimation();
 
 	rect_collider_grid.x = position.x; 
 	rect_collider_grid.y = position.y; 
 
-	Entity::UpdateRectCollider();
+	UpdateRectCollider();
 
 	// Update enabled shot bullets
 	for (int i = 0; i < pooled_bullets.size(); ++i)
@@ -63,6 +50,11 @@ UpdateStatus Enemy::Update(float delta_time)
 	}
 
 	return UpdateStatus::CONTINUE;
+}
+
+void Enemy::OnDeath()
+{
+	alive = false;
 }
 
 void Enemy::Move(iPoint position)

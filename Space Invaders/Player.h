@@ -13,6 +13,7 @@ public:
 	~Player();
 
 	UpdateStatus Update(float delta_time) override;
+	void OnDeath() override;
 
 public:
 	int score = 0;

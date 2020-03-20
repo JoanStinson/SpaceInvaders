@@ -27,9 +27,12 @@ public:
 	virtual ~Entity() {};
 
 	virtual UpdateStatus Update(float delta_time) = 0;
+	virtual void OnDeath() = 0;
 
 	void Draw();
 	void DrawAnimation();
+	bool DrawAnimationDeath(bool condition_death);
+	bool DrawAnimationDeath(bool condition_death, fPoint position_death);
 
 	bool CompareType(Type type) const;
 	SDL_Rect GetRectCollider() const;

@@ -11,6 +11,7 @@ public:
 	~Bullet();
 
 	UpdateStatus Update(float delta_time) override;
+	void OnDeath() override;
 
 private:
 	void CheckCollisions();

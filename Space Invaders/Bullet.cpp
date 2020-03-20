@@ -23,28 +23,26 @@ Bullet::~Bullet()
 
 UpdateStatus Bullet::Update(float delta_time)
 {
-	if (position.y <= TOP_LIMIT || position.y >= BOTTOM_LIMIT || !alive)
-	{
-		if (!animation_death.HasAnimationEnded())
-		{
-			App->renderer->Draw(texture_death, fPoint{ position.x - (rect.w / 2), position.y - (rect.w / 2) }, &(animation_death.GetCurrentFrameOnce()));
-		}
-		else
-		{
-			enabled = false;
-			animation_death.ResetAnim();
-		}
-	}
-	else
-	{
-		position.y -= move_speed * delta_time;
+	bool condition_death = position.y <= TOP_LIMIT || position.y >= BOTTOM_LIMIT || !alive;
 
-		Entity::UpdateRectCollider();
-		Entity::Draw();
-		CheckCollisions();
-	}
+	fPoint position_death = owner->CompareType(Type::PLAYER) ? fPoint{ position.x - (rect.w / 2), position.y - (rect.w / 2) } : fPoint{ position.x, position.y - 2 };
+
+	if (DrawAnimationDeath(condition_death, position_death))
+		return UpdateStatus::CONTINUE;
+
+	position.y -= move_speed * delta_time;
+
+	UpdateRectCollider();
+	Draw();
+	CheckCollisions();
 
 	return UpdateStatus::CONTINUE;
+}
+
+void Bullet::OnDeath()
+{
+	enabled = false;
+	animation_death.ResetAnim();
 }
 
 void Bullet::CheckCollisions()
@@ -58,41 +56,41 @@ void Bullet::CheckCollisions()
 		if (SDL_HasIntersection(&rect_collider, &entity->GetRectCollider()))
 		{
 			// Player shot bullet to asteroid or enemy
-			if (owner->CompareType(Type::PLAYER) && (entity->CompareType(Type::ASTEROID) || entity->CompareType(Type::ENEMY)))
+			if (owner->CompareType(Type::PLAYER))
 			{
 				if (entity->CompareType(Type::ASTEROID))
+				{
 					alive = false;
-				else 
-					enabled = false;
+					entity->life_points--;
 
-				entity->life_points--;
-
-				if (entity->life_points < 1)
+					if (entity->life_points < 1)
+					{
+						enabled = false;
+						dynamic_cast<Player*>(owner)->asteroids_destroyed += 1;
+						App->sceneGame->RemoveEntity(entity);
+					}
+				}
+				else if (entity->CompareType(Type::ENEMY))
 				{
 					enabled = false;
-					//entity->enabled = false;
+					entity->life_points--;
 
-					if (entity->CompareType(Type::ENEMY))
-						dynamic_cast<Player*>(owner)->score += 10;
-
-					if (entity->CompareType(Type::ASTEROID))
+					if (entity->life_points < 1)
 					{
-						dynamic_cast<Player*>(owner)->asteroids_destroyed += 1;
+						dynamic_cast<Player*>(owner)->score += 10;
 					}
-
-					//App->sceneGame->RemoveEntity(entity);
 				}
 				break;
 			}
 			// Enemy shot bullet to player
 			else if (owner->CompareType(Type::ENEMY) && entity->CompareType(Type::PLAYER))
 			{
-				//alive = false;
 				enabled = false;
 				entity->life_points--;
 				entity->alive = false;
 				break;
 			}
 		}
+
 	}
 }

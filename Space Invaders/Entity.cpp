@@ -39,6 +39,31 @@ void Entity::DrawAnimation()
 		DrawRectCollider();
 }
 
+bool Entity::DrawAnimationDeath(bool condition_death)
+{
+	return DrawAnimationDeath(condition_death, position);
+}
+
+bool Entity::DrawAnimationDeath(bool condition_death, fPoint position_death)
+{
+	if (condition_death)
+	{
+		if (!animation_death.HasAnimationEnded())
+		{
+			App->renderer->Draw(texture_death, position_death, &(animation_death.GetCurrentFrameOnce()));
+		}
+		else
+		{
+			OnDeath();
+		}
+	}
+
+	if (debug_draw)
+		DrawRectCollider();
+
+	return condition_death ? true : false;
+}
+
 bool Entity::CompareType(Type type) const
 {
 	return this->type == type;
