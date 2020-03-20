@@ -20,7 +20,7 @@ Enemy::Enemy(SDL_Rect rect, SDL_Rect rect_collider, SDL_Texture* texture, Animat
 	pooled_bullets.reserve(MAX_BULLETS);
 
 	for (int i = 0; i < MAX_BULLETS; ++i)
-		pooled_bullets.push_back(new Bullet({ 0, 0, 32, 32 }, { 8, 8, 16, 16 }, bullet_texture, bullet_texture_death, bullet_animation_death, fPoint(), 1, 1, -0.25f, this));
+		pooled_bullets.push_back(new Bullet({ 0, 0, 32, 32 }, { 8, 8, 16, 16 }, bullet_texture, bullet_texture_death, bullet_animation_death, fPoint(), 1, 1, -0.3f, this));
 
 	rect_collider_grid = { (int)position.x, (int)position.y, rect.w, rect.h };
 

@@ -93,7 +93,7 @@ bool ModuleSceneGame::Start()
 		SCREEN_HEIGHT - 96
 	};
 
-	player = new Player({ 0, 0, 64, 64 }, { 12, 26, 40, 16 }, player_texture, player_animation, entity_texture_death, entity_animation_death, player_position, 3, 1, 0.5f);
+	player = new Player({ 0, 0, 64, 64 }, { 12, 26, 40, 16 }, player_texture, player_animation, entity_texture_death, entity_animation_death, player_position, 3, 1, 0.4f);
 	AddEntity(player);
 
 	// Static text

@@ -81,7 +81,7 @@ UpdateStatus ModuleSceneMenu::Update()
 	{
 		App->audio->PlaySfx(sfx_pressed);
 		App->audio->StopMusic();
-		App->fade->FadeToBlack(App->sceneGame.get(), nullptr, 3.f);
+		App->fade->FadeToBlack(App->sceneGame.get(), App->sceneMenu.get(), 3.f);
 	}
 	else if (buttons[1].Selected(mouse_pos, mouse_clicked))
 	{
