@@ -96,9 +96,9 @@ void EnemyGrid::MoveEnemyRow()
 
 void EnemyGrid::ShootBullet()
 {
-	for (int i = 0; i < rows; ++i)
+	for (int i = rows-1; i >= 0; --i)
 	{
-		for (int j = 0; j < cols; ++j)
+		for (int j = cols-1; j >= 0; --j)
 		{
 			if (!grid[i][j]->enabled || !grid[i][j]->alive) continue;
 
