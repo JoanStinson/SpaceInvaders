@@ -30,6 +30,9 @@ private:
 
 	unsigned int sfx_shoot;
 	unsigned int sfx_killed;
+
+	float acceleration = 0.001f;
+	float init_move_speed;
 };
 
 #endif // _PLAYER_H_

@@ -10,7 +10,7 @@ Player::Player()
 }
 
 Player::Player(SDL_Rect rect, SDL_Rect rect_collider, SDL_Texture* texture, Animation animation, SDL_Texture* texture_death, Animation animation_death, fPoint position, int life_points, int damage, float move_speed) :
-	Entity(rect, rect_collider, texture, animation, texture_death, animation_death, position, life_points, damage, move_speed)
+	Entity(rect, rect_collider, texture, animation, texture_death, animation_death, position, life_points, damage, move_speed), init_move_speed(move_speed)
 {
 	type = Type::PLAYER;
 
@@ -42,6 +42,7 @@ UpdateStatus Player::Update(float delta_time)
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT))
 	{
 		position.x += move_speed * delta_time;
+		move_speed += acceleration * delta_time;
 
 		if (position.x > RIGHT_LIMIT)
 			position.x = RIGHT_LIMIT;
@@ -52,11 +53,16 @@ UpdateStatus Player::Update(float delta_time)
 	else if (App->input->GetKey(SDL_SCANCODE_LEFT))
 	{
 		position.x -= move_speed * delta_time;
+		move_speed += acceleration * delta_time;
 
 		if (position.x < LEFT_LIMIT)
 			position.x = LEFT_LIMIT;
 
 		UpdateRectCollider();
+	}
+	else if (App->input->GetKeyUp(SDL_SCANCODE_RIGHT) || App->input->GetKeyUp(SDL_SCANCODE_LEFT))
+	{
+		move_speed = init_move_speed;
 	}
 
 	DrawAnimation();
