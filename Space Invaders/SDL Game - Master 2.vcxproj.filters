@@ -11,9 +11,6 @@
     <Filter Include="Utils">
       <UniqueIdentifier>{ad89cf24-f35e-4d0c-90e5-820c054c274d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Utils\GIF">
-      <UniqueIdentifier>{b8b7dc3d-248a-4182-83aa-fa3c98ccb676}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Game Data">
       <UniqueIdentifier>{301af1ac-6f12-4bc5-bbd2-450ea1a9b4b0}</UniqueIdentifier>
     </Filter>
@@ -51,15 +48,6 @@
     </ClInclude>
     <ClInclude Include="ModuleInput.h">
       <Filter>Core Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="CEV_gif.h">
-      <Filter>Utils\GIF</Filter>
-    </ClInclude>
-    <ClInclude Include="CEV_gifDeflate.h">
-      <Filter>Utils\GIF</Filter>
-    </ClInclude>
-    <ClInclude Include="CEV_gifToSurface.h">
-      <Filter>Utils\GIF</Filter>
     </ClInclude>
     <ClInclude Include="ModuleSceneGame.h">
       <Filter>Game Modules</Filter>
@@ -125,15 +113,6 @@
     </ClCompile>
     <ClCompile Include="ModuleInput.cpp">
       <Filter>Core Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="CEV_gifDeflate.c">
-      <Filter>Utils\GIF</Filter>
-    </ClCompile>
-    <ClCompile Include="CEV_gifToSurface.c">
-      <Filter>Utils\GIF</Filter>
-    </ClCompile>
-    <ClCompile Include="CEV_gifUser.c">
-      <Filter>Utils\GIF</Filter>
     </ClCompile>
     <ClCompile Include="ModuleSceneGame.cpp">
       <Filter>Game Modules</Filter>
