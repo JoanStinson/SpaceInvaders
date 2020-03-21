@@ -11,7 +11,7 @@ struct SDL_Rect;
 class ModuleRender : public Module
 {
 public:
-	ModuleRender();
+	ModuleRender(bool start_enabled = true);
 	~ModuleRender();
 
 	bool Init() override;

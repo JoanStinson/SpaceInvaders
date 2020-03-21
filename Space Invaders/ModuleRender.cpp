@@ -5,7 +5,7 @@
 
 #include <SDL_render.h>
 
-ModuleRender::ModuleRender()
+ModuleRender::ModuleRender(bool start_enabled) : Module(start_enabled)
 {
 	camera.x = camera.y = 0;
 	camera.w = SCREEN_WIDTH;

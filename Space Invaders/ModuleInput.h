@@ -36,7 +36,7 @@ enum class MouseMove
 class ModuleInput : public Module
 {
 public:
-	ModuleInput();
+	ModuleInput(bool start_enabled = true);
 	~ModuleInput();
 
 	bool Init() override;

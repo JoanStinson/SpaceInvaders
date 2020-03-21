@@ -3,7 +3,7 @@
 #include "Application.h"
 #include "ModuleRender.h"
 
-ModuleTexture::ModuleTexture()
+ModuleTexture::ModuleTexture(bool start_enabled) : Module(start_enabled)
 {
 }
 

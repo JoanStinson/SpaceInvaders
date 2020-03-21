@@ -2,7 +2,7 @@
 
 #include <SDL_image.h>
 
-ModuleWindow::ModuleWindow()
+ModuleWindow::ModuleWindow(bool start_enabled) : Module(start_enabled)
 {
 }
 

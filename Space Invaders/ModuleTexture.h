@@ -29,7 +29,7 @@ struct Text
 class ModuleTexture : public Module
 {
 public:
-	ModuleTexture();
+	ModuleTexture(bool start_enabled = true);
 	~ModuleTexture();
 
 	bool Init() override;
