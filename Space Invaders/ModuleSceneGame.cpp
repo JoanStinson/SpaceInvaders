@@ -111,8 +111,8 @@ bool ModuleSceneGame::Start()
 
 	// Dynamic text
 	lives_value = new Text(App->textures->LoadText(utils::PadZerosLeft(player->life_points).c_str()));
-	score_value = new Text(App->textures->LoadText(utils::PadZerosLeft(player->score).c_str()));
-	hiscore_value = new Text(App->textures->LoadText(utils::PadZerosLeft(player->high_score).c_str()));
+	score_value = new Text(App->textures->LoadText(utils::PadZerosLeft(score).c_str()));
+	hiscore_value = new Text(App->textures->LoadText(utils::PadZerosLeft(high_score).c_str()));
 
 	return ret;
 }
@@ -120,6 +120,9 @@ bool ModuleSceneGame::Start()
 UpdateStatus ModuleSceneGame::Update()
 {
 	UpdateStatus ret = UpdateStatus::CONTINUE;
+
+	if (win || game_over)
+		return ret;
 
 	clock.Tick();
 
@@ -133,8 +136,8 @@ UpdateStatus ModuleSceneGame::Update()
 
 	// Draw dynamic text
 	lives_value->Update(App->textures->LoadText(utils::PadZerosLeft(player->life_points).c_str()));
-	score_value->Update(App->textures->LoadText(utils::PadZerosLeft(player->score).c_str()));
-	hiscore_value->Update(App->textures->LoadText(utils::PadZerosLeft(player->high_score).c_str()));
+	score_value->Update(App->textures->LoadText(utils::PadZerosLeft(score).c_str()));
+	hiscore_value->Update(App->textures->LoadText(utils::PadZerosLeft(high_score).c_str()));
 
 	App->renderer->Draw(lives_value->texture, fPoint{ 34, 55 }, &lives_value->rect);
 	App->renderer->Draw(score_value->texture, fPoint{ 181, 55 }, &score_value->rect);
@@ -149,14 +152,8 @@ UpdateStatus ModuleSceneGame::Update()
 			ret = (*it)->Update((float)clock.delta_time);
 
 	// Toggle box colliders
-	if (App->input->GetKeyDown(SDL_SCANCODE_D))
-		Entity::debug_draw = !Entity::debug_draw;
-
-	//TODO check if player win or game over
-	//if (player->win)
-	//{
-	//	//todo
-	//}
+	//if (App->input->GetKeyDown(SDL_SCANCODE_D))
+	//	Entity::debug_draw = !Entity::debug_draw;
 
 	return ret;
 }

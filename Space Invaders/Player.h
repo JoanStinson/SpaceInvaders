@@ -16,11 +16,6 @@ public:
 	void OnDeath() override;
 	void PlayKillSound();
 
-public:
-	int score = 0;
-	int high_score = 0;
-	int asteroids_destroyed = 0;
-
 private:
 	std::vector<Bullet*> pooled_bullets;
 

@@ -26,6 +26,13 @@ public:
 	void RemoveEntity(Entity* entity);
 	const std::list<Entity*>& GetEntities() const;
 
+public:
+	bool win = false;
+	bool game_over = false;
+
+	int score = 0;
+	int high_score = 0;
+
 private:
 	Player* player = nullptr;
 	EnemyGrid* enemy_grid = nullptr;
