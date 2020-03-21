@@ -1,7 +1,7 @@
 #include "Enemy.h"
 
 #include "Application.h"
-#include "ModuleTextures.h"
+#include "ModuleTexture.h"
 #include "ModuleAudio.h"
 
 Enemy::Enemy()
@@ -13,8 +13,8 @@ Enemy::Enemy(SDL_Rect rect, SDL_Rect rect_collider, SDL_Texture* texture, Animat
 {
 	type = Type::ENEMY;
 
-	SDL_Texture* bullet_texture = App->textures->LoadTexture("Sprites/bullet_enemy.png");
-	SDL_Texture* bullet_texture_death = App->textures->LoadTexture("Sprites/red.png");
+	SDL_Texture* bullet_texture = App->texture->LoadTexture("Sprites/bullet_enemy.png");
+	SDL_Texture* bullet_texture_death = App->texture->LoadTexture("Sprites/red.png");
 	Animation bullet_animation_death(17, 64, 0.8f);
 
 	pooled_bullets.reserve(MAX_BULLETS);

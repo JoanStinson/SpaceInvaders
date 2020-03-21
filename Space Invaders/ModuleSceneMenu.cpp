@@ -2,7 +2,7 @@
 
 #include "Application.h"
 #include "ModuleRender.h"
-#include "ModuleTextures.h"
+#include "ModuleTexture.h"
 #include "ModuleInput.h"
 #include "ModuleAudio.h"
 #include "ModuleWindow.h"
@@ -37,9 +37,9 @@ bool ModuleSceneMenu::Start()
 	LOG("Loading intro scene");
 	bool ret = true;
 
-	texture_background = App->textures->LoadTexture("Sprites/background.jpg");
-	texture_logo = App->textures->LoadTexture("Sprites/logo.png");
-	texture_buttons = App->textures->LoadTexture("Sprites/buttons.png");
+	texture_background = App->texture->LoadTexture("Sprites/background.jpg");
+	texture_logo = App->texture->LoadTexture("Sprites/logo.png");
+	texture_buttons = App->texture->LoadTexture("Sprites/buttons.png");
 
 	sfx_hover = App->audio->LoadSfx("Audio/Sfx/hover_button.wav");
 	sfx_pressed = App->audio->LoadSfx("Audio/Sfx/click_button.wav");
@@ -54,8 +54,8 @@ UpdateStatus ModuleSceneMenu::Update()
 	UpdateStatus ret = UpdateStatus::CONTINUE;
 
 	// Draw background and logo
-	App->renderer->Draw(texture_background, fPoint(), &rect_background);
-	App->renderer->Draw(texture_logo, fPoint{ (float)(SCREEN_WIDTH / 2) - (rect_logo.w / 2) - 2, 60 }, &rect_logo);
+	App->render->Draw(texture_background, fPoint(), &rect_background);
+	App->render->Draw(texture_logo, fPoint{ (float)(SCREEN_WIDTH / 2) - (rect_logo.w / 2) - 2, 60 }, &rect_logo);
 
 	iPoint mouse_pos = App->input->GetMousePosition();
 	bool mouse_clicked = App->input->GetMouseButtonDown(1);
@@ -63,7 +63,7 @@ UpdateStatus ModuleSceneMenu::Update()
 	// Draw buttons and handle hovering
 	for (int i = 0; i < MENU_BUTTONS; ++i)
 	{
-		App->renderer->Draw(texture_buttons, buttons[i].position, &buttons[i].GetRect(mouse_pos));
+		App->render->Draw(texture_buttons, buttons[i].position, &buttons[i].GetRect(mouse_pos));
 
 		if (buttons[i].Hovered(mouse_pos) && !buttons[i].play_hover_audio)
 		{
@@ -81,7 +81,7 @@ UpdateStatus ModuleSceneMenu::Update()
 	{
 		App->audio->PlaySfx(sfx_pressed);
 		App->audio->StopMusic();
-		App->fade->FadeToBlack(App->sceneGame.get(), App->sceneMenu.get(), 3.f);
+		App->fade->FadeToBlack(App->scene_game.get(), App->scene_menu.get(), 3.f);
 	}
 	else if (buttons[1].Selected(mouse_pos, mouse_clicked))
 	{

@@ -1,7 +1,7 @@
 #include "Player.h"
 
 #include "Application.h"
-#include "ModuleTextures.h"
+#include "ModuleTexture.h"
 #include "ModuleInput.h"
 #include "ModuleAudio.h"
 
@@ -14,8 +14,8 @@ Player::Player(SDL_Rect rect, SDL_Rect rect_collider, SDL_Texture* texture, Anim
 {
 	type = Type::PLAYER;
 
-	SDL_Texture* bullet_texture = App->textures->LoadTexture("Sprites/bullet.png");
-	SDL_Texture* bullet_texture_death = App->textures->LoadTexture("Sprites/blue.png");
+	SDL_Texture* bullet_texture = App->texture->LoadTexture("Sprites/bullet.png");
+	SDL_Texture* bullet_texture_death = App->texture->LoadTexture("Sprites/blue.png");
 	Animation bullet_animation_death(17, 64, 0.8f);
 
 	pooled_bullets.reserve(MAX_BULLETS);

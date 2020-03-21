@@ -69,16 +69,16 @@ void EnemyGrid::DrawGridRects()
 	}
 
 	// Draw row rects
-	SDL_SetRenderDrawColor(&App->renderer->GetRenderer(), 255, 0, 0, SDL_ALPHA_OPAQUE);
+	SDL_SetRenderDrawColor(&App->render->GetRenderer(), 255, 0, 0, SDL_ALPHA_OPAQUE);
 	for (int i = 0; i < row_rects.size(); ++i)
 	{
-		SDL_RenderDrawRect(&App->renderer->GetRenderer(), &row_rects[i]);
+		SDL_RenderDrawRect(&App->render->GetRenderer(), &row_rects[i]);
 		SDL_UnionRect(&grid_rect, &row_rects[i], &grid_rect);
 	}
 
 	// Draw grid rect
-	SDL_SetRenderDrawColor(&App->renderer->GetRenderer(), 0, 0, 255, SDL_ALPHA_OPAQUE);
-	SDL_RenderDrawRect(&App->renderer->GetRenderer(), &grid_rect);
+	SDL_SetRenderDrawColor(&App->render->GetRenderer(), 0, 0, 255, SDL_ALPHA_OPAQUE);
+	SDL_RenderDrawRect(&App->render->GetRenderer(), &grid_rect);
 }
 
 void EnemyGrid::MoveEnemyRow()

@@ -1,7 +1,7 @@
 #include "ModuleSceneGame.h"
 
 #include "Application.h"
-#include "ModuleTextures.h"
+#include "ModuleTexture.h"
 #include "ModuleRender.h"
 #include "ModuleAudio.h"
 #include "ModuleInput.h"
@@ -40,14 +40,14 @@ bool ModuleSceneGame::Start()
 	bool ret = true;
 
 	// Background
-	texture_background = App->textures->LoadTexture("Sprites/background.jpg");
+	texture_background = App->texture->LoadTexture("Sprites/background.jpg");
 
 	// Generic
-	SDL_Texture* entity_texture_death = App->textures->LoadTexture("Sprites/galaxy.png");
+	SDL_Texture* entity_texture_death = App->texture->LoadTexture("Sprites/galaxy.png");
 	Animation entity_animation_death(17, 64, 0.8f);
 
 	// Asteroids
-	SDL_Texture* asteroid_texture = App->textures->LoadTexture("Sprites/asteroid.png");
+	SDL_Texture* asteroid_texture = App->texture->LoadTexture("Sprites/asteroid.png");
 
 	float asteroid_position_y = SCREEN_HEIGHT - (64 * 3) + 20;
 	float asteroid_position_x = 15;
@@ -65,7 +65,7 @@ bool ModuleSceneGame::Start()
 		AddEntity(new Asteroid({ 0, 0, 64, 64 }, { 12, 12, 38, 38 }, asteroid_texture, entity_texture_death, entity_animation_death, asteroid_positions[i], 4));
 
 	// Enemies
-	SDL_Texture* enemy_texture = App->textures->LoadTexture("Sprites/spaceship_enemy.png");
+	SDL_Texture* enemy_texture = App->texture->LoadTexture("Sprites/spaceship_enemy.png");
 	Animation enemy_animation(8, 64, 0.4f);
 	enemy_grid = new EnemyGrid(ROWS, COLS);
 
@@ -92,7 +92,7 @@ bool ModuleSceneGame::Start()
 	enemy_grid->CreateGridRects();
 
 	// Player
-	SDL_Texture* player_texture = App->textures->LoadTexture("Sprites/spaceship.png");
+	SDL_Texture* player_texture = App->texture->LoadTexture("Sprites/spaceship.png");
 	Animation player_animation(8, 64);
 
 	fPoint player_position
@@ -105,14 +105,14 @@ bool ModuleSceneGame::Start()
 	AddEntity(player);
 
 	// Static text
-	lives_title = new Text(App->textures->LoadText("LIVES"));
-	score_title = new Text(App->textures->LoadText("SCORE"));
-	hiscore_title = new Text(App->textures->LoadText("HI-SCORE"));
+	lives_title = new Text(App->texture->LoadText("LIVES"));
+	score_title = new Text(App->texture->LoadText("SCORE"));
+	hiscore_title = new Text(App->texture->LoadText("HI-SCORE"));
 
 	// Dynamic text
-	lives_value = new Text(App->textures->LoadText(utils::PadZerosLeft(player->life_points).c_str()));
-	score_value = new Text(App->textures->LoadText(utils::PadZerosLeft(score).c_str()));
-	hiscore_value = new Text(App->textures->LoadText(utils::PadZerosLeft(high_score).c_str()));
+	lives_value = new Text(App->texture->LoadText(utils::PadZerosLeft(player->life_points).c_str()));
+	score_value = new Text(App->texture->LoadText(utils::PadZerosLeft(score).c_str()));
+	hiscore_value = new Text(App->texture->LoadText(utils::PadZerosLeft(hiscore).c_str()));
 
 	return ret;
 }
@@ -121,27 +121,27 @@ UpdateStatus ModuleSceneGame::Update()
 {
 	UpdateStatus ret = UpdateStatus::CONTINUE;
 
-	if (win || game_over)
-		return ret;
-
 	clock.Tick();
 
 	// Draw background
-	App->renderer->Draw(texture_background, fPoint(), &rect_background);
+	App->render->Draw(texture_background, fPoint(), &rect_background);
 
 	// Draw static text
-	App->renderer->Draw(lives_title->texture, fPoint{ 30, 15 }, &lives_title->rect);
-	App->renderer->Draw(score_title->texture, fPoint{ 170, 15 }, &score_title->rect);
-	App->renderer->Draw(hiscore_title->texture, fPoint{ 310, 15 }, &hiscore_title->rect);
+	App->render->Draw(lives_title->texture, fPoint{ 30, 15 }, &lives_title->rect);
+	App->render->Draw(score_title->texture, fPoint{ 170, 15 }, &score_title->rect);
+	App->render->Draw(hiscore_title->texture, fPoint{ 310, 15 }, &hiscore_title->rect);
 
 	// Draw dynamic text
-	lives_value->Update(App->textures->LoadText(utils::PadZerosLeft(player->life_points).c_str()));
-	score_value->Update(App->textures->LoadText(utils::PadZerosLeft(score).c_str()));
-	hiscore_value->Update(App->textures->LoadText(utils::PadZerosLeft(high_score).c_str()));
+	lives_value->Update(App->texture->LoadText(utils::PadZerosLeft(player->life_points).c_str()));
+	score_value->Update(App->texture->LoadText(utils::PadZerosLeft(score).c_str()));
+	hiscore_value->Update(App->texture->LoadText(utils::PadZerosLeft(hiscore).c_str()));
 
-	App->renderer->Draw(lives_value->texture, fPoint{ 34, 55 }, &lives_value->rect);
-	App->renderer->Draw(score_value->texture, fPoint{ 181, 55 }, &score_value->rect);
-	App->renderer->Draw(hiscore_value->texture, fPoint{ 340, 55 }, &hiscore_value->rect);
+	App->render->Draw(lives_value->texture, fPoint{ 34, 55 }, &lives_value->rect);
+	App->render->Draw(score_value->texture, fPoint{ 181, 55 }, &score_value->rect);
+	App->render->Draw(hiscore_value->texture, fPoint{ 340, 55 }, &hiscore_value->rect);
+
+	if (win || game_over)
+		return ret;
 
 	// Update enemy grid
 	enemy_grid->Update((float)clock.delta_time);
@@ -160,9 +160,9 @@ UpdateStatus ModuleSceneGame::Update()
 
 UpdateStatus ModuleSceneGame::PostUpdate()
 {
-	App->textures->Unload(lives_value->texture);
-	App->textures->Unload(score_value->texture);
-	App->textures->Unload(hiscore_value->texture);
+	App->texture->Unload(lives_value->texture);
+	App->texture->Unload(score_value->texture);
+	App->texture->Unload(hiscore_value->texture);
 	return UpdateStatus::CONTINUE;
 }
 

@@ -3,7 +3,7 @@
 #include "ModuleInput.h"
 #include "ModuleWindow.h"
 #include "ModuleRender.h"
-#include "ModuleTextures.h"
+#include "ModuleTexture.h"
 #include "ModuleAudio.h"
 #include "ModuleFadeToBlack.h"
 #include "ModuleSceneMenu.h"
@@ -14,11 +14,11 @@ Application::Application()
 	// Order matters: they will init/start/pre/update/post in this order
 	modules.push_back((input = std::make_unique<ModuleInput>()).get());
 	modules.push_back((window = std::make_unique<ModuleWindow>()).get());
-	modules.push_back((renderer = std::make_unique<ModuleRender>()).get());
-	modules.push_back((textures = std::make_unique<ModuleTextures>()).get());
+	modules.push_back((render = std::make_unique<ModuleRender>()).get());
+	modules.push_back((texture = std::make_unique<ModuleTexture>()).get());
 	modules.push_back((audio = std::make_unique<ModuleAudio>()).get());
-	modules.push_back((sceneMenu = std::make_unique<ModuleSceneMenu>(false)).get());
-	modules.push_back((sceneGame = std::make_unique<ModuleSceneGame>(false)).get());
+	modules.push_back((scene_menu = std::make_unique<ModuleSceneMenu>(false)).get());
+	modules.push_back((scene_game = std::make_unique<ModuleSceneGame>(false)).get());
 	modules.push_back((fade = std::make_unique<ModuleFadeToBlack>()).get());
 }
 
@@ -38,7 +38,7 @@ bool Application::Init()
 			ret = (*it)->Start();
 
 	// Start the first scene 
-	fade->FadeToBlack(sceneMenu.get(), nullptr, 3.f);
+	fade->FadeToBlack(scene_menu.get(), nullptr, 3.f);
 
 	return ret;
 }

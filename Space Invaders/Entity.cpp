@@ -25,7 +25,7 @@ Entity::Entity(SDL_Rect rect, SDL_Rect rect_collider, SDL_Texture* texture, Anim
 
 void Entity::Draw()
 {
-	App->renderer->Draw(texture, position, &rect);
+	App->render->Draw(texture, position, &rect);
 
 	if (debug_draw)
 		DrawRectCollider();
@@ -33,7 +33,7 @@ void Entity::Draw()
 
 void Entity::DrawAnimation()
 {
-	App->renderer->Draw(texture, position, &(animation.GetCurrentFrame()));
+	App->render->Draw(texture, position, &(animation.GetCurrentFrame()));
 
 	if (debug_draw)
 		DrawRectCollider();
@@ -50,7 +50,7 @@ bool Entity::DrawAnimationDeath(bool condition_death, fPoint position_death)
 	{
 		if (!animation_death.HasAnimationEnded())
 		{
-			App->renderer->Draw(texture_death, position_death, &(animation_death.GetCurrentFrameOnce()));
+			App->render->Draw(texture_death, position_death, &(animation_death.GetCurrentFrameOnce()));
 		}
 		else
 		{
@@ -92,6 +92,6 @@ void Entity::UpdateRectCollider()
 
 void Entity::DrawRectCollider()
 {
-	SDL_SetRenderDrawColor(&App->renderer->GetRenderer(), 0, 255, 0, SDL_ALPHA_OPAQUE);
-	SDL_RenderDrawRect(&App->renderer->GetRenderer(), &rect_collider);
+	SDL_SetRenderDrawColor(&App->render->GetRenderer(), 0, 255, 0, SDL_ALPHA_OPAQUE);
+	SDL_RenderDrawRect(&App->render->GetRenderer(), &rect_collider);
 }

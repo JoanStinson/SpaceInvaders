@@ -45,7 +45,7 @@ void Bullet::OnDeath()
 
 void Bullet::CheckCollisions()
 {
-	auto entities = App->sceneGame->GetEntities();
+	auto entities = App->scene_game->GetEntities();
 
 	for (auto& entity : entities)
 	{
@@ -79,16 +79,16 @@ void Bullet::CheckCollisions()
 					{
 						entity->alive = false;
 						dynamic_cast<Enemy*>(entity)->PlayKillSound();
-						App->sceneGame->score += 10;
+						App->scene_game->score += 10;
 
-						if (App->sceneGame->score > App->sceneGame->high_score)
+						if (App->scene_game->score > App->scene_game->hiscore)
 						{
-							App->sceneGame->high_score = App->sceneGame->score;
+							App->scene_game->hiscore = App->scene_game->score;
 						}
 
-						if (App->sceneGame->score >= 180)
+						if (App->scene_game->score >= 180)
 						{
-							App->sceneGame->win = true;
+							App->scene_game->win = true;
 						}
 					}
 				}
@@ -104,7 +104,7 @@ void Bullet::CheckCollisions()
 				if (entity->life_points < 1)
 				{
 					entity->life_points = 0;
-					App->sceneGame->game_over = true;
+					App->scene_game->game_over = true;
 				}
 				break;
 			}

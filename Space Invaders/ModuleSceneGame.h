@@ -31,7 +31,7 @@ public:
 	bool game_over = false;
 
 	int score = 0;
-	int high_score = 0;
+	int hiscore = 0;
 
 private:
 	Player* player = nullptr;

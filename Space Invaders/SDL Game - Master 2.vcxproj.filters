@@ -22,9 +22,6 @@
     <ClInclude Include="ModuleRender.h">
       <Filter>Core Modules</Filter>
     </ClInclude>
-    <ClInclude Include="ModuleTextures.h">
-      <Filter>Core Modules</Filter>
-    </ClInclude>
     <ClInclude Include="ModuleWindow.h">
       <Filter>Core Modules</Filter>
     </ClInclude>
@@ -35,9 +32,6 @@
       <Filter>Main</Filter>
     </ClInclude>
     <ClInclude Include="ModuleAudio.h">
-      <Filter>Core Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="ModuleFadeToBlack.h">
       <Filter>Core Modules</Filter>
     </ClInclude>
     <ClInclude Include="Animation.h">
@@ -85,6 +79,12 @@
     <ClInclude Include="Utils.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleTexture.h">
+      <Filter>Core Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleFadeToBlack.h">
+      <Filter>Game Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -96,16 +96,10 @@
     <ClCompile Include="ModuleRender.cpp">
       <Filter>Core Modules</Filter>
     </ClCompile>
-    <ClCompile Include="ModuleTextures.cpp">
-      <Filter>Core Modules</Filter>
-    </ClCompile>
     <ClCompile Include="ModuleWindow.cpp">
       <Filter>Core Modules</Filter>
     </ClCompile>
     <ClCompile Include="ModuleAudio.cpp">
-      <Filter>Core Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="ModuleFadeToBlack.cpp">
       <Filter>Core Modules</Filter>
     </ClCompile>
     <ClCompile Include="Log.cpp">
@@ -140,6 +134,12 @@
     </ClCompile>
     <ClCompile Include="EnemyGrid.cpp">
       <Filter>Game Data</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleTexture.cpp">
+      <Filter>Core Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleFadeToBlack.cpp">
+      <Filter>Game Modules</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
