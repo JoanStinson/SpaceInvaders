@@ -12,8 +12,8 @@
 #include "Animation.h"
 #include "Utils.h"
 
-ModuleSceneGame::ModuleSceneGame(bool start_enabled)
-	: Module(start_enabled), rect_background(SDL_Rect{ 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT })
+ModuleSceneGame::ModuleSceneGame(bool start_enabled) : 
+	Module(start_enabled), rect_background(SDL_Rect{ 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT })
 {
 }
 

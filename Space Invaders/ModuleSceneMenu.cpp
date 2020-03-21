@@ -12,8 +12,8 @@
 
 #include <SDL.h>
 
-ModuleSceneMenu::ModuleSceneMenu(bool start_enabled)
-	: Module(start_enabled), rect_background(SDL_Rect{ 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT }), rect_logo(SDL_Rect{ 0, 0, 420, 176 })
+ModuleSceneMenu::ModuleSceneMenu(bool start_enabled) : 
+	Module(start_enabled), rect_background(SDL_Rect{ 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT }), rect_logo(SDL_Rect{ 0, 0, 420, 176 })
 {
 	buttons[0].rect = { 0, 0, 256, 107 };
 	buttons[0].rect_hover = { 256, 0, 256, 107 };

@@ -2,8 +2,8 @@
 
 #include <SDL.h>
 
-ModuleInput::ModuleInput(bool start_enabled) 
-	: Module(start_enabled), window_events(), mouse_buttons(), mouse_motion({ 0,0 }), mouse_pos({ 0, 0 })
+ModuleInput::ModuleInput(bool start_enabled) : 
+	Module(start_enabled), window_events(), mouse_buttons(), mouse_motion({ 0,0 }), mouse_pos({ 0, 0 })
 {
 	keyboard = new KeyState[MAX_KEYS];
 
