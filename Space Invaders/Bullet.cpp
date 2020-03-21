@@ -64,6 +64,7 @@ void Bullet::CheckCollisions()
 					if (entity->life_points < 1)
 					{
 						enabled = false;
+						entity->alive = false;
 						dynamic_cast<Asteroid*>(entity)->PlayKillSound();
 						dynamic_cast<Player*>(owner)->asteroids_destroyed += 1;
 						//App->sceneGame->RemoveEntity(entity);
