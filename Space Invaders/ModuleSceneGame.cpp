@@ -257,12 +257,11 @@ UpdateStatus ModuleSceneGame::ShowGameOver()
 
 		for (auto& entity : entities)
 		{
+			entity->ResetPosition();
 			entity->life_points = entity->init_life_points;
 			entity->enabled = true;
 			entity->alive = true;
 		}
-
-		//TODO reset enemy grid to initial pos
 	}
 	else if (buttons[1].Selected(mouse_pos, mouse_clicked))
 	{

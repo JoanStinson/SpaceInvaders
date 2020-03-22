@@ -39,6 +39,7 @@ public:
 	fPoint GetPosition() const;
 
 	void SetPosition(fPoint position);
+	void ResetPosition();
 	void UpdateRectCollider();
 
 private:
@@ -55,6 +56,7 @@ public:
 protected:
 	Type type;
 	fPoint position;
+	fPoint init_position;
 
 	SDL_Rect rect;
 	SDL_Rect rect_collider;
