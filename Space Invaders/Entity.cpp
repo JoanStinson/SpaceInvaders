@@ -86,15 +86,18 @@ void Entity::SetPosition(fPoint position)
 	this->position = position;
 }
 
-void Entity::ResetPosition()
-{
-	position = init_position;
-}
-
 void Entity::UpdateRectCollider()
 {
 	rect_collider.x = position.x + init_rect_collider.x;
 	rect_collider.y = position.y + init_rect_collider.y;
+}
+
+void Entity::Reset()
+{
+	position = init_position;
+	life_points = init_life_points;
+	enabled = true;
+	alive = true;
 }
 
 void Entity::DrawRectCollider()

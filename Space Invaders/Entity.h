@@ -39,8 +39,8 @@ public:
 	fPoint GetPosition() const;
 
 	void SetPosition(fPoint position);
-	void ResetPosition();
 	void UpdateRectCollider();
+	void Reset();
 
 private:
 	void DrawRectCollider();
