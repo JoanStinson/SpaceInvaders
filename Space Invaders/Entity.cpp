@@ -12,13 +12,15 @@ Entity::Entity()
 }
 
 Entity::Entity(SDL_Rect rect, SDL_Rect rect_collider, SDL_Texture* texture, SDL_Texture* texture_death, Animation animation_death, fPoint position, int life_points, int damage, float move_speed) :
-	rect(rect), rect_collider(rect_collider), init_rect_collider(rect_collider), texture(texture), texture_death(texture_death), animation_death(animation_death), position(position), life_points(life_points), damage(damage), move_speed(move_speed)
+	rect(rect), rect_collider(rect_collider), init_rect_collider(rect_collider), texture(texture), texture_death(texture_death), animation_death(animation_death), position(position), life_points(life_points), 
+	init_life_points(life_points), damage(damage), move_speed(move_speed)
 {
 	UpdateRectCollider();
 }
 
 Entity::Entity(SDL_Rect rect, SDL_Rect rect_collider, SDL_Texture* texture, Animation animation, SDL_Texture* texture_death, Animation animation_death, fPoint position, int life_points, int damage, float move_speed) :
-	rect(rect), rect_collider(rect_collider), init_rect_collider(rect_collider), texture(texture), animation(animation), texture_death(texture_death), animation_death(animation_death), position(position), life_points(life_points), damage(damage), move_speed(move_speed)
+	rect(rect), rect_collider(rect_collider), init_rect_collider(rect_collider), texture(texture), animation(animation), texture_death(texture_death), animation_death(animation_death), position(position), 
+	life_points(life_points), init_life_points(life_points), damage(damage), move_speed(move_speed)
 {
 	UpdateRectCollider();
 }

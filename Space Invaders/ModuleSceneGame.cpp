@@ -251,8 +251,18 @@ UpdateStatus ModuleSceneGame::ShowGameOver()
 	if (buttons[0].Selected(mouse_pos, mouse_clicked))
 	{
 		App->audio->PlaySfx(sfx_pressed);
+		player->life_points = 3;
 		score = 0;
 		game_over = false;
+
+		for (auto& entity : entities)
+		{
+			entity->life_points = entity->init_life_points;
+			entity->enabled = true;
+			entity->alive = true;
+		}
+
+		//TODO reset enemy grid to initial pos
 	}
 	else if (buttons[1].Selected(mouse_pos, mouse_clicked))
 	{

@@ -49,6 +49,7 @@ public:
 	bool alive = true;
 
 	int life_points;
+	int init_life_points;
 	static bool debug_draw;
 
 protected:
