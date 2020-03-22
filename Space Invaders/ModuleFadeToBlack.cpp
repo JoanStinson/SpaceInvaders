@@ -31,7 +31,7 @@ UpdateStatus ModuleFadeToBlack::Update()
 		if (normalized > 1.f)
 			normalized = 1.f;
 
-		if (fading_in == false)
+		if (!fading_in)
 			normalized = 1.f - normalized;
 
 		// Draw a screen-size black rectangle with alpha

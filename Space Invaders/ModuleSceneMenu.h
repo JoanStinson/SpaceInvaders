@@ -4,8 +4,6 @@
 #include "Module.h"
 #include "Button.h"
 
-#define MENU_BUTTONS 3
-
 class ModuleSceneMenu : public Module
 {
 public:
@@ -24,7 +22,7 @@ private:
 	SDL_Rect rect_logo;
 
 	SDL_Texture* texture_buttons = nullptr;
-	Button buttons[MENU_BUTTONS];
+	Button buttons[3];
 
 	unsigned int sfx_hover;
 	unsigned int sfx_pressed;

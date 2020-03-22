@@ -61,7 +61,7 @@ UpdateStatus ModuleSceneMenu::Update()
 	bool mouse_clicked = App->input->GetMouseButtonDown(1);
 
 	// Draw buttons and handle hovering
-	for (int i = 0; i < MENU_BUTTONS; ++i)
+	for (int i = 0; i < sizeof(buttons) / sizeof(buttons[0]); ++i)
 	{
 		App->render->Draw(texture_buttons, buttons[i].position, &buttons[i].GetRect(mouse_pos));
 

@@ -11,7 +11,7 @@
  
 Application::Application()
 {
-	// Order matters: they will init/start/pre/update/post in this order
+	// Order matters: init/start/pre/update/post in this order
 	modules.push_back((input = std::make_unique<ModuleInput>()).get());
 	modules.push_back((window = std::make_unique<ModuleWindow>()).get());
 	modules.push_back((render = std::make_unique<ModuleRender>()).get());
@@ -31,7 +31,7 @@ bool Application::Init()
 	bool ret = true;
 
 	for (std::list<Module*>::iterator it = modules.begin(); it != modules.end() && ret; ++it)
-		ret = (*it)->Init(); // We init everything, even if not enabled
+		ret = (*it)->Init(); 
 
 	for (std::list<Module*>::iterator it = modules.begin(); it != modules.end() && ret; ++it)
 		if ((*it)->IsEnabled())
@@ -67,7 +67,6 @@ bool Application::CleanUp()
 	bool ret = true;
 
 	for (std::list<Module*>::reverse_iterator it = modules.rbegin(); it != modules.rend() && ret; ++it)
-		if ((*it)->IsEnabled())
 			ret = (*it)->CleanUp();
 
 	return ret;

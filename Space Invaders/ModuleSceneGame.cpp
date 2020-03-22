@@ -11,10 +11,18 @@
 #include "Enemy.h"
 #include "Animation.h"
 #include "Utils.h"
+#include "ModuleSceneMenu.h"
 
-ModuleSceneGame::ModuleSceneGame(bool start_enabled) : 
+ModuleSceneGame::ModuleSceneGame(bool start_enabled) :
 	Module(start_enabled), rect_background(SDL_Rect{ 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT })
 {
+	buttons[0].rect = { 0, 0, 256, 107 };
+	buttons[0].rect_hover = { 256, 0, 256, 107 };
+	buttons[0].position = fPoint{ (float)(SCREEN_WIDTH / 2) - (buttons[0].rect.w / 2) - 2, 375 };
+
+	buttons[1].rect = { 1024, 0, 256, 107 };
+	buttons[1].rect_hover = { 1280, 0, 256, 107 };
+	buttons[1].position = fPoint{ (float)(SCREEN_WIDTH / 2) - (buttons[1].rect.w / 2) - 2, 500 };
 }
 
 ModuleSceneGame::~ModuleSceneGame()
@@ -31,6 +39,8 @@ ModuleSceneGame::~ModuleSceneGame()
 	delete lives_value;
 	delete score_value;
 	delete hiscore_value;
+
+	delete game_over_title;
 }
 
 bool ModuleSceneGame::Start()
@@ -39,14 +49,14 @@ bool ModuleSceneGame::Start()
 
 	bool ret = true;
 
-	// Background
+	// Load background
 	texture_background = App->texture->LoadTexture("Sprites/background.jpg");
 
 	// Generic
 	SDL_Texture* entity_texture_death = App->texture->LoadTexture("Sprites/galaxy.png");
 	Animation entity_animation_death(17, 64, 0.8f);
 
-	// Asteroids
+	// Load asteroids
 	SDL_Texture* asteroid_texture = App->texture->LoadTexture("Sprites/asteroid.png");
 
 	float asteroid_position_y = SCREEN_HEIGHT - (64 * 3) + 20;
@@ -64,7 +74,7 @@ bool ModuleSceneGame::Start()
 	for (int i = 0; i < sizeof(asteroid_positions) / sizeof(asteroid_positions[0]); ++i)
 		AddEntity(new Asteroid({ 0, 0, 64, 64 }, { 12, 12, 38, 38 }, asteroid_texture, entity_texture_death, entity_animation_death, asteroid_positions[i], 4));
 
-	// Enemies
+	// Load enemies
 	SDL_Texture* enemy_texture = App->texture->LoadTexture("Sprites/spaceship_enemy.png");
 	Animation enemy_animation(8, 64, 0.4f);
 	enemy_grid = new EnemyGrid(ROWS, COLS);
@@ -91,7 +101,7 @@ bool ModuleSceneGame::Start()
 
 	enemy_grid->CreateGridRects();
 
-	// Player
+	// Load player
 	SDL_Texture* player_texture = App->texture->LoadTexture("Sprites/spaceship.png");
 	Animation player_animation(8, 64);
 
@@ -104,15 +114,22 @@ bool ModuleSceneGame::Start()
 	player = new Player({ 0, 0, 64, 64 }, { 12, 26, 40, 16 }, player_texture, player_animation, entity_texture_death, entity_animation_death, player_position, 3, 1, 0.3f);
 	AddEntity(player);
 
-	// Static text
+	// Load static text
 	lives_title = new Text(App->texture->LoadText("LIVES"));
 	score_title = new Text(App->texture->LoadText("SCORE"));
 	hiscore_title = new Text(App->texture->LoadText("HI-SCORE"));
 
-	// Dynamic text
+	// Load dynamic text
 	lives_value = new Text(App->texture->LoadText(utils::PadZerosLeft(player->life_points).c_str()));
 	score_value = new Text(App->texture->LoadText(utils::PadZerosLeft(score).c_str()));
 	hiscore_value = new Text(App->texture->LoadText(utils::PadZerosLeft(hiscore).c_str()));
+
+	// Load game over 
+	texture_buttons = App->texture->LoadTexture("Sprites/buttons.png");
+	sfx_hover = App->audio->LoadSfx("Audio/Sfx/hover_button.wav");
+	sfx_pressed = App->audio->LoadSfx("Audio/Sfx/click_button.wav");
+	sfx_game_over = App->audio->LoadSfx("Audio/Sfx/game_over.wav");
+	game_over_title = new Text(App->texture->LoadText("GAME OVER", 60, {255, 0, 0, 255}));
 
 	return ret;
 }
@@ -120,8 +137,6 @@ bool ModuleSceneGame::Start()
 UpdateStatus ModuleSceneGame::Update()
 {
 	UpdateStatus ret = UpdateStatus::CONTINUE;
-
-	clock.Tick();
 
 	// Draw background
 	App->render->Draw(texture_background, fPoint(), &rect_background);
@@ -140,20 +155,9 @@ UpdateStatus ModuleSceneGame::Update()
 	App->render->Draw(score_value->texture, fPoint{ 181, 55 }, &score_value->rect);
 	App->render->Draw(hiscore_value->texture, fPoint{ 340, 55 }, &hiscore_value->rect);
 
-	if (win || game_over)
-		return ret;
-
-	// Update enemy grid
-	enemy_grid->Update((float)clock.delta_time);
-
-	// Update entities
-	for (std::list<Entity*>::iterator it = entities.begin(); it != entities.end() && ret == UpdateStatus::CONTINUE; ++it)
-		if ((*it)->enabled)
-			ret = (*it)->Update((float)clock.delta_time);
-
-	// Toggle box colliders
-	//if (App->input->GetKeyDown(SDL_SCANCODE_D))
-	//	Entity::debug_draw = !Entity::debug_draw;
+	// While player is not dead play the game
+	// When player dies show game over panel
+	ret = game_over ? ShowGameOver() : RunGame();
 
 	return ret;
 }
@@ -169,7 +173,7 @@ UpdateStatus ModuleSceneGame::PostUpdate()
 bool ModuleSceneGame::CleanUp()
 {
 	LOG("Unloading game scene");
-
+	
 	bool ret = true;
 
 	return ret;
@@ -189,4 +193,72 @@ void ModuleSceneGame::RemoveEntity(Entity* entity)
 const std::list<Entity*>& ModuleSceneGame::GetEntities() const
 {
 	return entities;
+}
+
+void ModuleSceneGame::PlayGameOverSound() const
+{
+	App->audio->PlaySfx(sfx_game_over);
+}
+
+UpdateStatus ModuleSceneGame::RunGame()
+{
+	UpdateStatus ret = UpdateStatus::CONTINUE;
+
+	clock.Tick();
+
+	// Update enemy grid
+	enemy_grid->Update((float)clock.delta_time);
+
+	// Update entities
+	for (std::list<Entity*>::iterator it = entities.begin(); it != entities.end() && ret == UpdateStatus::CONTINUE; ++it)
+		if ((*it)->enabled)
+			ret = (*it)->Update((float)clock.delta_time);
+
+	// Toggle box colliders
+	//if (App->input->GetKeyDown(SDL_SCANCODE_D))
+	//	Entity::debug_draw = !Entity::debug_draw;
+
+	return ret;
+}
+
+UpdateStatus ModuleSceneGame::ShowGameOver()
+{
+	UpdateStatus ret = UpdateStatus::CONTINUE;
+
+	iPoint mouse_pos = App->input->GetMousePosition();
+	bool mouse_clicked = App->input->GetMouseButtonDown(1);
+
+	// Draw text
+	App->render->Draw(game_over_title->texture, fPoint{ 55, 200 }, &game_over_title->rect);
+
+	// Draw buttons and handle hovering
+	for (int i = 0; i < sizeof(buttons) / sizeof(buttons[0]); ++i)
+	{
+		App->render->Draw(texture_buttons, buttons[i].position, &buttons[i].GetRect(mouse_pos));
+
+		if (buttons[i].Hovered(mouse_pos) && !buttons[i].play_hover_audio)
+		{
+			App->audio->PlaySfx(sfx_hover);
+			buttons[i].play_hover_audio = true;
+		}
+		else if (!buttons[i].Hovered(mouse_pos) && buttons[i].play_hover_audio)
+		{
+			buttons[i].play_hover_audio = false;
+		}
+	}
+
+	// Button selection
+	if (buttons[0].Selected(mouse_pos, mouse_clicked))
+	{
+		App->audio->PlaySfx(sfx_pressed);
+		score = 0;
+		game_over = false;
+	}
+	else if (buttons[1].Selected(mouse_pos, mouse_clicked))
+	{
+		App->audio->PlaySfx(sfx_pressed);
+		return UpdateStatus::STOP;
+	}
+
+	return ret;
 }

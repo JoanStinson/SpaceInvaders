@@ -5,9 +5,8 @@
 #include "Player.h"
 #include "Clock.h"
 #include "EnemyGrid.h"
+#include "Button.h"
 
-struct SDL_Texture;
-struct SDL_Rect;
 struct Text;
 
 class ModuleSceneGame : public Module
@@ -25,13 +24,16 @@ public:
 	void AddEntity(Entity* entity);
 	void RemoveEntity(Entity* entity);
 	const std::list<Entity*>& GetEntities() const;
+	void PlayGameOverSound() const;
+
+private:
+	UpdateStatus RunGame();
+	UpdateStatus ShowGameOver();
 
 public:
-	bool win = false;
-	bool game_over = false;
-
 	int score = 0;
 	int hiscore = 0;
+	bool game_over = false;
 
 private:
 	Player* player = nullptr;
@@ -54,6 +56,15 @@ private:
 
 	const int ROWS = 3;
 	const int COLS = 6;
+
+	SDL_Texture* texture_buttons = nullptr;
+	Button buttons[2];
+
+	unsigned int sfx_hover;
+	unsigned int sfx_pressed;
+
+	Text* game_over_title = nullptr;
+	unsigned int sfx_game_over;
 };
 
 #endif // _MODULESCENEGAME_H_

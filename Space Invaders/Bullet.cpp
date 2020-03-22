@@ -85,11 +85,6 @@ void Bullet::CheckCollisions()
 						{
 							App->scene_game->hiscore = App->scene_game->score;
 						}
-
-						if (App->scene_game->score >= 180)
-						{
-							App->scene_game->win = true;
-						}
 					}
 				}
 				break;
@@ -105,6 +100,7 @@ void Bullet::CheckCollisions()
 				{
 					entity->life_points = 0;
 					App->scene_game->game_over = true;
+					App->scene_game->PlayGameOverSound();
 				}
 				break;
 			}
