@@ -63,11 +63,10 @@ void Bullet::CheckCollisions()
 
 					if (entity->life_points < 1)
 					{
-						enabled = false;
 						entity->alive = false;
 						dynamic_cast<Asteroid*>(entity)->PlayKillSound();
-						//dynamic_cast<Player*>(owner)->asteroids_destroyed += 1;
-						//App->sceneGame->RemoveEntity(entity);
+
+						enabled = false;
 					}
 				}
 				else if (entity->CompareType(Type::ENEMY))
@@ -79,12 +78,14 @@ void Bullet::CheckCollisions()
 					{
 						entity->alive = false;
 						dynamic_cast<Enemy*>(entity)->PlayKillSound();
+
 						App->scene_game->score += 10;
 
 						if (App->scene_game->score > App->scene_game->hiscore)
-						{
 							App->scene_game->hiscore = App->scene_game->score;
-						}
+
+						if (App->scene_game->score % 180 == 0)
+							App->scene_game->next_wave = true;
 					}
 				}
 				break;
@@ -94,8 +95,10 @@ void Bullet::CheckCollisions()
 			{
 				enabled = false;
 				dynamic_cast<Player*>(entity)->PlayKillSound();
-				entity->life_points--;
+
 				entity->alive = false;
+				entity->life_points--;
+
 				if (entity->life_points < 1)
 				{
 					entity->life_points = 0;

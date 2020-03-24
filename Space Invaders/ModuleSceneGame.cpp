@@ -96,10 +96,10 @@ bool ModuleSceneGame::Start()
 			AddEntity(enemy);
 		}
 
-		enemy_grid->grid.push_back(enemy_row);
+		enemy_grid->AddEnemyRow(enemy_row);
 	}
 
-	enemy_grid->CreateGridRects();
+	enemy_grid->CreateGrid();
 
 	// Load player
 	SDL_Texture* player_texture = App->texture->LoadTexture("Sprites/spaceship.png");
@@ -184,15 +184,20 @@ void ModuleSceneGame::AddEntity(Entity* entity)
 	entities.push_back(entity);
 }
 
-void ModuleSceneGame::RemoveEntity(Entity* entity)
-{
-	entities.remove(entity);
-	delete entity;
-}
-
 const std::list<Entity*>& ModuleSceneGame::GetEntities() const
 {
 	return entities;
+}
+
+void ModuleSceneGame::NextEnemyWave()
+{
+	for (std::list<Entity*>::iterator it = entities.begin(); it != entities.end(); ++it)
+		if ((*it)->CompareType(Type::ENEMY))
+			(*it)->Reset();
+
+	enemy_grid->Reset();
+
+	next_wave = false;
 }
 
 void ModuleSceneGame::PlayGameOverSound() const
@@ -207,16 +212,16 @@ UpdateStatus ModuleSceneGame::RunGame()
 	clock.Tick();
 
 	// Update enemy grid
-	enemy_grid->Update((float)clock.delta_time);
+	if (!next_wave)
+		enemy_grid->Update((float)clock.delta_time);
 
 	// Update entities
 	for (std::list<Entity*>::iterator it = entities.begin(); it != entities.end() && ret == UpdateStatus::CONTINUE; ++it)
 		if ((*it)->enabled)
 			ret = (*it)->Update((float)clock.delta_time);
 
-	// Toggle box colliders
-	//if (App->input->GetKeyDown(SDL_SCANCODE_D))
-	//	Entity::debug_draw = !Entity::debug_draw;
+	if (next_wave)
+		NextEnemyWave();
 
 	return ret;
 }
@@ -257,6 +262,8 @@ UpdateStatus ModuleSceneGame::ShowGameOver()
 
 		for (std::list<Entity*>::iterator it = entities.begin(); it != entities.end(); ++it)
 			(*it)->Reset();
+
+		enemy_grid->Reset();
 	}
 	else if (buttons[1].Selected(mouse_pos, mouse_clicked))
 	{

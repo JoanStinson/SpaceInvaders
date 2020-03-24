@@ -31,6 +31,16 @@ struct Clock
 			//LOG("Invoke");
 		}
 	}
+
+	void Reset()
+	{
+		current_time = 0;
+		last_time = 0;
+		delta_time = 0;
+
+		current_invoke_time = 0;
+		last_invoke_time = 0;
+	}
 };
 
 #endif // _CLOCK_H_

@@ -16,14 +16,16 @@ public:
 	~EnemyGrid();
 
 	UpdateStatus Update(float delta_time);
-	void CreateGridRects();
+	void AddEnemyRow(const std::vector<Enemy*>& enemy_row);
+	void CreateGrid();
+	void Reset();
 
 private:
-	void DrawGridRects();
+	void DrawGrid();
 	void MoveEnemyRow();
 	void ShootBullet();
 
-public:
+private:
 	int rows;
 	int cols;
 

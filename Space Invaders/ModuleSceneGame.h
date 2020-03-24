@@ -22,9 +22,10 @@ public:
 
 public:
 	void AddEntity(Entity* entity);
-	void RemoveEntity(Entity* entity);
 	const std::list<Entity*>& GetEntities() const;
+
 	void PlayGameOverSound() const;
+	void NextEnemyWave();
 
 private:
 	UpdateStatus RunGame();
@@ -34,6 +35,7 @@ public:
 	int score = 0;
 	int hiscore = 0;
 	bool game_over = false;
+	bool next_wave = false;
 
 private:
 	Player* player = nullptr;

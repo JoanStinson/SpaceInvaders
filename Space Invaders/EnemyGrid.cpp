@@ -34,7 +34,7 @@ UpdateStatus EnemyGrid::Update(float delta_time)
 	clock_move.Tick();
 	clock_shoot.Tick();
 
-	DrawGridRects();
+	DrawGrid();
 
 	clock_move.Invoke(0.3f, std::bind(&EnemyGrid::MoveEnemyRow, this));
 
@@ -43,7 +43,12 @@ UpdateStatus EnemyGrid::Update(float delta_time)
 	return UpdateStatus::CONTINUE;
 }
 
-void EnemyGrid::CreateGridRects()
+void EnemyGrid::AddEnemyRow(const std::vector<Enemy*>& enemy_row)
+{
+	grid.push_back(enemy_row);
+}
+
+void EnemyGrid::CreateGrid()
 {
 	for (int i = 0; i < rows; ++i)
 	{
@@ -58,7 +63,18 @@ void EnemyGrid::CreateGridRects()
 	grid_rect = SDL_Rect{ 0, 0, 0, 0 };
 }
 
-void EnemyGrid::DrawGridRects()
+void EnemyGrid::Reset()
+{
+	current_row = rows - 1;
+	speed = init_speed;
+
+	CreateGrid();
+
+	clock_move.Reset();
+	clock_shoot.Reset();
+}
+
+void EnemyGrid::DrawGrid()
 {
 	if (!Entity::debug_draw)
 	{
@@ -83,6 +99,7 @@ void EnemyGrid::DrawGridRects()
 
 void EnemyGrid::MoveEnemyRow()
 {
+	LOG("%d", row_rects[current_row].x);
 	App->audio->PlaySfx(sfx_move);
 
 	for (int j = 0; j < cols; ++j)
@@ -98,13 +115,14 @@ void EnemyGrid::MoveEnemyRow()
 		speed = init_speed;
 	}
 
-	CreateGridRects(); // update only after moving
+	CreateGrid(); // update only after moving
 }
 
 void EnemyGrid::ShootBullet()
 {
 	std::vector<Enemy*> enemies_that_can_shoot;
 	std::vector<bool> has_enemy_in_col;
+
 	has_enemy_in_col.reserve(cols);
 	for (int i = 0; i < cols; ++i)
 		has_enemy_in_col.push_back(false);

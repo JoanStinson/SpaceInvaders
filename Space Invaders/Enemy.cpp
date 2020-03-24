@@ -58,6 +58,9 @@ UpdateStatus Enemy::Update(float delta_time)
 void Enemy::OnDeath()
 {
 	alive = false;
+
+	for (int i = 0; i < pooled_bullets.size(); ++i)
+		pooled_bullets[i]->alive = false;
 }
 
 void Enemy::Move(iPoint position)
