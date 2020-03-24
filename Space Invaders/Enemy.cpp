@@ -58,9 +58,6 @@ UpdateStatus Enemy::Update(float delta_time)
 void Enemy::OnDeath()
 {
 	alive = false;
-
-	for (int i = 0; i < pooled_bullets.size(); ++i)
-		pooled_bullets[i]->alive = false;
 }
 
 void Enemy::Move(iPoint position)
@@ -95,9 +92,9 @@ void Enemy::Shoot()
 		// Instead of new/delete, enable/disable
 		if (!bullet->enabled)
 		{
+			bullet->SetPosition(fPoint{ position.x + 16, position.y + 34 });
 			bullet->enabled = true;
 			bullet->alive = true;
-			bullet->SetPosition(fPoint{ position.x + 16, position.y + 34 });
 			break;
 		}
 	}
