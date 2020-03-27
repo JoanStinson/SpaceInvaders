@@ -13,8 +13,8 @@ Enemy::Enemy(SDL_Rect rect, SDL_Rect rect_collider, SDL_Texture* texture, Animat
 {
 	type = Type::ENEMY;
 
-	SDL_Texture* bullet_texture = App->texture->LoadTexture("Sprites/bullet_enemy.png");
-	SDL_Texture* bullet_texture_death = App->texture->LoadTexture("Sprites/red.png");
+	SDL_Texture* bullet_texture = App->texture->LoadTexture("Assets/Sprites/bullet_enemy.png");
+	SDL_Texture* bullet_texture_death = App->texture->LoadTexture("Assets/Sprites/red.png");
 	Animation bullet_animation_death(17, 64, 0.8f);
 
 	pooled_bullets.reserve(MAX_BULLETS);
@@ -24,7 +24,7 @@ Enemy::Enemy(SDL_Rect rect, SDL_Rect rect_collider, SDL_Texture* texture, Animat
 
 	rect_collider_grid = { (int)position.x, (int)position.y, rect.w, rect.h };
 
-	sfx_killed = App->audio->LoadSfx("Audio/Sfx/enemy_killed.wav");
+	sfx_killed = App->audio->LoadSfx("Assets/Audio/Sfx/enemy_killed.wav");
 }
 
 Enemy::~Enemy()

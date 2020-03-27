@@ -36,7 +36,7 @@ bool ModuleWindow::Init()
 			screen_surface = SDL_GetWindowSurface(window);
 
 			// Set icon
-			SDL_Surface* iconSurface = IMG_Load("Sprites/icon.png");
+			SDL_Surface* iconSurface = IMG_Load("Assets/Sprites/icon.png");
 			SDL_SetWindowIcon(window, iconSurface);
 			SDL_FreeSurface(iconSurface);
 		}

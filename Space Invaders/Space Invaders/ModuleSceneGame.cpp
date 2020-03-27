@@ -50,14 +50,14 @@ bool ModuleSceneGame::Start()
 	bool ret = true;
 
 	// Load background
-	texture_background = App->texture->LoadTexture("Sprites/background.jpg");
+	texture_background = App->texture->LoadTexture("Assets/Sprites/background.jpg");
 
 	// Generic
-	SDL_Texture* entity_texture_death = App->texture->LoadTexture("Sprites/galaxy.png");
+	SDL_Texture* entity_texture_death = App->texture->LoadTexture("Assets/Sprites/galaxy.png");
 	Animation entity_animation_death(17, 64, 0.8f);
 
 	// Load asteroids
-	SDL_Texture* asteroid_texture = App->texture->LoadTexture("Sprites/asteroid.png");
+	SDL_Texture* asteroid_texture = App->texture->LoadTexture("Assets/Sprites/asteroid.png");
 
 	float asteroid_position_y = SCREEN_HEIGHT - (64 * 3) + 20;
 	float asteroid_position_x = 15;
@@ -75,7 +75,7 @@ bool ModuleSceneGame::Start()
 		AddEntity(new Asteroid({ 0, 0, 64, 64 }, { 12, 12, 38, 38 }, asteroid_texture, entity_texture_death, entity_animation_death, asteroid_positions[i], 4));
 
 	// Load enemies
-	SDL_Texture* enemy_texture = App->texture->LoadTexture("Sprites/spaceship_enemy.png");
+	SDL_Texture* enemy_texture = App->texture->LoadTexture("Assets/Sprites/spaceship_enemy.png");
 	Animation enemy_animation(8, 64, 0.4f);
 	enemy_grid = new EnemyGrid(ROWS, COLS);
 
@@ -102,7 +102,7 @@ bool ModuleSceneGame::Start()
 	enemy_grid->CreateGrid();
 
 	// Load player
-	SDL_Texture* player_texture = App->texture->LoadTexture("Sprites/spaceship.png");
+	SDL_Texture* player_texture = App->texture->LoadTexture("Assets/Sprites/spaceship.png");
 	Animation player_animation(8, 64);
 
 	fPoint player_position
@@ -125,10 +125,10 @@ bool ModuleSceneGame::Start()
 	hiscore_value = new Text(*App->texture->LoadText(utils::PadZerosLeft(hiscore).c_str()));
 
 	// Load game over 
-	texture_buttons = App->texture->LoadTexture("Sprites/buttons.png");
-	sfx_hover = App->audio->LoadSfx("Audio/Sfx/hover_button.wav");
-	sfx_pressed = App->audio->LoadSfx("Audio/Sfx/click_button.wav");
-	sfx_game_over = App->audio->LoadSfx("Audio/Sfx/game_over.wav");
+	texture_buttons = App->texture->LoadTexture("Assets/Sprites/buttons.png");
+	sfx_hover = App->audio->LoadSfx("Assets/Audio/Sfx/hover_button.wav");
+	sfx_pressed = App->audio->LoadSfx("Assets/Audio/Sfx/click_button.wav");
+	sfx_game_over = App->audio->LoadSfx("Assets/Audio/Sfx/game_over.wav");
 	game_over_title = new Text(*App->texture->LoadText("GAME OVER", 60, {255, 0, 0, 255}));
 
 	return ret;

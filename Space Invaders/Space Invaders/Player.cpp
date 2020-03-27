@@ -14,8 +14,8 @@ Player::Player(SDL_Rect rect, SDL_Rect rect_collider, SDL_Texture* texture, Anim
 {
 	type = Type::PLAYER;
 
-	SDL_Texture* bullet_texture = App->texture->LoadTexture("Sprites/bullet.png");
-	SDL_Texture* bullet_texture_death = App->texture->LoadTexture("Sprites/blue.png");
+	SDL_Texture* bullet_texture = App->texture->LoadTexture("Assets/Sprites/bullet.png");
+	SDL_Texture* bullet_texture_death = App->texture->LoadTexture("Assets/Sprites/blue.png");
 	Animation bullet_animation_death(17, 64, 0.8f);
 
 	pooled_bullets.reserve(MAX_BULLETS);
@@ -23,8 +23,8 @@ Player::Player(SDL_Rect rect, SDL_Rect rect_collider, SDL_Texture* texture, Anim
 	for (int i = 0; i < MAX_BULLETS; ++i)
 		pooled_bullets.push_back(std::move(new Bullet({ 0, 0, 32, 32 }, { 8, 8, 16, 16 }, bullet_texture, bullet_texture_death, bullet_animation_death, fPoint(), 1, 1, 0.5f, this)));
 
-	sfx_shoot = App->audio->LoadSfx("Audio/Sfx/player_shoot.wav");
-	sfx_killed = App->audio->LoadSfx("Audio/Sfx/player_killed.wav");
+	sfx_shoot = App->audio->LoadSfx("Assets/Audio/Sfx/player_shoot.wav");
+	sfx_killed = App->audio->LoadSfx("Assets/Audio/Sfx/player_killed.wav");
 }
 
 Player::~Player()

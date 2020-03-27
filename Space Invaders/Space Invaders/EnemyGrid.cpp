@@ -21,7 +21,7 @@ EnemyGrid::EnemyGrid(int rows, int cols) : rows(rows), cols(cols), current_row(r
 	for (int i = 0; i < rows; ++i)
 		row_rects.push_back(SDL_Rect{ 0, 0, 0, 0 });
 
-	sfx_move = App->audio->LoadSfx("Audio/Sfx/enemy_move.wav");
+	sfx_move = App->audio->LoadSfx("Assets/Audio/Sfx/enemy_move.wav");
 }
 
 EnemyGrid::~EnemyGrid()

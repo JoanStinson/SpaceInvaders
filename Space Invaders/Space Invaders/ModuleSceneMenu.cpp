@@ -37,14 +37,14 @@ bool ModuleSceneMenu::Start()
 	LOG("Loading intro scene");
 	bool ret = true;
 
-	texture_background = App->texture->LoadTexture("Sprites/background.jpg");
-	texture_logo = App->texture->LoadTexture("Sprites/logo.png");
-	texture_buttons = App->texture->LoadTexture("Sprites/buttons.png");
+	texture_background = App->texture->LoadTexture("Assets/Sprites/background.jpg");
+	texture_logo = App->texture->LoadTexture("Assets/Sprites/logo.png");
+	texture_buttons = App->texture->LoadTexture("Assets/Sprites/buttons.png");
 
-	sfx_hover = App->audio->LoadSfx("Audio/Sfx/hover_button.wav");
-	sfx_pressed = App->audio->LoadSfx("Audio/Sfx/click_button.wav");
+	sfx_hover = App->audio->LoadSfx("Assets/Audio/Sfx/hover_button.wav");
+	sfx_pressed = App->audio->LoadSfx("Assets/Audio/Sfx/click_button.wav");
 
-	App->audio->PlayMusic("Audio/Music/main_theme.mpeg");
+	App->audio->PlayMusic("Assets/Audio/Music/main_theme.mpeg");
 
 	return ret;
 }
