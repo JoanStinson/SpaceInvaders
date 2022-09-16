@@ -1,6 +1,6 @@
 # Space Invaders
 
-A Space Invaders remake using SDL and C++ done in one week.
+A Space Invaders remake using SDL and C++ done in one week..
 
 <p align="center">
   <a>
