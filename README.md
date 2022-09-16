@@ -7,7 +7,7 @@ A Space Invaders remake using SDL and C++ done in one week.
     <img alt="Made With SDL" src="https://img.shields.io/badge/made%20with-SDL-57b9d3.svg?logo=CPlusPlus">
   </a>
   <a>
-    <img alt="License" src="https://img.shields.io/github/license/JoanStinson/SpaceInvaders?&logo=github">
+    <img alt="License" src="https://img.shields.io/github/license/JoanStinson/SpaceInvaders?logo=github">
   </a>
   <a>
     <img alt="Last Commit" src="https://img.shields.io/github/last-commit/JoanStinson/SpaceInvaders?logo=Mapbox&color=orange">
