@@ -3,6 +3,27 @@
 A Space Invaders remake using SDL and C++ done in one week.
 
 <p align="center">
+  <a>
+    <img alt="Made With SDL" src="https://img.shields.io/badge/made%20with-SDL-57b9d3.svg?logo=CPlusPlus">
+  </a>
+  <a>
+    <img alt="License" src="https://img.shields.io/github/license/JoanStinson/SpaceInvaders?&logo=github">
+  </a>
+  <a>
+    <img alt="Last Commit" src="https://img.shields.io/github/last-commit/JoanStinson/SpaceInvaders?logo=Mapbox&color=orange">
+  </a>
+  <a>
+    <img alt="Repo Size" src="https://img.shields.io/github/repo-size/JoanStinson/SpaceInvaders?logo=VirtualBox">
+  </a>
+  <a>
+    <img alt="Downloads" src="https://img.shields.io/github/downloads/JoanStinson/SpaceInvaders/total?color=brightgreen">
+  </a>
+  <a>
+    <img alt="Last Release" src="https://img.shields.io/github/v/release/JoanStinson/SpaceInvaders?include_prereleases&logo=Dropbox&color=yellow">
+  </a>
+</p>
+
+<p align="center">
   <img width="471" height="716" src="https://github.com/JoanStinson/SpaceInvaders/blob/master/preview.gif">
  </p>
 
